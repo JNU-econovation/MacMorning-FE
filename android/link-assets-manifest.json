@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/NPSfont_bold.ttf",
+      "sha1": "c4ed26b54dbbb1a5c28361390afa9baeddfae0ab"
+    },
+    {
+      "path": "src/assets/fonts/NPSfont_extrabold.ttf",
+      "sha1": "e57bcbd37c267a94edf9a6707e59cbd44a291b94"
+    },
+    {
+      "path": "src/assets/fonts/NPSfont_regular.ttf",
+      "sha1": "6fc90379823d9b32d925d1a4ccaa4d81fe6e07af"
+    },
+    {
+      "path": "src/assets/fonts/NanumSquareNeo-aLt.ttf",
+      "sha1": "75613883b6ec50b2338881b5f4485d0f41d0b87e"
+    },
+    {
+      "path": "src/assets/fonts/NanumSquareNeo-bRg.ttf",
+      "sha1": "71fe16804bfb047541786372fb85e7c0d5bc210c"
+    },
+    {
+      "path": "src/assets/fonts/NanumSquareNeo-cBd.ttf",
+      "sha1": "cd9e58031c41271195ad793ae6443f7ee7e9f1c1"
+    },
+    {
+      "path": "src/assets/fonts/NanumSquareNeo-dEb.ttf",
+      "sha1": "578941cfc4bf2ad7a06922b8bf16ca25fdb1e959"
+    },
+    {
+      "path": "src/assets/fonts/NanumSquareNeo-eHv.ttf",
+      "sha1": "55ed11e0bfa2165291ffcfdffb3d9ce17d50e3db"
+    }
+  ]
+}
