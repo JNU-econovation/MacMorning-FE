@@ -12,6 +12,14 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8C21C119B012BCC50C15D9BA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		36C98EF9B8DE448C8BC3C49A /* NPSfont_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A9546E0BF914A098E9F1E67 /* NPSfont_bold.ttf */; };
+		0C2BD274E05F4C21A3BC2429 /* NPSfont_extrabold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6386A68999741B3ABEFF065 /* NPSfont_extrabold.ttf */; };
+		F9B840A5799247B8B52FD0B4 /* NPSfont_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3317A3DF9B64DE9BC835622 /* NPSfont_regular.ttf */; };
+		34BDC0077FE94E8BB804DA4C /* NanumSquareNeo-aLt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D7BB1E7362B40ACA55C5E84 /* NanumSquareNeo-aLt.ttf */; };
+		C3AC299EC9DB422FBF1C9EFE /* NanumSquareNeo-bRg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 053BC2C56E7A41E48E2678E2 /* NanumSquareNeo-bRg.ttf */; };
+		DE222057F50B4ACBBB247CC2 /* NanumSquareNeo-cBd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD7995C9E8E5456CBE9B8386 /* NanumSquareNeo-cBd.ttf */; };
+		1BD3C8A2BB3342BDA36E7544 /* NanumSquareNeo-dEb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F1F0FB7B6D604E17AF6110CA /* NanumSquareNeo-dEb.ttf */; };
+		6AA4AF5DEAB743B993BFD436 /* NanumSquareNeo-eHv.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9D26739E30242B0BB421929 /* NanumSquareNeo-eHv.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +33,14 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ingQ/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ingQ/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		5A9546E0BF914A098E9F1E67 /* NPSfont_bold.ttf */ = {isa = PBXFileReference; name = "NPSfont_bold.ttf"; path = "../src/assets/fonts/NPSfont_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B6386A68999741B3ABEFF065 /* NPSfont_extrabold.ttf */ = {isa = PBXFileReference; name = "NPSfont_extrabold.ttf"; path = "../src/assets/fonts/NPSfont_extrabold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F3317A3DF9B64DE9BC835622 /* NPSfont_regular.ttf */ = {isa = PBXFileReference; name = "NPSfont_regular.ttf"; path = "../src/assets/fonts/NPSfont_regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8D7BB1E7362B40ACA55C5E84 /* NanumSquareNeo-aLt.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-aLt.ttf"; path = "../src/assets/fonts/NanumSquareNeo-aLt.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		053BC2C56E7A41E48E2678E2 /* NanumSquareNeo-bRg.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-bRg.ttf"; path = "../src/assets/fonts/NanumSquareNeo-bRg.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FD7995C9E8E5456CBE9B8386 /* NanumSquareNeo-cBd.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-cBd.ttf"; path = "../src/assets/fonts/NanumSquareNeo-cBd.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F1F0FB7B6D604E17AF6110CA /* NanumSquareNeo-dEb.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-dEb.ttf"; path = "../src/assets/fonts/NanumSquareNeo-dEb.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F9D26739E30242B0BB421929 /* NanumSquareNeo-eHv.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-eHv.ttf"; path = "../src/assets/fonts/NanumSquareNeo-eHv.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +91,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				D971624602364E90A27F014D /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -97,6 +114,22 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		D971624602364E90A27F014D /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				5A9546E0BF914A098E9F1E67 /* NPSfont_bold.ttf */,
+				B6386A68999741B3ABEFF065 /* NPSfont_extrabold.ttf */,
+				F3317A3DF9B64DE9BC835622 /* NPSfont_regular.ttf */,
+				8D7BB1E7362B40ACA55C5E84 /* NanumSquareNeo-aLt.ttf */,
+				053BC2C56E7A41E48E2678E2 /* NanumSquareNeo-bRg.ttf */,
+				FD7995C9E8E5456CBE9B8386 /* NanumSquareNeo-cBd.ttf */,
+				F1F0FB7B6D604E17AF6110CA /* NanumSquareNeo-dEb.ttf */,
+				F9D26739E30242B0BB421929 /* NanumSquareNeo-eHv.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -161,6 +194,14 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				8C21C119B012BCC50C15D9BA /* PrivacyInfo.xcprivacy in Resources */,
+				36C98EF9B8DE448C8BC3C49A /* NPSfont_bold.ttf in Resources */,
+				0C2BD274E05F4C21A3BC2429 /* NPSfont_extrabold.ttf in Resources */,
+				F9B840A5799247B8B52FD0B4 /* NPSfont_regular.ttf in Resources */,
+				34BDC0077FE94E8BB804DA4C /* NanumSquareNeo-aLt.ttf in Resources */,
+				C3AC299EC9DB422FBF1C9EFE /* NanumSquareNeo-bRg.ttf in Resources */,
+				DE222057F50B4ACBBB247CC2 /* NanumSquareNeo-cBd.ttf in Resources */,
+				1BD3C8A2BB3342BDA36E7544 /* NanumSquareNeo-dEb.ttf in Resources */,
+				6AA4AF5DEAB743B993BFD436 /* NanumSquareNeo-eHv.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
