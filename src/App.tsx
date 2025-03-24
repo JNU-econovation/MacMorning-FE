@@ -7,6 +7,7 @@
 
 import React from 'react';
 import type {PropsWithChildren} from 'react';
+import CustomText from './utils/CustomText';
 import {
   ScrollView,
   StatusBar,
@@ -78,11 +79,11 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        style={backgroundStyle}>
+      <ScrollView style={backgroundStyle}>
         <View style={{paddingRight: safePadding}}>
-          <Header/>
+          <Header />
         </View>
+        <CustomText font="NPSfont_bold">안녕핫요?</CustomText>
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
