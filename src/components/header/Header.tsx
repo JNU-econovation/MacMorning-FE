@@ -9,7 +9,7 @@ import CustomText from '../../utils/CustomText';
 
 interface HeaderProps {
   title: string;
-  headerType: 'default' | 'create' | 'progress' | 'ending';
+  headerType: 'default' | 'create' | 'progress';
 }
 
 const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
@@ -36,14 +36,6 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
   }
 
   if (headerType === 'progress') {
-    return (
-      <HeaderWrapper>
-        <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
-      </HeaderWrapper>
-    );
-  }
-
-  if (headerType === 'ending') {
     return (
       <HeaderWrapper>
         <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
