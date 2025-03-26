@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import {TouchableOpacity, Text} from 'react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 import {colors} from '../../constants/colors';
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
@@ -27,7 +27,10 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
   if (headerType === 'create') {
     return (
       <HeaderWrapper>
-        <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
+        <CreateHeaderContainer>
+          <BackButton />
+          <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
+        </CreateHeaderContainer>
       </HeaderWrapper>
     );
   }
@@ -69,6 +72,14 @@ const DefaultHeaderContainer = styled.View`
   justify-content: center;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+`;
+
+const CreateHeaderContainer = styled.View`
+  width: 100%;
+  padding: 0 ${scale(10)}px;
+  justify-content: center;
+  flex-direction: row;
   align-items: center;
 `;
 
