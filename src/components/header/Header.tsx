@@ -6,6 +6,7 @@ import {colors} from '../../constants/colors';
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
 import CustomText from '../../utils/CustomText';
+import EndingButton from './EndingButton';
 
 interface HeaderProps {
   title: string;
@@ -38,14 +39,21 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
   if (headerType === 'progress') {
     return (
       <HeaderWrapper>
-        <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
+        <ProgressHeaderContainer>
+          <BackButton />
+          <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
+          <EndingButton />
+        </ProgressHeaderContainer>
       </HeaderWrapper>
     );
   }
 
   return (
     <HeaderWrapper>
-      <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
+      <DefaultHeaderContainer>
+        <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
+        <SearchButton />
+      </DefaultHeaderContainer>
     </HeaderWrapper>
   );
 };
@@ -75,9 +83,22 @@ const CreateHeaderContainer = styled.View`
   align-items: center;
 `;
 
+const ProgressHeaderContainer = styled.View`
+  width: 100%;
+  padding: 0 ${scale(10)}px;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+`;
+
 const HeaderTitle = styled(CustomText)`
   font-size: ${scale(12)}px;
   color: ${colors.text.white};
+`;
+
+const ButtonWrapper = styled.View`
+  height: 100%;
+  justify-content: center;
 `;
 
 export default Header;
