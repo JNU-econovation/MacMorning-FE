@@ -9,38 +9,38 @@
 /* Begin PBXBuildFile section */
 		0C80B921A6F3F58F76C31292 /* libPods-ingQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-ingQ.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		273D6CF1039A4CE390683177 /* NanumSquareNeo-aLt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CAC15E05212C41468D66BAFD /* NanumSquareNeo-aLt.ttf */; };
+		539A7B440D664702A98B4B81 /* NPSfont_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F488C4F011AA4F96B1DBA290 /* NPSfont_regular.ttf */; };
+		5642453721AC4FFD9A2B9B0C /* NanumSquareNeo-bRg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0DF21FD2B344BFF9D978792 /* NanumSquareNeo-bRg.ttf */; };
+		62677828337F4CAB83E768A6 /* NPSfont_extrabold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CF02FFAFF44211A0868DA9 /* NPSfont_extrabold.ttf */; };
+		6599437F5F844FA19BFA5046 /* NanumSquareNeo-cBd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A6EE23FA9AF4264885ACFBC /* NanumSquareNeo-cBd.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		ACB7A0EA37F405EC4D664645 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		A625BFAF247245539084FC73 /* NPSfont_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 921038B3127048838FA673D8 /* NPSfont_bold.ttf */; };
-		62677828337F4CAB83E768A6 /* NPSfont_extrabold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5CF02FFAFF44211A0868DA9 /* NPSfont_extrabold.ttf */; };
-		539A7B440D664702A98B4B81 /* NPSfont_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F488C4F011AA4F96B1DBA290 /* NPSfont_regular.ttf */; };
-		273D6CF1039A4CE390683177 /* NanumSquareNeo-aLt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CAC15E05212C41468D66BAFD /* NanumSquareNeo-aLt.ttf */; };
-		5642453721AC4FFD9A2B9B0C /* NanumSquareNeo-bRg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0DF21FD2B344BFF9D978792 /* NanumSquareNeo-bRg.ttf */; };
-		6599437F5F844FA19BFA5046 /* NanumSquareNeo-cBd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A6EE23FA9AF4264885ACFBC /* NanumSquareNeo-cBd.ttf */; };
 		8DA450A9BA944241B2644445 /* NanumSquareNeo-dEb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B6902AB76D843219871E612 /* NanumSquareNeo-dEb.ttf */; };
+		A625BFAF247245539084FC73 /* NPSfont_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 921038B3127048838FA673D8 /* NPSfont_bold.ttf */; };
 		AA971BF95DA641FEA017628D /* NanumSquareNeo-eHv.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03FEC3512C19416EAE9A780E /* NanumSquareNeo-eHv.ttf */; };
+		ACB7A0EA37F405EC4D664645 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03FEC3512C19416EAE9A780E /* NanumSquareNeo-eHv.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NanumSquareNeo-eHv.ttf"; path = "../src/assets/fonts/NanumSquareNeo-eHv.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ingQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ingQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ingQ/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ingQ/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = ingQ/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		2B6902AB76D843219871E612 /* NanumSquareNeo-dEb.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NanumSquareNeo-dEb.ttf"; path = "../src/assets/fonts/NanumSquareNeo-dEb.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-ingQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingQ.debug.xcconfig"; path = "Target Support Files/Pods-ingQ/Pods-ingQ.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-ingQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingQ.release.xcconfig"; path = "Target Support Files/Pods-ingQ/Pods-ingQ.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-ingQ.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ingQ.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ingQ/AppDelegate.swift; sourceTree = "<group>"; };
+		7A6EE23FA9AF4264885ACFBC /* NanumSquareNeo-cBd.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NanumSquareNeo-cBd.ttf"; path = "../src/assets/fonts/NanumSquareNeo-cBd.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ingQ/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		921038B3127048838FA673D8 /* NPSfont_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NPSfont_bold.ttf; path = ../src/assets/fonts/NPSfont_bold.ttf; sourceTree = "<group>"; };
+		B0DF21FD2B344BFF9D978792 /* NanumSquareNeo-bRg.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NanumSquareNeo-bRg.ttf"; path = "../src/assets/fonts/NanumSquareNeo-bRg.ttf"; sourceTree = "<group>"; };
+		B5CF02FFAFF44211A0868DA9 /* NPSfont_extrabold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NPSfont_extrabold.ttf; path = ../src/assets/fonts/NPSfont_extrabold.ttf; sourceTree = "<group>"; };
+		CAC15E05212C41468D66BAFD /* NanumSquareNeo-aLt.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NanumSquareNeo-aLt.ttf"; path = "../src/assets/fonts/NanumSquareNeo-aLt.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		921038B3127048838FA673D8 /* NPSfont_bold.ttf */ = {isa = PBXFileReference; name = "NPSfont_bold.ttf"; path = "../src/assets/fonts/NPSfont_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B5CF02FFAFF44211A0868DA9 /* NPSfont_extrabold.ttf */ = {isa = PBXFileReference; name = "NPSfont_extrabold.ttf"; path = "../src/assets/fonts/NPSfont_extrabold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F488C4F011AA4F96B1DBA290 /* NPSfont_regular.ttf */ = {isa = PBXFileReference; name = "NPSfont_regular.ttf"; path = "../src/assets/fonts/NPSfont_regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CAC15E05212C41468D66BAFD /* NanumSquareNeo-aLt.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-aLt.ttf"; path = "../src/assets/fonts/NanumSquareNeo-aLt.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B0DF21FD2B344BFF9D978792 /* NanumSquareNeo-bRg.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-bRg.ttf"; path = "../src/assets/fonts/NanumSquareNeo-bRg.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7A6EE23FA9AF4264885ACFBC /* NanumSquareNeo-cBd.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-cBd.ttf"; path = "../src/assets/fonts/NanumSquareNeo-cBd.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2B6902AB76D843219871E612 /* NanumSquareNeo-dEb.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-dEb.ttf"; path = "../src/assets/fonts/NanumSquareNeo-dEb.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		03FEC3512C19416EAE9A780E /* NanumSquareNeo-eHv.ttf */ = {isa = PBXFileReference; name = "NanumSquareNeo-eHv.ttf"; path = "../src/assets/fonts/NanumSquareNeo-eHv.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F488C4F011AA4F96B1DBA290 /* NPSfont_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NPSfont_regular.ttf; path = ../src/assets/fonts/NPSfont_regular.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,17 +106,8 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3B4392A12AC88292D35C810B /* Pods-ingQ.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-ingQ.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		8C291ADBCAD84A06995ACA91 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				921038B3127048838FA673D8 /* NPSfont_bold.ttf */,
 				B5CF02FFAFF44211A0868DA9 /* NPSfont_extrabold.ttf */,
@@ -129,7 +120,15 @@
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
+		};
+		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3B4392A12AC88292D35C810B /* Pods-ingQ.debug.xcconfig */,
+				5709B34CF0A7D63546082F79 /* Pods-ingQ.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -318,6 +317,7 @@
 				PRODUCT_NAME = ingQ;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -344,6 +344,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ingQ;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
