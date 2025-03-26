@@ -31,7 +31,6 @@ const CustomText: React.FC<CustomTextProps> = ({
 
   const customFont: TextStyle = {
     fontFamily: fontMap[font],
-    color: '#000000',
   };
 
   return <Text style={[style, customFont]} {...rest} />;
