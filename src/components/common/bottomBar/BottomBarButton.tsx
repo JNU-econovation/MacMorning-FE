@@ -34,9 +34,9 @@ const BottomBarButton = ({
 };
 
 const BottomBarButtonContainer = styled.TouchableOpacity`
+  width: 20%;
   justify-content: center;
   align-items: center;
-  background-color: ${colors.background.lightGray};
   gap: ${scale(2)}px;
 `;
 
