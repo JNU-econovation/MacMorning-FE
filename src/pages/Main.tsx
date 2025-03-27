@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   ScrollView,
 } from 'react-native';
-import Header from '../components/header/Header';
+import Header from '../components/common/header/Header';
 import {colors} from '../constants/colors';
 
 function Main(): React.JSX.Element {

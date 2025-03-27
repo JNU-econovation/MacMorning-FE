@@ -1,5 +1,5 @@
 import React from 'react';
-import ArrowLeftSVG from '../../assets/images/arrow-left.svg';
+import ArrowLeftSVG from '../../../assets/images/arrow-left.svg';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import {TouchableOpacity} from 'react-native';
