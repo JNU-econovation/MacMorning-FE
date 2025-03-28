@@ -1,8 +1,7 @@
 import React from 'react';
-import SearchSVG from '../../assets/images/search.svg';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
-import CustomText from '../../utils/CustomText';
+import CustomText from '../../../utils/CustomText';
 const EndingButton = (): React.JSX.Element => {
   return (
     <EndingButtonContainer>
