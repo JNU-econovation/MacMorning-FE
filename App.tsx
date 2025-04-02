@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+import 'react-native-reanimated';
 import React from 'react';
 import styled from 'styled-components/native';
 import {Text, View, useWindowDimensions} from 'react-native';
