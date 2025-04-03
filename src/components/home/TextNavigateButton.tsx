@@ -31,7 +31,7 @@ const TextNavigateButton: React.FC<TextNavigateButtonProps> = ({
   fontInfo,
 }) => {
   return (
-    <StoryCreateButton onPress={onPress}>
+    <StoryCreateButton onPress={onPress} activeOpacity={1}>
       <CustomText
         font={fontInfo.font}
         style={{fontSize: fontInfo.fontSize, color: fontInfo.fontColor}}>
