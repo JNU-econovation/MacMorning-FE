@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import {colors} from '../../constants/colors';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../../utils/CustomText';
-import ChevronRight from '../../assets/images/chevron-right.svg';
+import TextNavigateButton from '../../components/home/TextNavigateButton';
 
 const HomeBackground: React.FC = () => {
   const HomeImage = require('../../assets/images/home_image.png');
@@ -19,19 +19,15 @@ const HomeBackground: React.FC = () => {
             style={{fontSize: scale(18), color: colors.primary}}>
             AI로 만드는 나만의 동화
           </CustomText>
-          <StoryCreateButton onPress={() => console.log('이야기 만들러 가기')}>
-            <CustomText
-              font={'NPSfont_regular'}
-              style={{fontSize: scale(10), color: colors.text.navy}}>
-              이야기 만들러 가기
-            </CustomText>
-            <ChevronRight
-              width={scale(12)}
-              height={scale(12)}
-              strokeWidth={scale(1.2)}
-              color={colors.text.navy}
-            />
-          </StoryCreateButton>
+          <TextNavigateButton
+            onPress={() => console.log('이야기 만들러 가기')}
+            text="이야기 만들러 가기"
+            fontInfo={{
+              font: 'NPSfont_regular',
+              fontSize: scale(10),
+              fontColor: colors.text.navy,
+            }}
+          />
         </HomeTitleContainer>
         <HomeImageWrapper>
           <Image
@@ -70,12 +66,6 @@ const HomeImageWrapper = styled.View`
   height: 100%;
   justify-content: flex-end;
   align-items: flex-end;
-`;
-
-const StoryCreateButton = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
 `;
 
 export default HomeBackground;
