@@ -12,7 +12,11 @@ const HomeBackground: React.FC = () => {
 
   return (
     <>
-      <HomeBackgroundContainer>
+      <HomeBackgroundContainer
+        activeOpacity={1}
+        onPress={() => {
+          console.log('home banner');
+        }}>
         <HomeTitleContainer>
           <CustomText
             font={'NPSfont_extrabold'}
@@ -45,7 +49,7 @@ const HomeBackground: React.FC = () => {
   );
 };
 
-const HomeBackgroundContainer = styled.View`
+const HomeBackgroundContainer = styled.TouchableOpacity`
   flex: 1;
   flex-direction: row;
   background-color: ${colors.secondary};
