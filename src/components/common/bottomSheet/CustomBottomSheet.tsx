@@ -20,7 +20,7 @@ const CustomBottomSheet: React.FC<CustomBottomSheetProps> = ({
   const snapPoints = useMemo(() => ['60%', '100%'], []);
 
   return (
-    <GestureHandlerRootView style={{flex: 1, backgroundColor: 'red'}}>
+    <GestureHandlerRootView style={{flex: 1}}>
       {BackgroundComponent && <BackgroundComponent />}
       <BottomSheet
         animateOnMount={false}
