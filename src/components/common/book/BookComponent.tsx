@@ -24,8 +24,8 @@ const BookComponent: React.FC<BookComponentProps> = ({book}) => {
   );
 };
 const BookComponentContainer = styled.TouchableOpacity`
-  width: ${scale(80)}px;
-  gap: ${scale(3)}px;
+  width: 19%;
+  gap: 1%;
 `;
 
 const BookImageWrapper = styled.View`

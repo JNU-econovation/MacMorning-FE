@@ -32,9 +32,10 @@ const HomeView: React.FC = () => {
         renderItem={renderItem}
         keyExtractor={book => book.id}
         numColumns={4}
+        scrollEnabled={false}
         columnWrapperStyle={{
-          justifyContent: 'space-between',
           marginBottom: scale(20),
+          gap: '8%',
         }}
       />
     </HomeViewContainer>
@@ -44,6 +45,8 @@ const HomeView: React.FC = () => {
 const HomeViewContainer = styled.View`
   width: 100%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
   padding: 0 ${scale(20)}px;
 `;
 

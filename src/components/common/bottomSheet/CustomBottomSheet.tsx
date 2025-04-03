@@ -1,7 +1,10 @@
 import React, {useCallback, useMemo, useRef} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetScrollView,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 import {ReduceMotion} from 'react-native-reanimated';
 
 interface CustomBottomSheetProps {
@@ -31,9 +34,9 @@ const CustomBottomSheet: React.FC<CustomBottomSheetProps> = ({
         handleStyle={{
           backgroundColor: 'rgba(0, 0, 0, 0.0)',
         }}>
-        <BottomSheetView style={{flex: 1, padding: 36, alignItems: 'center'}}>
+        <BottomSheetScrollView style={{flex: 1, padding: 36}}>
           {ViewComponent && <ViewComponent />}
-        </BottomSheetView>
+        </BottomSheetScrollView>
       </BottomSheet>
     </GestureHandlerRootView>
   );

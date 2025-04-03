@@ -49,7 +49,6 @@ const TextNavigateButton: React.FC<TextNavigateButtonProps> = ({
 const StoryCreateButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
-  width: 100%;
 `;
 
 export default TextNavigateButton;
