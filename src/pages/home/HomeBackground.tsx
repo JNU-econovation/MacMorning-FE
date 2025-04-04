@@ -17,7 +17,7 @@ const HomeBackground = (): React.JSX.Element => {
       <HomeBackgroundContainer
         activeOpacity={1}
         onPress={() => {
-          console.log('home banner');
+          navigation.navigate('CreateBook');
         }}>
         <HomeTitleContainer>
           <CustomText
