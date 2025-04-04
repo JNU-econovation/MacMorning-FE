@@ -1,5 +1,4 @@
 import React from 'react';
-import type {IconProps} from '../../../types/icon';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {colors} from '../../../constants/colors';
@@ -9,22 +8,20 @@ import HomeSVG from '../../../assets/images/home.svg';
 import BookSVG from '../../../assets/images/book.svg';
 import OpenBookSVG from '../../../assets/images/book-open.svg';
 import UserSVG from '../../../assets/images/user.svg';
-import {useNavigation} from '@react-navigation/native';
+import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
-const BottomBar = (): React.JSX.Element => {
+const BottomBar = ({navigation}: BottomTabBarProps): React.JSX.Element => {
   const iconProps: IconProps = {
     width: scale(15),
     height: scale(15),
     strokeWidth: scale(1.2),
   };
 
-  const navigation = useNavigation<RootStackNavigationProp>();
-
   return (
     <>
       <BottomBarPlusButton
         buttonName="책 추가"
-        onPress={() => console.log('책 추가')}
+        onPress={() => navigation.navigate('CreateBook')}
       />
       <BottomBarContainer>
         <BottomBarButtonContainer>
@@ -36,19 +33,19 @@ const BottomBar = (): React.JSX.Element => {
           <BottomBarButton
             icon={<OpenBookSVG {...iconProps} />}
             buttonName="내 책"
-            onPress={() => console.log('내 책')}
+            onPress={() => navigation.navigate('MyBook')}
           />
         </BottomBarButtonContainer>
         <BottomBarButtonContainer>
           <BottomBarButton
             icon={<BookSVG {...iconProps} />}
             buttonName="이야기 도서관"
-            onPress={() => console.log('이야기 도서관')}
+            onPress={() => navigation.navigate('Library')}
           />
           <BottomBarButton
             icon={<UserSVG {...iconProps} />}
             buttonName="마이페이지"
-            onPress={() => console.log('마이페이지')}
+            onPress={() => navigation.navigate('MyPage')}
           />
         </BottomBarButtonContainer>
       </BottomBarContainer>
