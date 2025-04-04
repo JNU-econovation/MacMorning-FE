@@ -7,5 +7,6 @@ export const colors = {
     primary: '#000000',
     secondary: '#AEAEAE',
     white: '#ffffff',
+    navy: '#1E6292',
   },
 } as const;
