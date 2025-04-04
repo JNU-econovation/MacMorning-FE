@@ -7,18 +7,20 @@ import {scale} from 'react-native-size-matters';
 import {colors} from '../../constants/colors';
 import CustomText from '../../utils/CustomText';
 import TextNavigateButton from '../../components/home/TextNavigateButton';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeView = (): React.JSX.Element => {
   const books: Book[] = getBooks();
   const renderItem: ListRenderItem<Book> = ({item: book}) => (
     <BookComponent book={book} />
   );
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   return (
     <HomeViewContainer>
       <HomeButtonContainer>
         <TextNavigateButton
-          onPress={() => console.log('내가 쓴 이야기')}
+          onPress={() => navigation.navigate('MyBook')}
           text="내가 쓴 이야기"
           fontInfo={{
             font: 'NPSfont_bold',
