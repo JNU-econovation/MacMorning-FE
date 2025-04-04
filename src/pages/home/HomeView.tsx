@@ -8,7 +8,7 @@ import {colors} from '../../constants/colors';
 import CustomText from '../../utils/CustomText';
 import TextNavigateButton from '../../components/home/TextNavigateButton';
 
-const HomeView: React.FC = () => {
+const HomeView = (): React.JSX.Element => {
   const books: Book[] = getBooks();
   const renderItem: ListRenderItem<Book> = ({item: book}) => (
     <BookComponent book={book} />

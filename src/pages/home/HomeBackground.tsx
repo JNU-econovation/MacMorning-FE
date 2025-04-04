@@ -7,7 +7,7 @@ import {scale} from 'react-native-size-matters';
 import CustomText from '../../utils/CustomText';
 import TextNavigateButton from '../../components/home/TextNavigateButton';
 
-const HomeBackground: React.FC = () => {
+const HomeBackground = (): React.JSX.Element => {
   const HomeImage = require('../../assets/images/home_image.png');
 
   return (

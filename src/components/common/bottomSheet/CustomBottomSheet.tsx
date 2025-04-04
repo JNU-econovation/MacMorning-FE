@@ -8,14 +8,14 @@ import BottomSheet, {
 import {ReduceMotion} from 'react-native-reanimated';
 
 interface CustomBottomSheetProps {
-  BackgroundComponent?: React.FC;
-  ViewComponent?: React.FC;
+  BackgroundComponent?: () => React.JSX.Element;
+  ViewComponent?: () => React.JSX.Element;
 }
 
-const CustomBottomSheet: React.FC<CustomBottomSheetProps> = ({
+const CustomBottomSheet = ({
   ViewComponent,
   BackgroundComponent,
-}) => {
+}: CustomBottomSheetProps): React.JSX.Element => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['60%', '100%'], []);
 
