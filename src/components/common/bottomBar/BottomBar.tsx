@@ -9,6 +9,7 @@ import HomeSVG from '../../../assets/images/home.svg';
 import BookSVG from '../../../assets/images/book.svg';
 import OpenBookSVG from '../../../assets/images/book-open.svg';
 import UserSVG from '../../../assets/images/user.svg';
+import {useNavigation} from '@react-navigation/native';
 
 const BottomBar = (): React.JSX.Element => {
   const iconProps: IconProps = {
@@ -16,6 +17,8 @@ const BottomBar = (): React.JSX.Element => {
     height: scale(15),
     strokeWidth: scale(1.2),
   };
+
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   return (
     <>
@@ -28,7 +31,7 @@ const BottomBar = (): React.JSX.Element => {
           <BottomBarButton
             icon={<HomeSVG {...iconProps} />}
             buttonName="홈"
-            onPress={() => console.log('홈')}
+            onPress={() => navigation.navigate('Home')}
           />
           <BottomBarButton
             icon={<OpenBookSVG {...iconProps} />}
