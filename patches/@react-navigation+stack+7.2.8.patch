@@ -1,0 +1,21 @@
+diff --git a/node_modules/@react-navigation/stack/src/views/Stack/Card.tsx b/node_modules/@react-navigation/stack/src/views/Stack/Card.tsx
+index b11da07..e203396 100755
+--- a/node_modules/@react-navigation/stack/src/views/Stack/Card.tsx
++++ b/node_modules/@react-navigation/stack/src/views/Stack/Card.tsx
+@@ -113,6 +113,7 @@ export class Card extends React.Component<Props> {
+       });
+     }
+     this.isCurrentlyMounted = true;
++    this.props.gesture.addListener(() => { return });
+   }
+ 
+   componentDidUpdate(prevProps: Props) {
+@@ -161,6 +162,8 @@ export class Card extends React.Component<Props> {
+     this.props.gesture?.stopAnimation();
+     this.isCurrentlyMounted = false;
+     this.handleEndInteraction();
++    this.props.gesture.removeAllListeners();
++
+   }
+ 
+   private isCurrentlyMounted = false;

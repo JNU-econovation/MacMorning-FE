@@ -3,6 +3,7 @@ import {scale} from 'react-native-size-matters';
 import CustomText from '../../utils/CustomText';
 import {colors} from '../../constants/colors';
 import styled from 'styled-components/native';
+import {SvgProps} from 'react-native-svg';
 import ChevronRight from '../../assets/images/chevron-right.svg';
 
 interface FontInfo {
@@ -25,11 +26,11 @@ interface TextNavigateButtonProps {
   fontInfo: FontInfo;
 }
 
-const TextNavigateButton: React.FC<TextNavigateButtonProps> = ({
+function TextNavigateButton({
   onPress,
   text,
   fontInfo,
-}) => {
+}: TextNavigateButtonProps): React.JSX.Element {
   return (
     <StoryCreateButton onPress={onPress} activeOpacity={1}>
       <CustomText
@@ -45,7 +46,7 @@ const TextNavigateButton: React.FC<TextNavigateButtonProps> = ({
       />
     </StoryCreateButton>
   );
-};
+}
 const StoryCreateButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;

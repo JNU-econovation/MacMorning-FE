@@ -6,16 +6,18 @@ import {colors} from '../../constants/colors';
 import {scale} from 'react-native-size-matters';
 import CustomText from '../../utils/CustomText';
 import TextNavigateButton from '../../components/home/TextNavigateButton';
+import {useNavigation} from '@react-navigation/native';
 
-const HomeBackground: React.FC = () => {
+const HomeBackground = (): React.JSX.Element => {
   const HomeImage = require('../../assets/images/home_image.png');
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   return (
     <>
       <HomeBackgroundContainer
         activeOpacity={1}
         onPress={() => {
-          console.log('home banner');
+          navigation.navigate('CreateBook');
         }}>
         <HomeTitleContainer>
           <CustomText
@@ -24,7 +26,7 @@ const HomeBackground: React.FC = () => {
             AI로 만드는 나만의 동화
           </CustomText>
           <TextNavigateButton
-            onPress={() => console.log('이야기 만들러 가기')}
+            onPress={() => navigation.navigate('CreateBook')}
             text="이야기 만들러 가기"
             fontInfo={{
               font: 'NPSfont_regular',

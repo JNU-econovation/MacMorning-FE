@@ -8,7 +8,7 @@ interface BookComponentProps {
   book?: Book;
 }
 
-const BookComponent: React.FC<BookComponentProps> = ({book}) => {
+function BookComponent({book}: BookComponentProps): React.JSX.Element {
   return (
     <BookComponentContainer onPress={() => console.log('book 클릭')}>
       <BookImageWrapper></BookImageWrapper>
@@ -22,7 +22,7 @@ const BookComponent: React.FC<BookComponentProps> = ({book}) => {
       </BookInfoContainer>
     </BookComponentContainer>
   );
-};
+}
 const BookComponentContainer = styled.TouchableOpacity`
   width: 19%;
   gap: 1%;
