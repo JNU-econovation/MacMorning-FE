@@ -14,7 +14,7 @@ const BottomBar = ({navigation}: BottomTabBarProps): React.JSX.Element => {
   const iconProps: IconProps = {
     width: scale(15),
     height: scale(15),
-    strokeWidth: scale(1.2),
+    strokeWidth: scale(0.8),
   };
 
   return (
