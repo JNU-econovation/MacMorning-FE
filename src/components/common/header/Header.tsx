@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import {TouchableOpacity, Text, View} from 'react-native';
-import {colors} from '../../../constants/colors';
+import {colors} from '@/constants/colors';
 import BackButton from './BackButton';
 import SearchButton from './SearchButton';
-import CustomText from '../../../utils/CustomText';
+import CustomText from '@/utils/CustomText';
 import EndingButton from './EndingButton';
 
 interface HeaderProps {

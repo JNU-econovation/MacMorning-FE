@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import BottomSheet from '../../components/common/bottomSheet/CustomBottomSheet';
-import BottomBar from '../../components/common/bottomBar/BottomBar';
+import BottomSheet from '@/components/common/bottomSheet/CustomBottomSheet';
 import HomeBackground from './HomeBackground';
 import HomeView from './HomeView';
 

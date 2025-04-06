@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import {colors} from '../../../constants/colors';
+import {colors} from '@/constants/colors';
 import BottomBarButton from './BottomBarButton';
 import BottomBarPlusButton from './BottomBarPlusButton';
-import HomeSVG from '../../../assets/images/home.svg';
-import BookSVG from '../../../assets/images/book.svg';
-import OpenBookSVG from '../../../assets/images/book-open.svg';
-import UserSVG from '../../../assets/images/user.svg';
+import HomeSVG from '@/assets/images/home.svg';
+import BookSVG from '@/assets/images/book.svg';
+import OpenBookSVG from '@/assets/images/book-open.svg';
+import UserSVG from '@/assets/images/user.svg';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
 const BottomBar = ({navigation}: BottomTabBarProps): React.JSX.Element => {
