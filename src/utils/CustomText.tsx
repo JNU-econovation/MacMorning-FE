@@ -13,11 +13,11 @@ interface CustomTextProps extends TextProps {
     | 'NanumSquareNeo-eHv';
 }
 
-const CustomText: React.FC<CustomTextProps> = ({
+const CustomText = ({
   style,
   font = 'NanumSquareNeo-bRg',
   ...rest
-}) => {
+}: CustomTextProps): React.JSX.Element => {
   const fontMap: Record<NonNullable<CustomTextProps['font']>, string> = {
     NPSfont_bold: 'NPS-font-bold',
     NPSfont_extrabold: 'NPS-font-extrabold',

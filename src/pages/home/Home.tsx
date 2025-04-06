@@ -12,7 +12,6 @@ function Home(): React.JSX.Element {
         BackgroundComponent={HomeBackground}
         ViewComponent={HomeView}
       />
-      <BottomBar />
     </MainContainer>
   );
 }

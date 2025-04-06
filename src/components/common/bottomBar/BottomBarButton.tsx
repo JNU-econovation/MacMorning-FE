@@ -34,10 +34,10 @@ const BottomBarButton = ({
 };
 
 const BottomBarButtonContainer = styled.TouchableOpacity`
-  width: 20%;
   justify-content: center;
   align-items: center;
   gap: ${scale(2)}px;
+  width: 25%;
 `;
 
 export default BottomBarButton;
