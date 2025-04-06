@@ -5,7 +5,6 @@ import BookComponent from '../../components/common/book/BookComponent';
 import {getBooks} from '../../apis/book/mock';
 import {scale} from 'react-native-size-matters';
 import {colors} from '../../constants/colors';
-import CustomText from '../../utils/CustomText';
 import TextNavigateButton from '../../components/home/TextNavigateButton';
 import {useNavigation} from '@react-navigation/native';
 
