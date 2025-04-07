@@ -1,11 +1,10 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../../pages/home/Home';
-import Library from '../../pages/library/Library';
-import MyBook from '../../pages/myBook/Mybook';
-import MyPage from '../../pages/myPage/MyPage';
-import BottomBar from '../../components/common/bottomBar/BottomBar';
-import {useNavigation} from '@react-navigation/native';
+import Home from '@/pages/home/Home';
+import Library from '@/pages/library/Library';
+import MyBook from '@/pages/myBook/Mybook';
+import MyPage from '@/pages/myPage/MyPage';
+import BottomBar from '@/components/common/bottomBar/BottomBar';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import {colors} from '../../../constants/colors';
+import {colors} from '@/constants/colors';
 import {Text} from 'react-native';
-import CustomText from '../../../utils/CustomText';
+import CustomText from '@/utils/CustomText';
 
 interface BottomBarButtonProps {
   icon: React.ReactNode;

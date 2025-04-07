@@ -1,12 +1,11 @@
 import React from 'react';
 import {View, FlatList, ListRenderItem} from 'react-native';
 import styled from 'styled-components/native';
-import BookComponent from '../../components/common/book/BookComponent';
-import {getBooks} from '../../apis/book/mock';
+import BookComponent from '@/components/common/book/BookComponent';
+import {getBooks} from '@/apis/book/mock';
 import {scale} from 'react-native-size-matters';
-import {colors} from '../../constants/colors';
-import CustomText from '../../utils/CustomText';
-import TextNavigateButton from '../../components/home/TextNavigateButton';
+import {colors} from '@/constants/colors';
+import TextNavigateButton from '@/components/home/TextNavigateButton';
 import {useNavigation} from '@react-navigation/native';
 
 const HomeView = (): React.JSX.Element => {

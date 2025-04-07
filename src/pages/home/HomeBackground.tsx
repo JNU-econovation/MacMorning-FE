@@ -2,10 +2,10 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {Image} from 'react-native';
 import styled from 'styled-components/native';
-import {colors} from '../../constants/colors';
+import {colors} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
-import CustomText from '../../utils/CustomText';
-import TextNavigateButton from '../../components/home/TextNavigateButton';
+import CustomText from '@/utils/CustomText';
+import TextNavigateButton from '@/components/home/TextNavigateButton';
 import {useNavigation} from '@react-navigation/native';
 
 const HomeBackground = (): React.JSX.Element => {

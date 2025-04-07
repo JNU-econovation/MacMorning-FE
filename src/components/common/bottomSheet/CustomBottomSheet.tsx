@@ -1,10 +1,6 @@
-import React, {useCallback, useMemo, useRef} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useMemo, useRef} from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import BottomSheet, {
-  BottomSheetScrollView,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {ReduceMotion} from 'react-native-reanimated';
 
 interface CustomBottomSheetProps {

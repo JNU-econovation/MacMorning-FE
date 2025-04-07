@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import CustomText from '../../../utils/CustomText';
+import CustomText from '@/utils/CustomText';
 
 interface BookComponentProps {
   book?: Book;
