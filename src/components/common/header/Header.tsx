@@ -27,10 +27,10 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
   if (headerType === 'create') {
     return (
       <HeaderWrapper>
-        <CreateHeaderContainer>
+        <BackHeaderContainer>
           <BackButton />
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
-        </CreateHeaderContainer>
+        </BackHeaderContainer>
       </HeaderWrapper>
     );
   }
@@ -38,11 +38,11 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
   if (headerType === 'progress') {
     return (
       <HeaderWrapper>
-        <ProgressHeaderContainer>
+        <BackHeaderContainer>
           <BackButton />
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
           <EndingButton />
-        </ProgressHeaderContainer>
+        </BackHeaderContainer>
       </HeaderWrapper>
     );
   }
@@ -60,7 +60,7 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
 const HeaderWrapper = styled.View`
   flex-direction: row;
   width: 100%;
-  height: ${scale(35)}px;
+  height: ${scale(33)}px;
   justify-content: space-between;
   background-color: ${colors.primary};
 `;
@@ -74,15 +74,7 @@ const DefaultHeaderContainer = styled.View`
   align-items: center;
 `;
 
-const CreateHeaderContainer = styled.View`
-  width: 100%;
-  padding: 0 ${scale(10)}px;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const ProgressHeaderContainer = styled.View`
+const BackHeaderContainer = styled.View`
   width: 100%;
   padding: 0 ${scale(10)}px;
   justify-content: center;
@@ -91,7 +83,7 @@ const ProgressHeaderContainer = styled.View`
 `;
 
 const HeaderTitle = styled(CustomText)`
-  font-size: ${scale(12)}px;
+  font-size: ${scale(10)}px;
   color: ${colors.text.white};
 `;
 
