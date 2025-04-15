@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import {colors} from '@/constants/colors';
+import {COLORS} from '@/constants/colors';
 import {Text} from 'react-native';
 import CustomText from '@/utils/CustomText';
 
@@ -20,7 +20,7 @@ const BottomBarButton = ({
     <BottomBarButtonContainer onPress={onPress}>
       <Text
         style={{
-          color: colors.text.primary,
+          color: COLORS.text.primary,
           justifyContent: 'center',
           alignItems: 'center',
         }}>
