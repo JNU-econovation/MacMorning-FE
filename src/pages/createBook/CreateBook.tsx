@@ -10,12 +10,18 @@ import {WINDOW_WIDTH, WINDOW_HEIGHT} from '@/constants/windowSize';
 import {scale} from 'react-native-size-matters';
 import StepButton from '@/components/common/buttons/StepButton';
 
+interface FormData {
+  genre: string[];
+  character: string;
+}
+
 const CreateBook = (): React.JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({
-    genre: '',
+  const [formData, setFormData] = useState<FormData>({
+    genre: [],
     character: '',
   });
+  console.log(formData);
 
   const handleStep = (direction: number, data?: Partial<typeof formData>) => {
     if (data) {
@@ -35,7 +41,12 @@ const CreateBook = (): React.JSX.Element => {
         subtitleText="장르는 3개까지 정할 수 있어요"
       />
       <SelectView>
-        {currentStep === 0 && <GenreSelectView />}
+        {currentStep === 0 && (
+          <GenreSelectView
+            initialData={formData.genre}
+            setFormData={setFormData}
+          />
+        )}
         {currentStep === 1 && <CharacterSelectView />}
       </SelectView>
 

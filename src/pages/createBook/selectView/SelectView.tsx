@@ -15,7 +15,7 @@ const SelectView = ({
 const SelectViewContainer = styled.View`
   margin: 0 ${scale(30)}px;
   padding: ${scale(20)}px ${scale(30)}px;
-  height: 50%;
+  max-height: 50%;
   background-color: ${COLORS.background.white};
   border-radius: ${scale(20)}px;
   shadow-color: #000;
