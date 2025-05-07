@@ -9,7 +9,7 @@ type Props = {
   isOn: boolean;
 };
 
-const Toggle = ({onToggle, isOn}: Props) => {
+const Toggle: React.FC<Props> = ({onToggle, isOn}) => {
   const [animatedValue] = useState(new Animated.Value(isOn ? 1 : 0));
 
   useEffect(() => {
