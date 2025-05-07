@@ -7,7 +7,13 @@ import {Alert} from 'react-native';
 
 interface FormData {
   genre: string[];
-  character: string;
+  gameMode: boolean;
+  character: {
+    name: string;
+    gender: string;
+    age: string;
+    description: string;
+  };
 }
 
 type GenreSelectViewProps = {

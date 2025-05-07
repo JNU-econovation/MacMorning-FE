@@ -9,10 +9,16 @@ import SelectView from './selectView/SelectView';
 import {WINDOW_WIDTH, WINDOW_HEIGHT} from '@/constants/windowSize';
 import {scale} from 'react-native-size-matters';
 import StepButton from '@/components/common/buttons/StepButton';
-
+import Toggle from '@/components/common/toggle/Toggle';
 interface FormData {
   genre: string[];
-  character: string;
+  gameMode: boolean;
+  character: {
+    name: string;
+    gender: string;
+    age: string;
+    description: string;
+  };
 }
 
 interface CreateBookTitle {
@@ -39,7 +45,13 @@ const CreateBook = (): React.JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
     genre: [],
-    character: '',
+    gameMode: false,
+    character: {
+      name: '',
+      gender: '',
+      age: '',
+      description: '',
+    },
   });
   const [availableGenres, setAvailableGenres] = useState<string[]>([
     '판타지',
@@ -111,7 +123,12 @@ const CreateBook = (): React.JSX.Element => {
             onRemoveGenre={handleRemoveGenre}
           />
         )}
-        {currentStep === 1 && <CharacterSelectView />}
+        {currentStep === 1 && (
+          <CharacterSelectView
+            initialData={formData}
+            setFormData={setFormData}
+          />
+        )}
       </SelectView>
 
       <BottomBarButtonContainer>
