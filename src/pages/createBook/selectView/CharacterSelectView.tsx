@@ -11,6 +11,10 @@ import GenderToggle from '@/components/createBook/characterSelect/GenderToggle';
 interface FormData {
   genre: string[];
   gameMode: boolean;
+  story: {
+    perspective: string;
+    background: string;
+  };
   character: {
     name: string;
     gender: string;
@@ -29,15 +33,6 @@ const CharacterSelectView = (
 ): React.JSX.Element => {
   return (
     <CharacterSelectContainer>
-      <GameModeContainer>
-        <GameModeTitle font="NPSfont_bold">게임 모드</GameModeTitle>
-        <Toggle
-          onToggle={() => {
-            props.setFormData(prev => ({...prev, gameMode: !prev.gameMode}));
-          }}
-          isOn={props.initialData.gameMode}
-        />
-      </GameModeContainer>
       <CharacterDetailContainer>
         <InputContainer width="30%">
           <TitleText font="NPSfont_bold">주인공 이름</TitleText>
@@ -106,13 +101,6 @@ const CharacterSelectContainer = styled.View`
   width: 100%;
 `;
 
-const GameModeContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: ${scale(5)}px;
-`;
-
 const CharacterDetailContainer = styled.View`
   align-items: center;
   justify-content: space-between;
@@ -120,7 +108,7 @@ const CharacterDetailContainer = styled.View`
 `;
 
 const CharacterDescriptionContainer = styled.View`
-  height: 30%;
+  height: 50%;
   gap: ${scale(5)}px;
 `;
 
@@ -129,10 +117,6 @@ const InputContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-`;
-
-const GameModeTitle = styled(CustomText)`
-  font-size: ${scale(12)}px;
 `;
 
 const TitleText = styled(CustomText)`

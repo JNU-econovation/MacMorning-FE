@@ -8,6 +8,10 @@ import {Alert} from 'react-native';
 interface FormData {
   genre: string[];
   gameMode: boolean;
+  story: {
+    perspective: string;
+    background: string;
+  };
   character: {
     name: string;
     gender: string;
