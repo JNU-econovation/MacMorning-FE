@@ -1,5 +1,6 @@
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
+import {StatusBar} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import 'react-native-reanimated';
 import React from 'react';
@@ -13,6 +14,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 function App(): React.JSX.Element {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
+      <StatusBar hidden={true} />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
