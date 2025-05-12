@@ -21,14 +21,13 @@ const CharacterSelectInput = ({value, onChange, style}: Props) => {
 const CharacterSelectInputContainer = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
 `;
 
 const CharacterSelectInputInput = styled.TextInput`
   width: 100%;
   height: 100%;
   border-radius: ${scale(10)}px;
-  border-width: 2px;
+  border-width: 1px;
   border-color: ${COLORS.background.lightGray};
   padding: ${scale(5)}px;
 `;
