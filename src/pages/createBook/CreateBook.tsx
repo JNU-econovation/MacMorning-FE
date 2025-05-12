@@ -9,10 +9,15 @@ import SelectView from './selectView/SelectView';
 import {WINDOW_WIDTH, WINDOW_HEIGHT} from '@/constants/windowSize';
 import {scale} from 'react-native-size-matters';
 import StepButton from '@/components/common/buttons/StepButton';
-import Toggle from '@/components/common/toggle/Toggle';
+import StorySettingView from './selectView/StorySettingView';
+
 interface FormData {
   genre: string[];
   gameMode: boolean;
+  story: {
+    perspective: string;
+    background: string;
+  };
   character: {
     name: string;
     gender: string;
@@ -33,7 +38,11 @@ const CreateBookTitles: CreateBookTitle[] = [
   },
   {
     titleText: '이야기의 세부 설정들을 알려주세요.',
-    subtitleText: '세부 설정 context 2',
+    subtitleText: '설정된 내용은 바꿀 수 없어요.',
+  },
+  {
+    titleText: '주인공에 대한 정보를 입력해주세요.',
+    subtitleText: '설정된 내용은 바꿀 수 없어요.',
   },
   {
     titleText: '이렇게 이야기를 시작할까요?',
@@ -51,6 +60,10 @@ const CreateBook = (): React.JSX.Element => {
       gender: '',
       age: '',
       description: '',
+    },
+    story: {
+      perspective: '',
+      background: '',
     },
   });
   const [availableGenres, setAvailableGenres] = useState<string[]>([
@@ -124,11 +137,15 @@ const CreateBook = (): React.JSX.Element => {
           />
         )}
         {currentStep === 1 && (
+          <StorySettingView initialData={formData} setFormData={setFormData} />
+        )}
+        {currentStep === 2 && (
           <CharacterSelectView
             initialData={formData}
             setFormData={setFormData}
           />
         )}
+        {currentStep === 3 && <View></View>}
       </SelectView>
 
       <BottomBarButtonContainer>
@@ -137,7 +154,7 @@ const CreateBook = (): React.JSX.Element => {
         ) : (
           <View style={{width: scale(40), height: scale(20)}} />
         )}
-        {currentStep < 2 && (
+        {currentStep < 3 && (
           <StepButton text="다음" onPress={() => handleStep(1)} />
         )}
       </BottomBarButtonContainer>
