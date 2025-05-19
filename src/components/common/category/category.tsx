@@ -1,7 +1,7 @@
 import CustomText from '@/utils/CustomText';
 import {COLORS} from '@/constants/colors';
 import React, {useState} from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 const Category = ({
