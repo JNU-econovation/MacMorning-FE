@@ -9,7 +9,9 @@ const Category = ({
 }: {
   categoryList: string[];
 }): React.JSX.Element => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('인기');
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    categoryList[0],
+  );
 
   const renderItem = ({item}: {item: string}) => {
     return (
