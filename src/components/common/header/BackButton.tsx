@@ -2,10 +2,12 @@ import React from 'react';
 import ArrowLeftSVG from '@/assets/images/arrow-left.svg';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
+import {useNavigation} from '@react-navigation/native';
 
 const BackButton = (): React.JSX.Element => {
+  const navigation = useNavigation();
   return (
-    <BackbuttonContainer>
+    <BackbuttonContainer onPress={() => navigation.goBack()}>
       <ArrowLeftSVG color="#fff" width={scale(15)} height={scale(15)} />
     </BackbuttonContainer>
   );

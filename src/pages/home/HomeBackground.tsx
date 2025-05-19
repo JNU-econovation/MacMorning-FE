@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {Image} from 'react-native';
 import styled from 'styled-components/native';
-import {colors} from '@/constants/colors';
+import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
 import CustomText from '@/utils/CustomText';
 import TextNavigateButton from '@/components/home/TextNavigateButton';
@@ -22,7 +22,7 @@ const HomeBackground = (): React.JSX.Element => {
         <HomeTitleContainer>
           <CustomText
             font={'NPSfont_extrabold'}
-            style={{fontSize: scale(18), color: colors.primary}}>
+            style={{fontSize: scale(18), color: COLORS.primary}}>
             AI로 만드는 나만의 동화
           </CustomText>
           <TextNavigateButton
@@ -31,7 +31,7 @@ const HomeBackground = (): React.JSX.Element => {
             fontInfo={{
               font: 'NPSfont_regular',
               fontSize: scale(10),
-              fontColor: colors.text.navy,
+              fontColor: COLORS.text.navy,
             }}
           />
         </HomeTitleContainer>
@@ -46,7 +46,7 @@ const HomeBackground = (): React.JSX.Element => {
         </HomeImageWrapper>
         {/* 메인 화면 컨텐츠 영역 확보를 위한 뷰 */}
       </HomeBackgroundContainer>
-      <View style={{height: '60%', backgroundColor: colors.secondary}} />
+      <View style={{height: '60%', backgroundColor: COLORS.secondary}} />
     </>
   );
 };
@@ -54,7 +54,7 @@ const HomeBackground = (): React.JSX.Element => {
 const HomeBackgroundContainer = styled.TouchableOpacity`
   flex: 1;
   flex-direction: row;
-  background-color: ${colors.secondary};
+  background-color: ${COLORS.secondary};
   padding: 0 ${scale(40)}px;
   justify-content: space-between;
   align-items: center;

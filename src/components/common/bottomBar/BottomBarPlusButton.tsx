@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import {colors} from '@/constants/colors';
+import {COLORS} from '@/constants/colors';
 import {Text} from 'react-native';
 import PlusSVG from '@/assets/images/plus.svg';
 
@@ -24,7 +24,7 @@ const BottomBarPlusButton = ({
       onPress={onPress}>
       <Text
         style={{
-          color: colors.text.primary,
+          color: COLORS.text.primary,
           justifyContent: 'center',
           alignItems: 'center',
         }}>
@@ -32,7 +32,7 @@ const BottomBarPlusButton = ({
           width={scale(20)}
           height={scale(20)}
           strokeWidth={scale(1.2)}
-          stroke={colors.text.white}
+          stroke={COLORS.text.white}
         />
       </Text>
     </BottomBarPlusButtonContainer>
@@ -48,8 +48,8 @@ const BottomBarPlusButtonContainer = styled.TouchableOpacity`
   align-items: center;
   border-width: ${scale(3)}px;
   border-radius: ${scale(100)}px;
-  background-color: ${colors.primary};
-  border-color: ${colors.background.white};
+  background-color: ${COLORS.primary};
+  border-color: ${COLORS.background.white};
   position: absolute;
   bottom: ${scale(10)}px;
   shadow-color: #000;

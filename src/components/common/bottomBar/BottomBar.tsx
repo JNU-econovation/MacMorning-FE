@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
-import {colors} from '@/constants/colors';
+import {COLORS} from '@/constants/colors';
 import BottomBarButton from './BottomBarButton';
 import BottomBarPlusButton from './BottomBarPlusButton';
 import HomeSVG from '@/assets/images/home.svg';
@@ -58,7 +58,7 @@ const BottomBarContainer = styled.View`
   height: ${scale(38)}px;
   flex-direction: row;
   justify-content: space-between;
-  background-color: ${colors.background.white};
+  background-color: ${COLORS.background.white};
   shadow-color: #000;
   shadow-offset: 0px ${scale(-2)}px;
   shadow-opacity: 0.1;

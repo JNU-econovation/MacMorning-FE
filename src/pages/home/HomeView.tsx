@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import BookComponent from '@/components/common/book/BookComponent';
 import {getBooks} from '@/apis/book/mock';
 import {scale} from 'react-native-size-matters';
-import {colors} from '@/constants/colors';
+import {COLORS} from '@/constants/colors';
 import TextNavigateButton from '@/components/home/TextNavigateButton';
 import {useNavigation} from '@react-navigation/native';
 
@@ -24,7 +24,7 @@ const HomeView = (): React.JSX.Element => {
           fontInfo={{
             font: 'NPSfont_bold',
             fontSize: scale(12),
-            fontColor: colors.text.primary,
+            fontColor: COLORS.text.primary,
           }}
         />
       </HomeButtonContainer>
