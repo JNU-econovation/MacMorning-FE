@@ -18,9 +18,13 @@ const CardBookComponent = (bookInfo: BookInfo): React.JSX.Element => {
     ? require('@/assets/images/heart-filled.png')
     : require('@/assets/images/heart-outline.png');
 
+  const onClickLikeButton = () => {
+    console.log('onClickLikeButton');
+  };
+
   return (
     <CardBookComponentContainer>
-      <LikeButton>
+      <LikeButton onPress={onClickLikeButton}>
         <Image
           source={heartIcon}
           style={{width: scale(16), height: scale(16)}}
