@@ -10,6 +10,8 @@ import {useNavigation} from '@react-navigation/native';
 
 const HomeView = (): React.JSX.Element => {
   const books: Book[] = getBooks();
+  console.log(books);
+
   const renderItem: ListRenderItem<Book> = ({item: book}) => (
     <BookComponent book={book} />
   );
