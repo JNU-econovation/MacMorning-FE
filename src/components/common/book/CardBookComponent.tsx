@@ -5,16 +5,14 @@ import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
 import CustomText from '@/utils/CustomText';
 
-interface BookInfo {
-  title: string;
-  author: string;
-  image: string;
-  isLiked: boolean;
-  description: string;
+interface CardBookComponentProps {
+  book: Book;
 }
 
-const CardBookComponent = (bookInfo: BookInfo): React.JSX.Element => {
-  const heartIcon = bookInfo.isLiked
+const CardBookComponent = ({
+  book,
+}: CardBookComponentProps): React.JSX.Element => {
+  const heartIcon = book.isLiked
     ? require('@/assets/images/heart-filled.png')
     : require('@/assets/images/heart-outline.png');
 
@@ -33,8 +31,8 @@ const CardBookComponent = (bookInfo: BookInfo): React.JSX.Element => {
       <BookImageWrapper></BookImageWrapper>
       <BookInfoContainer>
         <BookTitleContainer>
-          <BookTitle font={'NPSfont_bold'}>{bookInfo.title}</BookTitle>
-          <BookAuthor font={'NPSfont_regular'}>{bookInfo.author}</BookAuthor>
+          <BookTitle font={'NPSfont_bold'}>{book.title}</BookTitle>
+          <BookAuthor font={'NPSfont_regular'}>{book.author}</BookAuthor>
         </BookTitleContainer>
         <BookDescriptionContainer>
           <CustomText
@@ -43,7 +41,7 @@ const CardBookComponent = (bookInfo: BookInfo): React.JSX.Element => {
             주제
           </CustomText>
           <BookDescription font={'NPSfont_regular'}>
-            {bookInfo.description}
+            {book.description}
           </BookDescription>
         </BookDescriptionContainer>
       </BookInfoContainer>
