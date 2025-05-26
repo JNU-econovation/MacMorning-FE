@@ -5,6 +5,7 @@ import Library from '@/pages/library/Library';
 import MyBook from '@/pages/myBook/Mybook';
 import MyPage from '@/pages/myPage/MyPage';
 import BottomBar from '@/components/common/bottomBar/BottomBar';
+import Login from '@/pages/login/Login';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
@@ -18,7 +19,7 @@ const BottomTabNavigator: React.FC = () => {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Library" component={Library} />
       <Tab.Screen name="MyBook" component={MyBook} />
-      <Tab.Screen name="MyPage" component={MyPage} />
+      <Tab.Screen name="MyPage" component={Login} />
     </Tab.Navigator>
   );
 };

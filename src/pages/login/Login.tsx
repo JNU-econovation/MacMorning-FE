@@ -25,7 +25,10 @@ const Login = (): React.JSX.Element => {
         </InputContainer>
         <LoginButton
           activeOpacity={1}
-          style={{backgroundColor: COLORS.primary}}>
+          style={{backgroundColor: COLORS.primary}}
+          onPress={() => {
+            console.log('로그인 버튼 클릭');
+          }}>
           <CustomText
             font="NanumSquareNeo-dEb"
             style={{fontSize: 15, color: COLORS.background.white}}>
@@ -96,7 +99,7 @@ const Input = styled.TextInput`
   border-radius: ${scale(20)}px;
   border-width: ${scale(0.7)}px;
   border-color: ${COLORS.text.secondary};
-  padding: ${scale(10)}px;
+  padding-left: ${scale(10)}px;
 `;
 
 const LoginButtonsContainer = styled.View`
