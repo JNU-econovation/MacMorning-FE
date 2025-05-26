@@ -21,7 +21,7 @@ const Login = (): React.JSX.Element => {
         </LoginTitleContainer>
         <InputContainer>
           <Input placeholder="아이디" />
-          <Input placeholder="비밀번호" />
+          <Input placeholder="비밀번호" secureTextEntry={true} />
         </InputContainer>
         <LoginButton
           activeOpacity={1}
