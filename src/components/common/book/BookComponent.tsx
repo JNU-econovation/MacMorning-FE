@@ -5,7 +5,7 @@ import {scale} from 'react-native-size-matters';
 import CustomText from '@/utils/CustomText';
 
 interface BookComponentProps {
-  book?: Book;
+  book: Book;
 }
 
 function BookComponent({book}: BookComponentProps): React.JSX.Element {

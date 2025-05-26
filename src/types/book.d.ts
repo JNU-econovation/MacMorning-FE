@@ -3,6 +3,8 @@ interface Book {
   image?: string;
   title: string;
   author: string;
+  isLiked: boolean;
+  description: string;
 }
 
 type BookStatus = 'reading' | 'completed' | 'planned';
