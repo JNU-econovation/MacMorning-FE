@@ -4,8 +4,11 @@ import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
+import {useNavigation} from '@react-navigation/native';
 
 const Login = (): React.JSX.Element => {
+  const navigation = useNavigation<RootStackNavigationProp>();
+
   return (
     <LoginContainer>
       <LoginBox>
@@ -49,6 +52,9 @@ const Login = (): React.JSX.Element => {
           </LoginButton>
           <LoginButton
             activeOpacity={1}
+            onPress={() => {
+              navigation.navigate('Signin');
+            }}
             style={{backgroundColor: COLORS.background.lightGray}}>
             <CustomText
               font="NanumSquareNeo-dEb"
@@ -70,8 +76,8 @@ const LoginContainer = styled.View`
 `;
 
 const LoginBox = styled.View`
-  width: 40%;
-  height: 80%;
+  width: ${scale(200)}px;
+  height: ${scale(400)}px;
   gap: ${scale(15)}px;
   border-radius: ${scale(10)}px;
   padding: ${scale(15)}px;
