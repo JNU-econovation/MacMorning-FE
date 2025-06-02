@@ -7,8 +7,9 @@ declare global {
     MyBook: undefined;
     Library: undefined;
     MyPage: undefined;
+    Login: undefined;
+    Signin: undefined;
     CreateBook: undefined;
-    MainTabs: undefined;
   };
 
   type RootStackScreenNames = keyof RootStackParamList;

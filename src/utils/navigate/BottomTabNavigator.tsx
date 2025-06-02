@@ -5,7 +5,7 @@ import Library from '@/pages/library/Library';
 import MyBook from '@/pages/myBook/Mybook';
 import MyPage from '@/pages/myPage/MyPage';
 import BottomBar from '@/components/common/bottomBar/BottomBar';
-import Login from '@/pages/login/Login';
+import Login from '@/pages/auth/login/Login';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
