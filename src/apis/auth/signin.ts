@@ -1,10 +1,10 @@
 import axios from 'axios';
 import {LoginParams} from '@/types/auth';
-import {useAuth} from '@/hooks/useAuth';
 
 const signin = async (params: LoginParams) => {
   console.log(params);
   const baseUrl = 'https://api.ilovejokbal.monster/v1/login';
+
   try {
     const response = await axios.post(
       `${baseUrl}`,
@@ -17,21 +17,14 @@ const signin = async (params: LoginParams) => {
       },
     );
 
-    console.log(response);
-
-    return response.data;
+    console.log(response.data);
+    return {
+      accessToken: response.headers['authorization'],
+      refreshToken: 'null',
+    };
   } catch (error: any) {
     console.log(error.response.data);
   }
-  //   const {setLogin} = useAuth();
-
-  //   console.log(response.headers);
-  //   console.log(response.data);
-  //   setLogin(
-  //     responseData.user,
-  //     response.headers.authorization,
-  //     response.headers.refresh_token,
-  //   );
 
   return 0;
 };
