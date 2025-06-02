@@ -6,6 +6,7 @@ import MyBook from '@/pages/myBook/Mybook';
 import MyPage from '@/pages/myPage/MyPage';
 import BottomBar from '@/components/common/bottomBar/BottomBar';
 import Login from '@/pages/auth/login/Login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
@@ -19,7 +20,12 @@ const BottomTabNavigator: React.FC = () => {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Library" component={Library} />
       <Tab.Screen name="MyBook" component={MyBook} />
-      <Tab.Screen name="MyPage" component={Login} />
+      <Tab.Screen
+        name="MyPage"
+        component={
+          AsyncStorage.getItem('accessToken') === null ? Login : MyPage
+        }
+      />
     </Tab.Navigator>
   );
 };

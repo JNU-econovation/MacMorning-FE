@@ -6,11 +6,15 @@ import {COLORS} from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
 import {useNavigation} from '@react-navigation/native';
 import signin from '@/apis/auth/signin';
+import {useAuth} from '@/hooks/useAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (): React.JSX.Element => {
   const navigation = useNavigation<RootStackNavigationProp>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {setLogin} = useAuth();
+
   return (
     <LoginContainer>
       <LoginBox>
@@ -36,8 +40,17 @@ const Login = (): React.JSX.Element => {
         <LoginButton
           activeOpacity={1}
           style={{backgroundColor: COLORS.primary}}
-          onPress={() => {
-            signin({email: email, password: password});
+          onPress={async () => {
+            const response = await signin({email: email, password: password});
+            console.log(response);
+            // if (response) {
+            //   setLogin(
+            //     response.user,
+            //     response.accessToken,
+            //     response.refreshToken,
+            //   );
+            // }
+            // console.log(await AsyncStorage.getItem('user'));
           }}>
           <CustomText
             font="NanumSquareNeo-dEb"
