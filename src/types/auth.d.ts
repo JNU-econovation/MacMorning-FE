@@ -1,5 +1,4 @@
 export interface AuthState {
-  user: userInfo | null;
   accessToken: string | null;
   refreshToken: string | null;
   isLoading: boolean;
