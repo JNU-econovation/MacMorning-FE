@@ -1,13 +1,20 @@
-import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
 import {useNavigation} from '@react-navigation/native';
+import signin from '@/apis/auth/signin';
+import {useAuth} from '@/hooks/useAuth';
+import {CommonActions} from '@react-navigation/native';
+import {useAuthStore} from '@/store/authStore';
 
 const Login = (): React.JSX.Element => {
   const navigation = useNavigation<RootStackNavigationProp>();
+  const {setAuth} = useAuthStore();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const {setLogin} = useAuth();
 
   return (
     <LoginContainer>
@@ -23,14 +30,29 @@ const Login = (): React.JSX.Element => {
           </CustomText>
         </LoginTitleContainer>
         <InputContainer>
-          <Input placeholder="아이디" />
-          <Input placeholder="비밀번호" secureTextEntry={true} />
+          <Input placeholder="아이디" value={email} onChangeText={setEmail} />
+          <Input
+            placeholder="비밀번호"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={true}
+          />
         </InputContainer>
         <LoginButton
           activeOpacity={1}
           style={{backgroundColor: COLORS.primary}}
-          onPress={() => {
-            console.log('로그인 버튼 클릭');
+          onPress={async () => {
+            const response = await signin({email: email, password: password});
+            if (response) {
+              setLogin(response.accessToken, response.refreshToken);
+              setAuth(response.accessToken, response.refreshToken);
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{name: 'Home'}],
+                }),
+              );
+            }
           }}>
           <CustomText
             font="NanumSquareNeo-dEb"

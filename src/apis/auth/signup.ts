@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {SignupParams} from '@/types/auth';
 
 interface signupParams {
   email: string;
@@ -7,7 +8,7 @@ interface signupParams {
   username: string;
   phone_number: string;
 }
-const signup = async (params: signupParams) => {
+const signup = async (params: SignupParams) => {
   const baseUrl = 'https://api.ilovejokbal.monster/v1/signup';
   const response = await axios.post(
     `${baseUrl}`,
@@ -25,7 +26,7 @@ const signup = async (params: signupParams) => {
       },
     },
   );
-  console.log(response.data);
+  console.log(response);
   return response.data;
 };
 
