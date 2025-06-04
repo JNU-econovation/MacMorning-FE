@@ -32,16 +32,8 @@ export const useAuth = () => {
     }
   };
 
-  const setLogin = async (
-    userData: User,
-    accessToken: string,
-    refreshToken: string | null,
-  ) => {
+  const setLogin = async (accessToken: string, refreshToken: string | null) => {
     try {
-      if (!userData) {
-        throw new Error('사용자 데이터가 없습니다.');
-      }
-
       await Promise.all([
         AsyncStorage.setItem('accessToken', accessToken || ''),
         AsyncStorage.setItem('refreshToken', refreshToken || ''),
@@ -63,7 +55,6 @@ export const useAuth = () => {
   const setLogout = async () => {
     try {
       await Promise.all([
-        AsyncStorage.removeItem('user'),
         AsyncStorage.removeItem('accessToken'),
         AsyncStorage.removeItem('refreshToken'),
       ]);
