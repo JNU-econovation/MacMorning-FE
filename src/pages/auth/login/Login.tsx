@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
@@ -7,10 +6,12 @@ import CustomText from '@/utils/CustomText';
 import {useNavigation} from '@react-navigation/native';
 import signin from '@/apis/auth/signin';
 import {useAuth} from '@/hooks/useAuth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CommonActions} from '@react-navigation/native';
+import {useAuthStore} from '@/store/authStore';
 
 const Login = (): React.JSX.Element => {
   const navigation = useNavigation<RootStackNavigationProp>();
+  const {setAuth} = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {setLogin} = useAuth();
@@ -42,15 +43,16 @@ const Login = (): React.JSX.Element => {
           style={{backgroundColor: COLORS.primary}}
           onPress={async () => {
             const response = await signin({email: email, password: password});
-            console.log(response);
-            // if (response) {
-            //   setLogin(
-            //     response.user,
-            //     response.accessToken,
-            //     response.refreshToken,
-            //   );
-            // }
-            // console.log(await AsyncStorage.getItem('user'));
+            if (response) {
+              setLogin(response.accessToken, response.refreshToken);
+              setAuth(response.accessToken, response.refreshToken);
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{name: 'Home'}],
+                }),
+              );
+            }
           }}>
           <CustomText
             font="NanumSquareNeo-dEb"
