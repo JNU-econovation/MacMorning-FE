@@ -16,7 +16,7 @@ const HomeView = (): React.JSX.Element => {
   const [bestBooks, setBestBooks] = useState<Book[]>([]);
   const [nextBestCursor, setNextBestCursor] = useState<string | null>(null);
   const accessToken = useAuthStore(state => state.accessToken);
-  const isAuthenticated = !!accessToken;
+  const isAuthenticated = accessToken;
 
   useEffect(() => {
     const fetchBooks = async () => {
