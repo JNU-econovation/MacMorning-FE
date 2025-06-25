@@ -7,12 +7,16 @@ import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import TextNavigateButton from '@/components/home/TextNavigateButton';
 import {useNavigation} from '@react-navigation/native';
+import GuestView from '@/components/common/guestView/GuestView';
+import {useAuthStore} from '@/store/authStore';
 
 const HomeView = (): React.JSX.Element => {
   const [MyBooks, setMyBooks] = useState<Book[]>([]);
   const [nextMyBookCursor, setNextMyBookCursor] = useState<string | null>(null);
   const [bestBooks, setBestBooks] = useState<Book[]>([]);
   const [nextBestCursor, setNextBestCursor] = useState<string | null>(null);
+  const accessToken = useAuthStore(state => state.accessToken);
+  const isAuthenticated = accessToken;
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -47,17 +51,21 @@ const HomeView = (): React.JSX.Element => {
           }}
         />
       </HomeButtonContainer>
-      <FlatList<Book>
-        data={MyBooks}
-        renderItem={renderItem}
-        keyExtractor={book => book.id}
-        numColumns={4}
-        scrollEnabled={false}
-        columnWrapperStyle={{
-          marginBottom: scale(20),
-          gap: '8%',
-        }}
-      />
+      {isAuthenticated ? (
+        <FlatList<Book>
+          data={MyBooks}
+          renderItem={renderItem}
+          keyExtractor={book => book.id}
+          numColumns={4}
+          scrollEnabled={false}
+          columnWrapperStyle={{
+            marginBottom: scale(20),
+            gap: '8%',
+          }}
+        />
+      ) : (
+        <GuestView />
+      )}
 
       <HomeButtonContainer>
         <TextNavigateButton
@@ -70,17 +78,21 @@ const HomeView = (): React.JSX.Element => {
           }}
         />
       </HomeButtonContainer>
-      <FlatList<Book>
-        data={bestBooks}
-        renderItem={renderItem}
-        keyExtractor={book => book.id}
-        numColumns={4}
-        scrollEnabled={false}
-        columnWrapperStyle={{
-          marginBottom: scale(20),
-          gap: '8%',
-        }}
-      />
+      {isAuthenticated ? (
+        <FlatList<Book>
+          data={bestBooks}
+          renderItem={renderItem}
+          keyExtractor={book => book.id}
+          numColumns={4}
+          scrollEnabled={false}
+          columnWrapperStyle={{
+            marginBottom: scale(20),
+            gap: '8%',
+          }}
+        />
+      ) : (
+        <GuestView />
+      )}
     </HomeViewContainer>
   );
 };
