@@ -45,7 +45,7 @@ const CreateBook = (): React.JSX.Element => {
     title: '',
     character: {
       name: '',
-      gender: '',
+      gender: '남자',
       age: '',
       description: '',
     },
