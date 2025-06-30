@@ -7,21 +7,7 @@ import Toggle from '@/components/common/toggle/Toggle';
 import DropDownToggle from '@/components/common/toggle/DropDownToggle';
 import CharacterSelectInput from '@/components/createBook/characterSelect/CharacterSelectInput';
 import GenderToggle from '@/components/createBook/characterSelect/GenderToggle';
-
-interface FormData {
-  genre: string[];
-  gameMode: boolean;
-  story: {
-    perspective: string;
-    background: string;
-  };
-  character: {
-    name: string;
-    gender: string;
-    age: string;
-    description: string;
-  };
-}
+import {FormData} from '@/types/form';
 
 type StorySettingViewProps = {
   initialData: FormData;
@@ -30,7 +16,7 @@ type StorySettingViewProps = {
 
 const StorySettingView = (props: StorySettingViewProps): React.JSX.Element => {
   return (
-    <CharacterSelectContainer>
+    <CharacterSelectContainer showsVerticalScrollIndicator={false}>
       <GameModeContainer>
         <GameModeTitle font="NPSfont_bold">게임 모드</GameModeTitle>
         <Toggle
@@ -56,6 +42,32 @@ const StorySettingView = (props: StorySettingViewProps): React.JSX.Element => {
           />
         </InputContainer>
       </CharacterDetailContainer>
+      <BackgroundContainer alignItems="center" style={{height: scale(20)}}>
+        <TitleText font="NPSfont_bold">제목</TitleText>
+        <CharacterSelectInput
+          style={{height: '100%', width: '80%'}}
+          value={props.initialData.title}
+          onChange={value => {
+            props.setFormData(prev => ({
+              ...prev,
+              title: value,
+            }));
+          }}
+        />
+      </BackgroundContainer>
+      <BackgroundContainer>
+        <TitleText font="NPSfont_bold">줄거리</TitleText>
+        <CharacterSelectInput
+          style={{height: '100%', width: '80%'}}
+          value={props.initialData.story.plot}
+          onChange={value => {
+            props.setFormData(prev => ({
+              ...prev,
+              story: {...prev.story, plot: value},
+            }));
+          }}
+        />
+      </BackgroundContainer>
       <BackgroundContainer>
         <TitleText font="NPSfont_bold">시대적 배경</TitleText>
         <CharacterSelectInput
@@ -73,8 +85,8 @@ const StorySettingView = (props: StorySettingViewProps): React.JSX.Element => {
   );
 };
 
-const CharacterSelectContainer = styled.View`
-  gap: ${scale(10)}px;
+const CharacterSelectContainer = styled.ScrollView`
+  margin: ${scale(20)}px 0;
   width: 100%;
 `;
 
@@ -88,12 +100,15 @@ const GameModeContainer = styled.View`
 const CharacterDetailContainer = styled.View`
   align-items: center;
   flex-direction: row;
+  margin-bottom: ${scale(15)}px;
+
+  gap: ${scale(10)}px;
 `;
 
 const BackgroundContainer = styled.View`
   flex-direction: row;
-  height: 25%;
-  align-items: center;
+  height: ${scale(50)}px;
+  margin-bottom: ${scale(20)}px;
 `;
 
 const InputContainer = styled.View`
@@ -106,7 +121,7 @@ const GameModeTitle = styled(CustomText)`
 `;
 
 const TitleText = styled(CustomText)`
-  width: ${scale(80)}px;
+  width: ${scale(76)}px;
   font-size: ${scale(9)}px;
 `;
 

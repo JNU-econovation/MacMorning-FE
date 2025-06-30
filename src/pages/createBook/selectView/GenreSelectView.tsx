@@ -4,21 +4,7 @@ import styled from 'styled-components/native';
 import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
 import {Alert} from 'react-native';
-
-interface FormData {
-  genre: string[];
-  gameMode: boolean;
-  story: {
-    perspective: string;
-    background: string;
-  };
-  character: {
-    name: string;
-    gender: string;
-    age: string;
-    description: string;
-  };
-}
+import {FormData} from '@/types/form';
 
 type GenreSelectViewProps = {
   initialData: string[];
@@ -140,8 +126,8 @@ export default GenreSelectView;
 const GenreSelectContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  padding: ${scale(10)}px;
   justify-content: center;
+  width: 100%;
 `;
 
 const GenreSelectButtonsWrapper = styled.View`
