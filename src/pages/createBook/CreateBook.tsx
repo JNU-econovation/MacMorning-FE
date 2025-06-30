@@ -10,21 +10,8 @@ import {WINDOW_WIDTH, WINDOW_HEIGHT} from '@/constants/windowSize';
 import {scale} from 'react-native-size-matters';
 import StepButton from '@/components/common/buttons/StepButton';
 import StorySettingView from './selectView/StorySettingView';
-
-interface FormData {
-  genre: string[];
-  gameMode: boolean;
-  story: {
-    perspective: string;
-    background: string;
-  };
-  character: {
-    name: string;
-    gender: string;
-    age: string;
-    description: string;
-  };
-}
+import SelectedSettingView from './selectView/SelectedSettingView';
+import {FormData} from '@/types/form';
 
 interface CreateBookTitle {
   titleText: string;
@@ -55,6 +42,7 @@ const CreateBook = (): React.JSX.Element => {
   const [formData, setFormData] = useState<FormData>({
     genre: [],
     gameMode: false,
+    title: '',
     character: {
       name: '',
       gender: '',
@@ -64,6 +52,7 @@ const CreateBook = (): React.JSX.Element => {
     story: {
       perspective: '',
       background: '',
+      plot: '',
     },
   });
   const [availableGenres, setAvailableGenres] = useState<string[]>([
@@ -145,7 +134,7 @@ const CreateBook = (): React.JSX.Element => {
             setFormData={setFormData}
           />
         )}
-        {currentStep === 3 && <View></View>}
+        {currentStep === 3 && <SelectedSettingView data={formData} />}
       </SelectView>
 
       <BottomBarButtonContainer>
