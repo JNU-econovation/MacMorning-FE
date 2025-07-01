@@ -1,5 +1,6 @@
+import {baseUrl} from '@/constants/api';
+
 async function getBooks(cursor?: string) {
-  const baseUrl = 'https://api.ilovejokbal.monster/v1/books';
   const limit = 4;
 
   const url = cursor
