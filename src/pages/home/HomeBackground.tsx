@@ -9,7 +9,7 @@ import TextNavigateButton from '@/components/home/TextNavigateButton';
 import {useNavigation} from '@react-navigation/native';
 
 const HomeBackground = (): React.JSX.Element => {
-  const HomeImage = require('../../assets/images/home_image.png');
+  const HomeImage = require('../../assets/images/home/home_image.png');
   const navigation = useNavigation<RootStackNavigationProp>();
 
   return (
