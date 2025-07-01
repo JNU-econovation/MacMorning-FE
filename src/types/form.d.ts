@@ -3,8 +3,8 @@ export interface FormData {
   gameMode: boolean;
   title: string;
   story: {
-    perspective: string;
-    background: string;
+    grammatical_person: string;
+    historical_background: string;
     plot: string;
   };
   character: {
