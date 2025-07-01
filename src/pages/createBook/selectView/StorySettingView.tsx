@@ -31,11 +31,11 @@ const StorySettingView = (props: StorySettingViewProps): React.JSX.Element => {
           <TitleText font="NPSfont_bold">이야기 진행 시점</TitleText>
           <DropDownToggle
             title="1인칭"
-            value={props.initialData.story.perspective}
+            value={props.initialData.story.grammatical_person}
             onChange={value => {
               props.setFormData(prev => ({
                 ...prev,
-                story: {...prev.story, perspective: value},
+                story: {...prev.story, grammatical_person: value},
               }));
             }}
             list={['1인칭', '3인칭']}
@@ -72,11 +72,11 @@ const StorySettingView = (props: StorySettingViewProps): React.JSX.Element => {
         <TitleText font="NPSfont_bold">시대적 배경</TitleText>
         <CharacterSelectInput
           style={{height: '100%', width: '80%'}}
-          value={props.initialData.story.background}
+          value={props.initialData.story.historical_background}
           onChange={value => {
             props.setFormData(prev => ({
               ...prev,
-              story: {...prev.story, background: value},
+              story: {...prev.story, historical_background: value},
             }));
           }}
         />
