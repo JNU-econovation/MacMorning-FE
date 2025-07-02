@@ -13,8 +13,8 @@ const CardBookComponent = ({
   book,
 }: CardBookComponentProps): React.JSX.Element => {
   const heartIcon = book.isLiked
-    ? require('@/assets/images/heart-filled.png')
-    : require('@/assets/images/heart-outline.png');
+    ? require('@/assets/images/common/heart-filled.png')
+    : require('@/assets/images/common/heart-outline.png');
 
   const onClickLikeButton = () => {
     console.log('onClickLikeButton');

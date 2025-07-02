@@ -3,7 +3,7 @@ import {scale} from 'react-native-size-matters';
 import CustomText from '@/utils/CustomText';
 import styled from 'styled-components/native';
 import type {SvgProps} from 'react-native-svg';
-import ChevronRight from '@/assets/images/chevron-right.svg';
+import ChevronRight from '@/assets/images/common/chevron-right.svg';
 interface FontInfo {
   font:
     | 'NPSfont_regular'
