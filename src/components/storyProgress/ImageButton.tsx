@@ -3,11 +3,17 @@ import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
+import PlusCircle from '@/assets/images/storyProgress/plus-circle.svg';
 
 const ImageButton = ({text, onPress}: {text: string; onPress: () => void}) => {
   return (
     <ImageButtonContainer onPress={onPress}>
-      <ImageButtonText>{text}</ImageButtonText>
+      <PlusCircle
+        width={scale(20)}
+        height={scale(20)}
+        color={COLORS.text.primary}
+      />
+      <ImageButtonText font="NanumSquareNeo-dEb">{text}</ImageButtonText>
     </ImageButtonContainer>
   );
 };
@@ -15,12 +21,12 @@ const ImageButton = ({text, onPress}: {text: string; onPress: () => void}) => {
 const ImageButtonContainer = styled.TouchableOpacity`
   width: ${scale(150)}px;
   height: ${scale(100)}px;
-  background-color: ${COLORS.background.lightGray};
+  background-color: ${COLORS.secondary};
   border-radius: ${scale(10)}px;
-  border: 2px solid ${COLORS.text.secondary};
   justify-content: center;
   align-items: center;
-  opacity: 0.5;
+  gap: ${scale(5)}px;
+  opacity: 0.3;
 `;
 
 const ImageButtonText = styled(CustomText)`
