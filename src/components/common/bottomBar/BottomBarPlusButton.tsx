@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import {Text} from 'react-native';
-import PlusSVG from '@/assets/images/plus.svg';
+import PlusSVG from '@/assets/images/bottomBar/plus.svg';
 
 interface BottomBarPlusButtonProps {
   buttonName: string;
