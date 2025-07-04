@@ -12,6 +12,8 @@ import StepButton from '@/components/common/buttons/StepButton';
 import StorySettingView from './selectView/StorySettingView';
 import SelectedSettingView from './selectView/SelectedSettingView';
 import {FormData} from '@/types/form';
+import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
+import {useNavigation} from '@react-navigation/native';
 
 interface CreateBookTitle {
   titleText: string;
@@ -38,6 +40,9 @@ const CreateBookTitles: CreateBookTitle[] = [
 ];
 
 const CreateBook = (): React.JSX.Element => {
+  const navigation = useNavigation<RootStackNavigationProp>();
+  const {goToStoryProgress} = createNavigationHelpers(navigation);
+
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
     genre: [],
@@ -50,8 +55,8 @@ const CreateBook = (): React.JSX.Element => {
       description: '',
     },
     story: {
-      perspective: '',
-      background: '',
+      grammatical_person: '',
+      historical_background: '',
       plot: '',
     },
   });
@@ -108,6 +113,10 @@ const CreateBook = (): React.JSX.Element => {
     });
   };
 
+  const handleCreateBook = () => {
+    goToStoryProgress();
+  };
+
   return (
     <CreateBookContainer>
       <Header title="이야기 만들기" headerType="create" />
@@ -143,8 +152,10 @@ const CreateBook = (): React.JSX.Element => {
         ) : (
           <View style={{width: scale(40), height: scale(20)}} />
         )}
-        {currentStep < 3 && (
+        {currentStep < 3 ? (
           <StepButton text="다음" onPress={() => handleStep(1)} />
+        ) : (
+          <StepButton text="생성" onPress={handleCreateBook} />
         )}
       </BottomBarButtonContainer>
     </CreateBookContainer>

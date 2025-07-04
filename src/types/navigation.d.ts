@@ -10,6 +10,7 @@ declare global {
     Login: undefined;
     Signin: undefined;
     CreateBook: undefined;
+    StoryProgress: undefined;
   };
 
   type RootStackScreenNames = keyof RootStackParamList;
