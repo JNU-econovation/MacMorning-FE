@@ -19,8 +19,8 @@ const ImageButton = ({text, onPress}: {text: string; onPress: () => void}) => {
 };
 
 const ImageButtonContainer = styled.TouchableOpacity`
-  width: ${scale(150)}px;
-  height: ${scale(100)}px;
+  width: ${scale(140)}px;
+  height: ${scale(90)}px;
   background-color: ${COLORS.secondary};
   border-radius: ${scale(10)}px;
   justify-content: center;
