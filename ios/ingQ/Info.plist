@@ -32,7 +32,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>위치 기반 서비스를 위해 위치 접근 권한이 필요합니다.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NPSfont_bold.ttf</string>
@@ -58,5 +58,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<!-- ios/ingQ/Info.plist -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>사진 선택을 위해 사진 라이브러리 접근 권한이 필요합니다.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>사진 촬영을 위해 카메라 접근 권한이 필요합니다.</string>
 </dict>
 </plist>
