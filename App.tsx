@@ -1,7 +1,5 @@
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
-import {KeyboardAvoidingView, Platform, StatusBar} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import 'react-native-reanimated';
 import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
@@ -10,7 +8,7 @@ import BottomTabNavigator from './src/utils/navigate/BottomTabNavigator';
 import Signin from '@/pages/auth/signin/Signin';
 import Login from '@/pages/auth/login/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useAuth} from '@/hooks/useAuth';
+import {StatusBar} from 'react-native';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
