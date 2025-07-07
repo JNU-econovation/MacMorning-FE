@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {LoginParams} from '@/types/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const signin = async (params: LoginParams) => {
   console.log(params);
@@ -18,6 +19,10 @@ const signin = async (params: LoginParams) => {
     );
 
     console.log(response.data);
+
+    AsyncStorage.setItem('accessToken', response.headers['authorization']);
+    AsyncStorage.setItem('refreshToken', response.headers['refresh']);
+
     return {
       accessToken: response.headers['authorization'],
       refreshToken: 'null',
