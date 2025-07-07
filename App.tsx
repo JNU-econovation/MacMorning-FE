@@ -1,5 +1,6 @@
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useAuthStore} from '@/store/authStore';
 import 'react-native-reanimated';
 import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
@@ -14,11 +15,15 @@ import StoryProgress from '@/pages/storyProgress/StoryProgress';
 const Stack = createStackNavigator<RootStackParamList>();
 
 function App(): React.JSX.Element {
+  const {setAuth} = useAuthStore();
+
   useEffect(() => {
-    if (AsyncStorage.getItem('accessToken') === null) {
-      AsyncStorage.setItem('accessToken', 'null');
-      AsyncStorage.setItem('refreshToken', 'null');
-    }
+    const getToken = async () => {
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      const refreshToken = await AsyncStorage.getItem('refreshToken');
+      setAuth(accessToken || '', refreshToken || '');
+    };
+    getToken();
   }, []);
 
   return (
