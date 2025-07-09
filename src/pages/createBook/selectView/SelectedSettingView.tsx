@@ -52,7 +52,7 @@ const SelectedSettingView = ({data}: {data: FormData}) => {
           <RowDetailView title="줄거리" description={data.story.plot} />
           <RowDetailView
             title="시대적 배경"
-            description={data.story.background}
+            description={data.story.historical_background}
           />
         </ViewContainer>
         <ViewContainer>
