@@ -15,6 +15,12 @@ export interface FormData {
   };
 }
 
+export interface Question {
+  id: number;
+  question: string;
+  answer: string;
+}
+
 declare global {
   interface Window {
     formData: FormData;
