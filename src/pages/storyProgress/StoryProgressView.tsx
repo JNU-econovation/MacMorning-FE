@@ -6,11 +6,20 @@ import {scale} from 'react-native-size-matters';
 import ImageButton from '@/components/storyProgress/ImageButton';
 import SelectButton from '@/components/storyProgress/SelectButton';
 import {onSelectImage} from '@/utils/ImagePicker';
+import {uploadImageToS3} from '@/apis/upload/imageUpload';
+import {useAuthStore} from '@/store/authStore';
 
-const StoryProgressView = () => {
+const StoryProgressView = ({bookId}: {bookId: number}) => {
+  const accessToken = useAuthStore(state => state.accessToken);
+
   const handleImagePicker = async () => {
     const result = await onSelectImage();
-    console.log(result);
+    const uploadResult = await uploadImageToS3(
+      result.assets?.[0]?.uri || '',
+      bookId,
+      accessToken || '',
+    );
+    console.log(uploadResult);
   };
 
   return (

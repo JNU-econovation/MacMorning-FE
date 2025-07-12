@@ -1,6 +1,8 @@
 // src/apis/upload/imageUpload.ts
 import axios from 'axios';
 import {onSelectImage} from '@/utils/ImagePicker';
+import {baseUrl} from '@/constants/api';
+import {useAuthStore} from '@/store/authStore';
 
 interface UploadResult {
   success: boolean;
@@ -8,48 +10,67 @@ interface UploadResult {
   error?: string;
 }
 
-const uploadImage = async (): Promise<UploadResult> => {
+const getPresignedUrl = async (
+  image: string,
+  bookId: number,
+  accessToken: string,
+) => {
   try {
-    console.log('uploadImage');
-    const response = await onSelectImage();
-
-    if (response.didCancel) {
-      return {
-        success: false,
-        error: '이미지 선택이 취소되었습니다.',
-      };
+    if (!accessToken) {
+      const authError = new Error('인증 토큰이 없습니다. 다시 로그인해주세요.');
+      console.error(authError.message);
+      throw authError;
     }
+    const url = `https://api.ilovejokbal.monster/v1/book/${bookId}/story/image`;
 
-    if (response.errorCode) {
-      return {
-        success: false,
-        error: `이미지 선택 오류: ${response.errorMessage}`,
-      };
-    }
-
-    if (response.assets && response.assets.length > 0) {
-      const asset = response.assets[0];
-      console.log('선택된 이미지:', asset);
-
-      // const uploadResult = await uploadToS3(asset);
-
-      return {
-        success: true,
-        imageUrl: asset.uri,
-      };
-    }
-
-    return {
-      success: false,
-      error: '이미지를 선택하지 않았습니다.',
-    };
+    const response = await axios.post(
+      url,
+      {
+        filename: image.split('/').pop(),
+      },
+      {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      },
+    );
+    return response.data;
   } catch (error) {
-    console.error('업로드 중 오류:', error);
-    return {
-      success: false,
-      error: '업로드 중 오류가 발생했습니다.',
-    };
+    const errorMessage =
+      error instanceof Error ? error.message : '알 수 없는 오류';
+    console.error('Presigned URL 요청 오류:', errorMessage);
+
+    throw new Error(`업로드 오류: ${errorMessage}`);
   }
 };
 
-export default uploadImage;
+const uploadImageToS3 = async (
+  image: string,
+  bookId: number,
+  accessToken: string,
+) => {
+  try {
+    const presignedData = await getPresignedUrl(image, bookId, accessToken);
+
+    const uploadResponse = await fetch(presignedData.data.presignedUrl, {
+      method: 'PUT',
+      body: image,
+      headers: {
+        'Content-Type': 'image/jpeg',
+      },
+    });
+
+    if (!uploadResponse.ok) {
+      throw new Error(`S3 업로드 실패: ${uploadResponse.status}`);
+    }
+
+    return presignedData.imageUrl;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : '알 수 없는 오류';
+    console.error('S3 업로드 오류:', errorMessage);
+    throw new Error(`이미지 업로드 실패: ${errorMessage}`);
+  }
+};
+
+export {uploadImageToS3};
