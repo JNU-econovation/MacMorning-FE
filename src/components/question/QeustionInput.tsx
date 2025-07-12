@@ -4,16 +4,25 @@ import styled from 'styled-components/native';
 import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
 import CustomText from '@/utils/CustomText';
+import {Question} from '@/types/form';
 
-const QuestionInput = ({id, question}: {id: number; question: string}) => {
+const QuestionInput = ({
+  question,
+  setAnswer,
+}: {
+  question: Question;
+  setAnswer: (id: number, answer: string) => void;
+}) => {
   return (
     <QuestionInputContainer>
       <QuestionInputTextWrapper>
-        <QuestionInputText>
-          {id + 1}. {question}
+        <QuestionInputText font="NPSfont_regular" style={{fontSize: scale(9)}}>
+          {question.id + 1}. {question.question}
         </QuestionInputText>
       </QuestionInputTextWrapper>
       <QustionInputBox
+        value={question.answer}
+        onChangeText={(text: string) => setAnswer(question.id, text)}
         style={{
           textAlignVertical: 'top',
           textAlign: 'left',
@@ -41,7 +50,7 @@ const QuestionInputContainer = styled.View`
 
 const QuestionInputText = styled(CustomText)`
   font-size: ${scale(10)}px;
-  font-weight: 600;
+  margin-left: ${scale(5)}px;
   color: ${COLORS.background.black};
 `;
 
