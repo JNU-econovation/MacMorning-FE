@@ -44,6 +44,7 @@ const Questions = () => {
       <QuestionListContainer showsVerticalScrollIndicator={false}>
         {questions.map(question => (
           <QuestionWrapper
+            activeOpacity={1}
             active={selectedQuestion === question.id}
             key={question.id}
             onPress={() => setSelectedQuestion(question.id)}>
