@@ -14,6 +14,8 @@ import SelectedSettingView from './selectView/SelectedSettingView';
 import {FormData} from '@/types/form';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 import {useNavigation} from '@react-navigation/native';
+import createBook from '@/apis/book/createBook';
+import {createStory} from '@/apis/AI/createStory';
 
 interface CreateBookTitle {
   titleText: string;
@@ -42,7 +44,6 @@ const CreateBookTitles: CreateBookTitle[] = [
 const CreateBook = (): React.JSX.Element => {
   const navigation = useNavigation<RootStackNavigationProp>();
   const {goToStoryProgress} = createNavigationHelpers(navigation);
-
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
     genre: [],
@@ -101,9 +102,40 @@ const CreateBook = (): React.JSX.Element => {
   };
 
   const handleStep = (direction: number) => {
-    if (direction === 1) {
+    console.log(direction);
+    if (currentStep === 0) {
       if (formData.genre.length === 0) {
         Alert.alert('장르를 선택해주세요.');
+        return;
+      }
+    }
+
+    if (currentStep === 1) {
+      if (formData.title === '') {
+        Alert.alert('제목을 입력해주세요.');
+        return;
+      }
+      if (formData.story.plot === '') {
+        Alert.alert('이야기의 줄거리를 입력해주세요.');
+        return;
+      }
+      if (formData.story.historical_background === '') {
+        Alert.alert('이야기의 시대적 배경을 입력해주세요.');
+        return;
+      }
+    }
+
+    if (currentStep === 2) {
+      if (formData.character.name === '') {
+        Alert.alert('주인공의 이름을 입력해주세요.');
+        return;
+      }
+      if (formData.character.age === '나이') {
+        Alert.alert('주인공의 나이를 입력해주세요.');
+        return;
+      }
+      if (formData.character.description === '') {
+        Alert.alert('주인공의 특징을 입력해주세요.');
         return;
       }
     }
@@ -113,8 +145,12 @@ const CreateBook = (): React.JSX.Element => {
     });
   };
 
-  const handleCreateBook = () => {
-    goToStoryProgress();
+  const handleCreateBook = async (formData: FormData) => {
+    const response = await createBook(formData);
+    console.log('response', response);
+    const AIResponse = await createStory(formData);
+    console.log('AIResponse', AIResponse);
+    goToStoryProgress({bookId: response.id, AIResponse});
   };
 
   return (
@@ -155,7 +191,7 @@ const CreateBook = (): React.JSX.Element => {
         {currentStep < 3 ? (
           <StepButton text="다음" onPress={() => handleStep(1)} />
         ) : (
-          <StepButton text="생성" onPress={handleCreateBook} />
+          <StepButton text="생성" onPress={() => handleCreateBook(formData)} />
         )}
       </BottomBarButtonContainer>
     </CreateBookContainer>
