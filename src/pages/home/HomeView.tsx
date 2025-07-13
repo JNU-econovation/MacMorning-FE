@@ -18,14 +18,14 @@ const HomeView = (): React.JSX.Element => {
 
   useEffect(() => {
     const fetchBooks = async () => {
+      if (!accessToken) return;
+
       try {
-        console.log('accessToken', accessToken);
         const {books: myBooks} = await getRecentMyBooks(
           'created_at_desc',
-          accessToken || '',
+          accessToken,
         );
         setMyBooks(myBooks);
-
         const {books: bestBooks} = await getMainBestBooks();
         setBestBooks(bestBooks);
       } catch (error) {
@@ -33,9 +33,8 @@ const HomeView = (): React.JSX.Element => {
       }
     };
 
-    console.log('useEffect 실행됨');
     fetchBooks();
-  }, []);
+  }, [accessToken]);
 
   const renderItem: ListRenderItem<Book> = ({item: book}) => (
     <BookComponent book={book} />
@@ -57,6 +56,7 @@ const HomeView = (): React.JSX.Element => {
       </HomeButtonContainer>
       {isAuthenticated ? (
         <FlatList<Book>
+          style={{width: '100%'}}
           data={MyBooks}
           renderItem={renderItem}
           keyExtractor={book => book.id}
@@ -84,6 +84,7 @@ const HomeView = (): React.JSX.Element => {
       </HomeButtonContainer>
       {isAuthenticated ? (
         <FlatList<Book>
+          style={{width: '100%'}}
           data={bestBooks}
           renderItem={renderItem}
           keyExtractor={book => book.id}
