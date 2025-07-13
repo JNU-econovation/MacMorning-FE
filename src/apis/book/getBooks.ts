@@ -16,12 +16,11 @@ async function getBooks(cursor?: string) {
 }
 
 async function getRecentMyBooks(cursor?: string, orderStrategy?: string) {
-  const baseUrl = 'https://api.ilovejokbal.monster/v1/books/mybooks';
   const limit = 4;
 
   const url = cursor
-    ? `${baseUrl}?limit=${limit}&order_strategy=${orderStrategy}&cursor=${cursor}`
-    : `${baseUrl}?limit=${limit}&order_strategy=${orderStrategy}`;
+    ? `${baseUrl}/books/mybooks?limit=${limit}&order_strategy=${orderStrategy}&cursor=${cursor}`
+    : `${baseUrl}/books/mybooks?limit=${limit}&order_strategy=${orderStrategy}`;
 
   const response = await (await fetch(url)).json();
 
@@ -32,12 +31,11 @@ async function getRecentMyBooks(cursor?: string, orderStrategy?: string) {
 }
 
 async function getMainBestBooks(cursor?: string) {
-  const baseUrl = 'https://api.ilovejokbal.monster/v1/books/best';
   const limit = 4;
 
   const url = cursor
-    ? `${baseUrl}?limit=${limit}&cursor=${cursor}`
-    : `${baseUrl}?limit=${limit}`;
+    ? `${baseUrl}/books/best?limit=${limit}&cursor=${cursor}`
+    : `${baseUrl}/books/best?limit=${limit}`;
 
   const response = await (await fetch(url)).json();
 
