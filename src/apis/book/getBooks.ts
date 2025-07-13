@@ -15,14 +15,19 @@ async function getBooks(cursor?: string) {
   };
 }
 
-async function getRecentMyBooks(cursor?: string, orderStrategy?: string) {
+async function getRecentMyBooks(orderStrategy?: string, accessToken?: string) {
+  const baseUrl = 'https://api.ilovejokbal.monster/v1/books/mybooks';
   const limit = 4;
 
-  const url = cursor
-    ? `${baseUrl}/books/mybooks?limit=${limit}&order_strategy=${orderStrategy}&cursor=${cursor}`
-    : `${baseUrl}/books/mybooks?limit=${limit}&order_strategy=${orderStrategy}`;
+  const url = `${baseUrl}?limit=${limit}&order_strategy=${orderStrategy}`;
 
-  const response = await (await fetch(url)).json();
+  const response = await (
+    await fetch(url, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    })
+  ).json();
 
   return {
     books: response.data.books,
@@ -30,12 +35,11 @@ async function getRecentMyBooks(cursor?: string, orderStrategy?: string) {
   };
 }
 
-async function getMainBestBooks(cursor?: string) {
+async function getMainBestBooks() {
+  const baseUrl = 'https://api.ilovejokbal.monster/v1/books/best';
   const limit = 4;
+  const url = `${baseUrl}?limit=${limit}`;
 
-  const url = cursor
-    ? `${baseUrl}/books/best?limit=${limit}&cursor=${cursor}`
-    : `${baseUrl}/books/best?limit=${limit}`;
 
   const response = await (await fetch(url)).json();
 

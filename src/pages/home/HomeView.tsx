@@ -12,26 +12,29 @@ import {useAuthStore} from '@/store/authStore';
 
 const HomeView = (): React.JSX.Element => {
   const [MyBooks, setMyBooks] = useState<Book[]>([]);
-  const [nextMyBookCursor, setNextMyBookCursor] = useState<string | null>(null);
   const [bestBooks, setBestBooks] = useState<Book[]>([]);
-  const [nextBestCursor, setNextBestCursor] = useState<string | null>(null);
   const accessToken = useAuthStore(state => state.accessToken);
   const isAuthenticated = accessToken;
 
   useEffect(() => {
     const fetchBooks = async () => {
-      const {books: myBooks, nextCursor: myBooksCursor} =
-        await getRecentMyBooks();
-      setMyBooks(myBooks);
-      setNextMyBookCursor(myBooksCursor);
+      if (!accessToken) return;
 
-      const {books: bestBooks, nextCursor: bestBooksCursor} =
-        await getMainBestBooks();
-      setBestBooks(bestBooks);
-      setNextBestCursor(bestBooksCursor);
+      try {
+        const {books: myBooks} = await getRecentMyBooks(
+          'created_at_desc',
+          accessToken,
+        );
+        setMyBooks(myBooks);
+        const {books: bestBooks} = await getMainBestBooks();
+        setBestBooks(bestBooks);
+      } catch (error) {
+        console.error('fetchBooks 에러:', error);
+      }
     };
+
     fetchBooks();
-  }, []);
+  }, [accessToken]);
 
   const renderItem: ListRenderItem<Book> = ({item: book}) => (
     <BookComponent book={book} />
@@ -53,6 +56,7 @@ const HomeView = (): React.JSX.Element => {
       </HomeButtonContainer>
       {isAuthenticated ? (
         <FlatList<Book>
+          style={{width: '100%'}}
           data={MyBooks}
           renderItem={renderItem}
           keyExtractor={book => book.id}
@@ -80,6 +84,7 @@ const HomeView = (): React.JSX.Element => {
       </HomeButtonContainer>
       {isAuthenticated ? (
         <FlatList<Book>
+          style={{width: '100%'}}
           data={bestBooks}
           renderItem={renderItem}
           keyExtractor={book => book.id}

@@ -11,6 +11,7 @@ import Login from '@/pages/auth/login/Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StatusBar} from 'react-native';
 import StoryProgress from '@/pages/storyProgress/StoryProgress';
+import {processColorsInProps} from 'react-native-reanimated/lib/typescript/Colors';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
