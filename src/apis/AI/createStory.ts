@@ -24,6 +24,5 @@ export const createStory = async (data: FormData, bookId: number) => {
       Authorization: `${accessToken}`,
     },
   });
-  console.log('response', response);
   return response.json();
 };
