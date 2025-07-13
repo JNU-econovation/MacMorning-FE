@@ -17,7 +17,7 @@ const createBook = async (data: FormData) => {
         name: data.character.name,
         age: data.character.age,
         gender: data.character.gender,
-        characteristic: [data.character.description],
+        characteristic: data.character.description,
       },
       background: data.story.plot,
     }),
