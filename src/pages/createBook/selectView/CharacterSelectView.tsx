@@ -56,7 +56,7 @@ const CharacterSelectView = (
                 ...prev,
                 character: {
                   ...prev.character,
-                  gender: prev.character.gender === '남자' ? '여자' : '남자',
+                  gender: prev.character.gender === '남성' ? '여성' : '남성',
                 },
               }));
             }}

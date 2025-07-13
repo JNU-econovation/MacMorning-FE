@@ -11,7 +11,7 @@ const createBook = async (data: FormData) => {
       title: data.title,
       genre: data.genre,
       gamemode: data.gameMode,
-      chracter: {
+      character: {
         grammatical_person: data.story.grammatical_person,
         historical_background: data.story.historical_background,
         name: data.character.name,

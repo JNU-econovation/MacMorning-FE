@@ -51,12 +51,12 @@ const CreateBook = (): React.JSX.Element => {
     title: '',
     character: {
       name: '',
-      gender: '남자',
+      gender: '남성',
       age: '',
       description: '',
     },
     story: {
-      grammatical_person: '',
+      grammatical_person: '1인칭',
       historical_background: '',
       plot: '',
     },
