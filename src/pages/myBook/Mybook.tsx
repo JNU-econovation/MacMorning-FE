@@ -15,20 +15,45 @@ function Mybook(): React.JSX.Element {
   const accessToken = useAuthStore(state => state.accessToken);
   const isAuthenticated = accessToken;
   const [myBooks, setMyBooks] = useState<Book[]>([]);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchMyBooks = async (cursor?: string) => {
+    if (!accessToken || isLoading) return;
+
+    setIsLoading(true);
+    try {
+      const response = await getMyBooks(
+        'created_at_desc',
+        accessToken || '',
+        cursor,
+      );
+
+      if (cursor) {
+        setMyBooks(prev => [...prev, ...response.books]);
+      } else {
+        setMyBooks(response.books);
+      }
+
+      setNextCursor(response.nextCursor);
+      setHasMore(!!response.nextCursor);
+    } catch (error) {
+      console.error('내 책 불러오기 에러:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchMyBooks = async () => {
-      if (!accessToken) return;
-
-      try {
-        const response = await getMyBooks('created_at_desc', accessToken || '');
-        setMyBooks(response.books);
-      } catch (error) {
-        console.error('내 책 불러오기 에러:', error);
-      }
-    };
     fetchMyBooks();
   }, [accessToken]);
+
+  const handleLoadMore = () => {
+    if (hasMore && !isLoading && nextCursor) {
+      fetchMyBooks(nextCursor);
+    }
+  };
 
   const renderItem: ListRenderItem<Book> = ({item: book}) => (
     <BookComponent book={book} />
@@ -37,15 +62,22 @@ function Mybook(): React.JSX.Element {
   return (
     <MyBookContainer>
       <Header title="내 책" headerType="default" />
-      <MybookScrollContainer>
+      <MybookFlatListContainer>
         {isAuthenticated ? (
           <FlatList<Book>
             style={{width: '100%'}}
             data={myBooks}
             renderItem={renderItem}
-            keyExtractor={book => book.id}
+            keyExtractor={(book, index) => `${book.id}-${index}`}
             numColumns={4}
-            scrollEnabled={false}
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={true}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.1}
+            contentContainerStyle={{
+              paddingTop: scale(30),
+              paddingBottom: scale(60),
+            }}
             columnWrapperStyle={{
               marginBottom: scale(20),
               gap: '8%',
@@ -54,7 +86,7 @@ function Mybook(): React.JSX.Element {
         ) : (
           <GuestView />
         )}
-      </MybookScrollContainer>
+      </MybookFlatListContainer>
     </MyBookContainer>
   );
 }
@@ -64,9 +96,9 @@ const MyBookContainer = styled.View`
   background-color: ${COLORS.background.white};
 `;
 
-const MybookScrollContainer = styled.ScrollView`
+const MybookFlatListContainer = styled.View`
   flex: 1;
   background-color: ${COLORS.background.white};
-  padding: ${scale(30)}px;
+  padding: 0 ${scale(30)}px;
 `;
 export default Mybook;
