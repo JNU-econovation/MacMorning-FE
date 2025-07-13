@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
 import {View, Alert} from 'react-native';
-import CreateBookTitle from './CreateBookTitle';
-import Header from '@/components/common/header/Header';
-import styled from 'styled-components/native';
-import CharacterSelectView from './selectView/CharacterSelectView';
-import GenreSelectView from './selectView/GenreSelectView';
-import SelectView from './selectView/SelectView';
-import {WINDOW_WIDTH, WINDOW_HEIGHT} from '@/constants/windowSize';
 import {scale} from 'react-native-size-matters';
-import StepButton from '@/components/common/buttons/StepButton';
-import StorySettingView from './selectView/StorySettingView';
-import SelectedSettingView from './selectView/SelectedSettingView';
+import styled from 'styled-components/native';
+
+import {WINDOW_WIDTH, WINDOW_HEIGHT} from '@/constants/windowSize';
+import createBook from '@/apis/book/createBook';
+import {createStory} from '@/apis/AI/createStory';
 import {FormData} from '@/types/form';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 import {useNavigation} from '@react-navigation/native';
-import createBook from '@/apis/book/createBook';
-import {createStory} from '@/apis/AI/createStory';
+
+import CreateBookTitle from './CreateBookTitle';
+import Header from '@/components/common/header/Header';
+import CharacterSelectView from './selectView/CharacterSelectView';
+import GenreSelectView from './selectView/GenreSelectView';
+import SelectView from './selectView/SelectView';
+import StepButton from '@/components/common/buttons/StepButton';
+import StorySettingView from './selectView/StorySettingView';
+import SelectedSettingView from './selectView/SelectedSettingView';
 
 interface CreateBookTitle {
   titleText: string;
@@ -146,8 +148,8 @@ const CreateBook = (): React.JSX.Element => {
 
   const handleCreateBook = async (formData: FormData) => {
     const response = await createBook(formData);
-    const AIResponse = await createStory(formData);
-    goToStoryProgress({bookId: response.id, AIResponse});
+    const AIResponse = await createStory(formData, response.data.id);
+    goToStoryProgress({bookId: response.data.id, AIResponse});
   };
 
   return (

@@ -50,7 +50,7 @@ const CharacterSelectView = (
         <InputContainer>
           <TitleText font="NPSfont_bold">성별</TitleText>
           <GenderToggle
-            isOn={props.initialData.character.gender === '여자'}
+            isOn={props.initialData.character.gender === '여성'}
             onToggle={() => {
               props.setFormData(prev => ({
                 ...prev,
