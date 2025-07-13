@@ -1,10 +1,10 @@
 import {useAuthStore} from '@/store/authStore';
 import {FormData} from '@/types/form';
+import {baseUrl} from '@/constants/api';
 
 const createBook = async (data: FormData) => {
   const accessToken = useAuthStore.getState().accessToken;
 
-  const baseUrl = 'https://api.ilovejokbal.monster/v1';
   const response = await fetch(`${baseUrl}/book`, {
     method: 'POST',
     body: JSON.stringify({

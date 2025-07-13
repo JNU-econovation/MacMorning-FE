@@ -1,14 +1,5 @@
-// src/apis/upload/imageUpload.ts
 import axios from 'axios';
-import {onSelectImage} from '@/utils/ImagePicker';
 import {baseUrl} from '@/constants/api';
-import {useAuthStore} from '@/store/authStore';
-
-interface UploadResult {
-  success: boolean;
-  imageUrl?: string;
-  error?: string;
-}
 
 const getPresignedUrl = async (
   image: string,
@@ -21,7 +12,7 @@ const getPresignedUrl = async (
       console.error(authError.message);
       throw authError;
     }
-    const url = `https://api.ilovejokbal.monster/v1/book/${bookId}/story/image`;
+    const url = `${baseUrl}/book/${bookId}/story/image`;
 
     const response = await axios.post(
       url,
