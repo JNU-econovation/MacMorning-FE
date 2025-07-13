@@ -33,10 +33,10 @@ const GenderToggle = ({onToggle, isOn}: Props) => {
     <GenderToggleContainer>
       <ToggleContainer activeOpacity={1} onPress={onToggle} color={color}>
         <ToggleTextContainer style={{left: 0}}>
-          <CustomText font="NPSfont_regular">남자</CustomText>
+          <CustomText font="NPSfont_regular">남성</CustomText>
         </ToggleTextContainer>
         <ToggleTextContainer style={{right: 0}}>
-          <CustomText font="NPSfont_regular">여자</CustomText>
+          <CustomText font="NPSfont_regular">여성</CustomText>
         </ToggleTextContainer>
         <ToggleWheel
           style={{
