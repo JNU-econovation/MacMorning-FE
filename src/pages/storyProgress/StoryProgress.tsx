@@ -5,12 +5,12 @@ import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
 import StoryProgressView from './StoryProgressView';
 
-const StoryProgress = () => {
+const StoryProgress = ({bookId}: {bookId: number}) => {
   return (
     <StoryProgressContainer>
       <Header title="이야기 진행" headerType="progress" />
       <StoryProgressViewContainer>
-        <StoryProgressView />
+        <StoryProgressView bookId={bookId} />
       </StoryProgressViewContainer>
     </StoryProgressContainer>
   );

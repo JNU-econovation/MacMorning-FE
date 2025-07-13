@@ -10,7 +10,11 @@ declare global {
     Login: undefined;
     Signin: undefined;
     CreateBook: undefined;
-    StoryProgress: undefined;
+    StoryProgress: {
+      props: {
+        bookId: number;
+      };
+    };
   };
 
   type RootStackScreenNames = keyof RootStackParamList;
