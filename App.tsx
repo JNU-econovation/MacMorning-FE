@@ -38,7 +38,10 @@ function App(): React.JSX.Element {
           <Stack.Screen name="CreateBook" component={CreateBook} />
           <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="StoryProgress" component={StoryProgress} />
+          <Stack.Screen
+            name="StoryProgress"
+            component={() => <StoryProgress bookId={1} />}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

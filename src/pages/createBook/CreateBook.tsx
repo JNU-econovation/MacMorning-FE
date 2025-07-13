@@ -56,7 +56,7 @@ const CreateBook = (): React.JSX.Element => {
       description: '',
     },
     story: {
-      grammatical_person: '',
+      grammatical_person: '1인칭',
       historical_background: '',
       plot: '',
     },
@@ -102,7 +102,6 @@ const CreateBook = (): React.JSX.Element => {
   };
 
   const handleStep = (direction: number) => {
-    console.log(direction);
     if (currentStep === 0) {
       if (formData.genre.length === 0) {
         Alert.alert('장르를 선택해주세요.');
@@ -147,9 +146,7 @@ const CreateBook = (): React.JSX.Element => {
 
   const handleCreateBook = async (formData: FormData) => {
     const response = await createBook(formData);
-    console.log('response', response);
     const AIResponse = await createStory(formData);
-    console.log('AIResponse', AIResponse);
     goToStoryProgress({bookId: response.id, AIResponse});
   };
 
