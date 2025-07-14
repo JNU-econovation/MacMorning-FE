@@ -10,16 +10,20 @@ import {getMyBooks} from '@/apis/book/getBooks';
 import GuestView from '@/components/common/guestView/GuestView';
 import {ListRenderItem} from '@react-native/virtualized-lists';
 import BookComponent from '@/components/common/book/BookComponent';
+import Category from '@/components/common/category/Category';
 
 function Mybook(): React.JSX.Element {
   const accessToken = useAuthStore(state => state.accessToken);
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>('완성된 이야기');
   const isAuthenticated = accessToken;
   const [myBooks, setMyBooks] = useState<Book[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  const fetchMyBooks = async (cursor?: string) => {
+  const fetchMyBooks = async (cursor?: string, progress?: boolean) => {
+    console.log('progress', progress);
     if (!accessToken || isLoading) return;
 
     setIsLoading(true);
@@ -28,6 +32,7 @@ function Mybook(): React.JSX.Element {
         'created_at_desc',
         accessToken || '',
         cursor,
+        progress,
       );
 
       if (cursor) {
@@ -46,8 +51,11 @@ function Mybook(): React.JSX.Element {
   };
 
   useEffect(() => {
-    fetchMyBooks();
-  }, [accessToken]);
+    fetchMyBooks(
+      undefined,
+      selectedCategory === '완성된 이야기' ? false : true,
+    );
+  }, [accessToken, selectedCategory]);
 
   const handleLoadMore = () => {
     if (hasMore && !isLoading && nextCursor) {
@@ -62,6 +70,10 @@ function Mybook(): React.JSX.Element {
   return (
     <MyBookContainer>
       <Header title="내 책" headerType="default" />
+      <Category
+        categoryList={['완성된 이야기', '작성중인 이야기']}
+        setCategory={setSelectedCategory}
+      />
       <MybookFlatListContainer>
         {isAuthenticated ? (
           <FlatList<Book>
