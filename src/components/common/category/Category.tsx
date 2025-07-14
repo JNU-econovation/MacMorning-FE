@@ -17,8 +17,9 @@ const Category = ({
 
   return (
     <CategoryContainer>
-      {categoryList.map(item => (
+      {categoryList.map((item, index) => (
         <CategoryItem
+          key={item + index}
           selectedCategory={selectedCategory === item}
           onPress={() => {
             setSelectedCategory(item);
