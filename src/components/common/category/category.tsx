@@ -6,8 +6,10 @@ import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 const Category = ({
   categoryList,
+  setCategory,
 }: {
   categoryList: string[];
+  setCategory: (category: string) => void;
 }): React.JSX.Element => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
     categoryList[0],
@@ -20,6 +22,7 @@ const Category = ({
           selectedCategory={selectedCategory === item}
           onPress={() => {
             setSelectedCategory(item);
+            setCategory(item);
           }}
           activeOpacity={1}>
           <CustomText
