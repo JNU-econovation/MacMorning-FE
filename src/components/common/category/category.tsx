@@ -6,46 +6,44 @@ import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 const Category = ({
   categoryList,
+  setCategory,
 }: {
   categoryList: string[];
+  setCategory: (category: string) => void;
 }): React.JSX.Element => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
     categoryList[0],
   );
 
-  const renderItem = ({item}: {item: string}) => {
-    return (
-      <CategoryItem
-        selectedCategory={selectedCategory === item}
-        onPress={() => setSelectedCategory(item)}
-        activeOpacity={1}>
-        <CustomText
-          font="NPSfont_regular"
-          style={{
-            fontSize: 20,
-            color:
-              selectedCategory === item ? COLORS.primary : COLORS.text.primary,
-          }}>
-          {item}
-        </CustomText>
-      </CategoryItem>
-    );
-  };
-
   return (
     <CategoryContainer>
-      <FlatList
-        data={categoryList}
-        renderItem={renderItem}
-        keyExtractor={item => item}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      />
+      {categoryList.map(item => (
+        <CategoryItem
+          selectedCategory={selectedCategory === item}
+          onPress={() => {
+            setSelectedCategory(item);
+            setCategory(item);
+          }}
+          activeOpacity={1}>
+          <CustomText
+            font="NPSfont_regular"
+            style={{
+              fontSize: 20,
+              color:
+                selectedCategory === item
+                  ? COLORS.primary
+                  : COLORS.text.primary,
+            }}>
+            {item}
+          </CustomText>
+        </CategoryItem>
+      ))}
     </CategoryContainer>
   );
 };
 
 const CategoryContainer = styled.View`
+  flex-direction: row;
   width: 100%;
   height: ${scale(27)}px;
   background-color: ${COLORS.background.white};

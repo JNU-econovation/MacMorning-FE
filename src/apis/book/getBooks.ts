@@ -18,13 +18,18 @@ async function getMyBooks(
   orderStrategy?: string,
   accessToken?: string,
   cursor?: string,
+  progress?: boolean,
 ) {
   const baseUrl = 'https://api.ilovejokbal.monster/v1/books/mybooks';
   const limit = 8;
 
   let url = `${baseUrl}?limit=${limit}&order_strategy=${orderStrategy}`;
-  if (cursor) {
+
+  if (cursor !== undefined) {
     url += `&cursor=${cursor}`;
+  }
+  if (progress !== undefined) {
+    url += `&progress=${progress}`;
   }
 
   const response = await (
