@@ -1,19 +1,87 @@
 import {baseUrl} from '@/constants/api';
 
-async function getBooks(cursor?: string) {
-  const limit = 4;
+async function getBooks(
+  orderStrategy?: string,
+  cursor?: string,
+  accessToken?: string,
+) {
+  const limit = 8;
+  let url = `${baseUrl}/books?limit=${limit}`;
 
-  const url = cursor
-    ? `${baseUrl}?limit=${limit}&cursor=${cursor}`
-    : `${baseUrl}?limit=${limit}`;
+  if (orderStrategy !== undefined) {
+    url += `&order_strategy=${orderStrategy}`;
+  }
+  if (cursor !== undefined) {
+    url += `&cursor=${cursor}`;
+  }
 
-  const response = await (await fetch(url)).json();
+  const response = await (
+    await fetch(url, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    })
+  ).json();
 
   return {
     books: response.data.books,
     nextCursor: response.data.next_cursor,
   };
 }
+
+async function getBestBooks(cursor?: string, accessToken?: string) {
+  const limit = 8;
+  let url = `${baseUrl}/books/best?limit=${limit}`;
+
+  if (cursor !== undefined) {
+    url += `&cursor=${cursor}`;
+  }
+
+  const response = await (
+    await fetch(url, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    })
+  ).json();
+
+  return {
+    books: response.data.books,
+    nextCursor: response.data.next_cursor,
+  };
+}
+
+async function getLikedBooks(
+  orderStrategy?: string,
+  cursor?: string,
+  accessToken?: string,
+) {
+  const limit = 4;
+
+  let url = `${baseUrl}/books/bookmarks?limit=${limit}`;
+
+  if (orderStrategy !== undefined) {
+    url += `&order_strategy=${orderStrategy}`;
+  }
+
+  if (cursor !== undefined) {
+    url += `&cursor=${cursor}`;
+  }
+
+  const response = await (
+    await fetch(url, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    })
+  ).json();
+
+  return {
+    books: response.data.books,
+    nextCursor: response.data.next_cursor,
+  };
+}
+
 async function getMyBooks(
   orderStrategy?: string,
   accessToken?: string,
@@ -40,7 +108,6 @@ async function getMyBooks(
     })
   ).json();
 
-  console.log('response', response);
   return {
     books: response.data.books,
     nextCursor: response.data.next_cursor,
@@ -80,4 +147,11 @@ async function getMainBestBooks() {
   };
 }
 
-export {getBooks, getMyBooks, getRecentMyBooks, getMainBestBooks};
+export {
+  getBooks,
+  getMyBooks,
+  getRecentMyBooks,
+  getMainBestBooks,
+  getBestBooks,
+  getLikedBooks,
+};
