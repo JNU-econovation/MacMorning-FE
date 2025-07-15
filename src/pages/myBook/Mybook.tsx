@@ -23,7 +23,6 @@ function Mybook(): React.JSX.Element {
   const [hasMore, setHasMore] = useState(true);
 
   const fetchMyBooks = async (cursor?: string, progress?: boolean) => {
-    console.log('progress', progress);
     if (!accessToken || isLoading) return;
 
     setIsLoading(true);
