@@ -16,7 +16,7 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
   const {goToCreatedBookProgress} = createNavigationHelpers(navigation);
 
   const handlePress = () => {
-    goToCreatedBookProgress({bookId: Number(book.id), lastPage: 0});
+    goToCreatedBookProgress({bookId: Number(book.book_id), lastPage: 0});
   };
 
   return (
