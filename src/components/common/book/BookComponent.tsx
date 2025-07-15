@@ -3,14 +3,24 @@ import {View} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '@/utils/CustomText';
+import {Book} from '@/types/book';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 
 interface BookComponentProps {
   book: Book;
 }
 
 function BookComponent({book}: BookComponentProps): React.JSX.Element {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const {goToCreatedBookProgress} = createNavigationHelpers(navigation);
+
+  const handlePress = () => {
+    goToCreatedBookProgress({bookId: Number(book.id), lastPage: 0});
+  };
+
   return (
-    <BookComponentContainer onPress={() => console.log('book 클릭')}>
+    <BookComponentContainer onPress={handlePress}>
       <BookImageWrapper></BookImageWrapper>
       <BookInfoContainer>
         <CustomText font={'NPSfont_bold'} style={{fontSize: scale(10)}}>
