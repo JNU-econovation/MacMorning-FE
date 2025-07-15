@@ -1,5 +1,6 @@
 export interface Book {
-  id: string;
+  book_id: number;
+  total_page: number;
   image?: string;
   title: string;
   author: string;
