@@ -45,7 +45,7 @@ const CreateBookTitles: CreateBookTitle[] = [
 
 const CreateBook = (): React.JSX.Element => {
   const navigation = useNavigation<RootStackNavigationProp>();
-  const {goToCreatedBookProgress} = createNavigationHelpers(navigation);
+  const {goToStoryProgress} = createNavigationHelpers(navigation);
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
     genre: [],
@@ -148,7 +148,11 @@ const CreateBook = (): React.JSX.Element => {
 
   const handleCreateBook = async (formData: FormData) => {
     const response = await createBook(formData);
-    goToCreatedBookProgress({bookId: Number(response.data.id), lastPage: 0});
+    goToStoryProgress({
+      bookId: Number(response.data.id),
+      lastPage: 0,
+      formData: formData,
+    });
   };
 
   return (
