@@ -1,26 +1,115 @@
-import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, FlatList} from 'react-native';
+import styled from 'styled-components/native';
+import {scale} from 'react-native-size-matters';
+import {COLORS} from '@/constants/colors';
+
+import Header from '@/components/common/header/Header';
+import {useAuthStore} from '@/store/authStore';
+import {getMyBooks} from '@/apis/book/getBooks';
+import GuestView from '@/components/common/guestView/GuestView';
+import {ListRenderItem} from '@react-native/virtualized-lists';
+import BookComponent from '@/components/common/book/BookComponent';
+import Category from '@/components/common/category/Category';
 
 function Mybook(): React.JSX.Element {
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const accessToken = useAuthStore(state => state.accessToken);
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>('완성된 이야기');
+  const isAuthenticated = accessToken;
+  const [myBooks, setMyBooks] = useState<Book[]>([]);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchMyBooks = async (cursor?: string, progress?: boolean) => {
+    if (!accessToken || isLoading) return;
+
+    setIsLoading(true);
+    try {
+      const response = await getMyBooks(
+        'created_at_desc',
+        accessToken || '',
+        cursor,
+        progress,
+      );
+
+      if (cursor) {
+        setMyBooks(prev => [...prev, ...response.books]);
+      } else {
+        setMyBooks(response.books);
+      }
+
+      setNextCursor(response.nextCursor);
+      setHasMore(!!response.nextCursor);
+    } catch (error) {
+      console.error('내 책 불러오기 에러:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchMyBooks(
+      undefined,
+      selectedCategory === '완성된 이야기' ? false : true,
+    );
+  }, [accessToken, selectedCategory]);
+
+  const handleLoadMore = () => {
+    if (hasMore && !isLoading && nextCursor) {
+      fetchMyBooks(nextCursor);
+    }
+  };
+
+  const renderItem: ListRenderItem<Book> = ({item: book}) => (
+    <BookComponent book={book} />
+  );
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TouchableOpacity 
-        onPress={() => navigation.navigate('ShareBook', { props: { bookId: 39 } })}
-        style={{ 
-          backgroundColor: 'blue', 
-          padding: 20, 
-          borderRadius: 10 
-        }}
-      >
-        <Text style={{ color: 'white', fontSize: 16 }}>
-          ShareBook 테스트
-        </Text>
-      </TouchableOpacity>
-    </View>
+    <MyBookContainer>
+      <Header title="내 책" headerType="default" />
+      <Category
+        categoryList={['완성된 이야기', '작성중인 이야기']}
+        setCategory={setSelectedCategory}
+      />
+      <MybookFlatListContainer>
+        {isAuthenticated ? (
+          <FlatList<Book>
+            style={{width: '100%'}}
+            data={myBooks}
+            renderItem={renderItem}
+            keyExtractor={(book, index) => `${book.id}-${index}`}
+            numColumns={4}
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={true}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.1}
+            contentContainerStyle={{
+              paddingTop: scale(30),
+              paddingBottom: scale(60),
+            }}
+            columnWrapperStyle={{
+              marginBottom: scale(20),
+              gap: '8%',
+            }}
+          />
+        ) : (
+          <GuestView />
+        )}
+      </MybookFlatListContainer>
+    </MyBookContainer>
   );
 }
 
+const MyBookContainer = styled.View`
+  flex: 1;
+  background-color: ${COLORS.background.white};
+`;
+
+const MybookFlatListContainer = styled.View`
+  flex: 1;
+  background-color: ${COLORS.background.white};
+  padding: 0 ${scale(30)}px;
+`;
 export default Mybook;
