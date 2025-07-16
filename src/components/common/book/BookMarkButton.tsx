@@ -64,8 +64,7 @@ const BookMarkButton = ({book_id, is_bookmarked}: BookMarkButtonProps): React.JS
 const BookmarkButtonContainer = styled.TouchableOpacity`
     position: absolute;
     right: ${scale(10)}px;
-    width: ${scale(40)}px;
-    height: 100%;
+    top: ${scale(10)}px;
     justify-content: center;
     align-items: center;
 `;
