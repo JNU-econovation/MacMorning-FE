@@ -7,6 +7,27 @@ interface Book {
   description: string;
 }
 
+interface Character {
+  grammatical_person?: string;
+  historical_background?: string;
+  name?: string;
+  age?: string;
+  gender?: string;
+  characteristic?: string;
+}
+
+export interface BookDetail {
+  book_id: number;
+  title_img_url: string;
+  title: string;
+  author: string;
+  background?: string;
+  is_bookmarked?: boolean;
+  character: Character;
+  genre: string[];
+  created_at: string;
+}
+
 type BookStatus = 'reading' | 'completed' | 'planned';
 
 declare global {

@@ -1,3 +1,4 @@
+import { ShareBook } from '@/pages/shareBook/ShareBook';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 declare global {
@@ -10,6 +11,10 @@ declare global {
     Login: undefined;
     Signin: undefined;
     CreateBook: undefined;
+    ShareBook: {
+      props: {
+        bookId: number;
+      };};
     StoryProgress: {
       props: {
         bookId: number;

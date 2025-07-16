@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android-tablet": "emulator -avd Pixel_Tablet_API_35 & sleep 5",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
