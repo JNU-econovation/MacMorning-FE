@@ -26,9 +26,9 @@ const SelectButton = ({
 
 const ButtonContainer = styled.Pressable<{isPressed: boolean}>`
   width: 80%;
-  height: ${scale(22)}px;
   background-color: ${COLORS.background.white};
-  border-radius: ${scale(10)}px;
+  padding: ${scale(5)}px ${scale(15)}px;
+  border-radius: ${scale(30)}px;
   justify-content: center;
   align-items: center;
   border: 2px solid
