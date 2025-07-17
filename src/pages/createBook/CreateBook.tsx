@@ -148,8 +148,11 @@ const CreateBook = (): React.JSX.Element => {
 
   const handleCreateBook = async (formData: FormData) => {
     const response = await createBook(formData);
-    const AIResponse = await createStory(formData, response.data.id);
-    goToStoryProgress({bookId: response.data.id, AIResponse});
+    goToStoryProgress({
+      bookId: Number(response.data.id),
+      lastPage: 0,
+      formData: formData,
+    });
   };
 
   return (

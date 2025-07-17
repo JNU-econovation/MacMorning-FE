@@ -1,5 +1,6 @@
-interface Book {
-  id: string;
+export interface Book {
+  book_id: number;
+  total_page: number;
   image?: string;
   title: string;
   author: string;
@@ -7,6 +8,7 @@ interface Book {
   description: string;
 }
 
+export type BookStatus = 'reading' | 'completed' | 'planned';
 interface Character {
   grammatical_person?: string;
   historical_background?: string;
@@ -28,7 +30,7 @@ export interface BookDetail {
   created_at: string;
 }
 
-type BookStatus = 'reading' | 'completed' | 'planned';
+
 
 declare global {
   interface Window {

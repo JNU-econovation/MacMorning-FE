@@ -1,5 +1,4 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
@@ -8,9 +7,21 @@ import SelectButton from '@/components/storyProgress/SelectButton';
 import {onSelectImage} from '@/utils/ImagePicker';
 import {uploadImageToS3} from '@/apis/upload/imageUpload';
 import {useAuthStore} from '@/store/authStore';
+import CustomText from '@/utils/CustomText';
+import {saveProgressStory} from '@/apis/story/storyProgress';
+import {useRoute} from '@react-navigation/native';
 
-const StoryProgressView = ({bookId}: {bookId: number}) => {
+const StoryProgressView = ({
+  bookId,
+  lastPage,
+  AIResponse,
+}: {
+  bookId: number;
+  lastPage: number;
+  AIResponse: {story: string; choice1: string; choice2: string};
+}) => {
   const accessToken = useAuthStore(state => state.accessToken);
+  console.log(AIResponse);
 
   const handleImagePicker = async () => {
     const result = await onSelectImage();
@@ -21,6 +32,14 @@ const StoryProgressView = ({bookId}: {bookId: number}) => {
     );
     console.log(uploadResult);
   };
+  const handleSelectChoice = (choice: number) => {
+    saveProgressStory({
+      bookId,
+      lastPage,
+      AIResponse,
+      myChoice: choice,
+    });
+  };
 
   return (
     <StoryProgressViewContainer>
@@ -29,11 +48,20 @@ const StoryProgressView = ({bookId}: {bookId: number}) => {
         <ImageButton text="삽화 생성" onPress={() => {}} />
       </LeftContainer>
       <RightContainer>
-        <StoryContainer></StoryContainer>
+        <StoryContainer>
+          <CustomText font="NPSfont_regular" style={{fontSize: scale(9)}}>
+            {AIResponse.story}
+          </CustomText>
+        </StoryContainer>
         <SelectButtonContainer>
-          <SelectButton onPress={() => {}} selectScript="선택지 1" />
-          <SelectButton onPress={() => {}} selectScript="선택지 2" />
-          <SelectButton onPress={() => {}} selectScript="선택지 3" />
+          <SelectButton
+            onPress={() => handleSelectChoice(1)}
+            selectScript={AIResponse.choice1}
+          />
+          <SelectButton
+            onPress={() => handleSelectChoice(2)}
+            selectScript={AIResponse.choice2}
+          />
         </SelectButtonContainer>
       </RightContainer>
     </StoryProgressViewContainer>
@@ -63,9 +91,9 @@ const RightContainer = styled.View`
   justify-content: space-between;
 `;
 
-const StoryContainer = styled.View`
+const StoryContainer = styled.ScrollView`
   width: 100%;
-  background-color: red;
+  padding: ${scale(10)}px;
 `;
 
 const SelectButtonContainer = styled.View`

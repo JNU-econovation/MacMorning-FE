@@ -1,5 +1,6 @@
 import { ShareBook } from '@/pages/shareBook/ShareBook';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {FormData} from './form';
 
 declare global {
   type RootStackParamList = {
@@ -18,6 +19,8 @@ declare global {
     StoryProgress: {
       props: {
         bookId: number;
+        lastPage: number;
+        formData?: FormData | undefined;
       };
     };
   };
