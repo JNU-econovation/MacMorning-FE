@@ -30,8 +30,6 @@ export interface BookDetail {
   created_at: string;
 }
 
-
-
 declare global {
   interface Window {
     books: Book[];
