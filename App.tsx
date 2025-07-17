@@ -16,6 +16,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StatusBar} from 'react-native';
 import StoryProgress from '@/pages/storyProgress/StoryProgress';
 import {FormData} from '@/types/form';
+import {processColorsInProps} from 'react-native-reanimated/lib/typescript/Colors';
+import ShareBook from '@/pages/shareBook/ShareBook';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -44,6 +46,10 @@ function App(): React.JSX.Element {
           <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="StoryProgress" component={StoryProgress} />
+          <Stack.Screen
+            name="ShareBook"
+            component={() => <ShareBook bookId={39} />}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

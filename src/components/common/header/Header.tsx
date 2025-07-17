@@ -6,10 +6,11 @@ import BackButton from './BackButton';
 import SearchButton from './SearchButton';
 import CustomText from '@/utils/CustomText';
 import EndingButton from './EndingButton';
+import EditButton from './EditButton';
 
 interface HeaderProps {
   title: string;
-  headerType: 'default' | 'create' | 'progress';
+  headerType: 'default' | 'create' | 'progress' | 'edit';
 }
 
 const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
@@ -42,6 +43,18 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
           <BackButton />
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
           <EndingButton />
+        </BackHeaderContainer>
+      </HeaderWrapper>
+    );
+  }
+
+  if (headerType === 'edit') {
+    return (
+      <HeaderWrapper>
+        <BackHeaderContainer>
+          <BackButton />
+          <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
+          <EditButton />
         </BackHeaderContainer>
       </HeaderWrapper>
     );
