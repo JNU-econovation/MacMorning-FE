@@ -7,11 +7,13 @@ import {COLORS} from '@/constants/colors';
 import Header from '@/components/common/header/Header';
 import {useAuthStore} from '@/store/authStore';
 import {getBestBooks, getBooks, getLikedBooks} from '@/apis/book/getBooks';
+import {Book} from '@/types/book';
 
 import GuestView from '@/components/common/guestView/GuestView';
 import {ListRenderItem} from '@react-native/virtualized-lists';
 import BookComponent from '@/components/common/book/BookComponent';
 import Category from '@/components/common/category/Category';
+import Loading from '@/components/common/loading/Loading';
 
 function Mybook(): React.JSX.Element {
   const accessToken = useAuthStore(state => state.accessToken);
@@ -97,7 +99,7 @@ function Mybook(): React.JSX.Element {
             style={{width: '100%'}}
             data={books}
             renderItem={renderItem}
-            keyExtractor={(book, index) => `${book.id}-${index}`}
+            keyExtractor={(book, index) => `${book.book_id}-${index}`}
             numColumns={4}
             showsVerticalScrollIndicator={false}
             scrollEnabled={true}
