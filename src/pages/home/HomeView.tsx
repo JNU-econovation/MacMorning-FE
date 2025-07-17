@@ -93,7 +93,7 @@ const HomeView = (): React.JSX.Element => {
       </HomeButtonContainer>
       {isAuthenticated ? (
         isLoading ? (
-          <Loading />
+          <Loading script="" />
         ) : (
           <FlatList<Book>
             style={{width: '100%'}}
