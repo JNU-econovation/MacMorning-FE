@@ -3,7 +3,8 @@ import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
-// import {useNavigation} from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { createNavigationHelpers } from '@/utils/navigate/NavigateHelpers';
 
 interface ShareButtonProps {
     text: string;
@@ -11,15 +12,15 @@ interface ShareButtonProps {
 }
 
 export const useShareButtonHandlers = (book_id: number | null, bookDetail: any) => {
-    // const navigation = useNavigation();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const { goToReadBook } = createNavigationHelpers(navigation);
 
     const handleReadStory = () => {
     if (!book_id) {
         console.warn('book_id가 없습니다.');
         return;
     }
-    //책 읽으러가는 navigate
-    // navigation.navigate('StoryRead', { book_id });
+    goToReadBook({ story_id: book_id });
     };
 
     const handleCreateStory = () => {

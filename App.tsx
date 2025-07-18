@@ -18,6 +18,7 @@ import StoryProgress from '@/pages/storyProgress/StoryProgress';
 import {FormData} from '@/types/form';
 import {processColorsInProps} from 'react-native-reanimated/lib/typescript/Colors';
 import ShareBook from '@/pages/shareBook/ShareBook';
+import ReadBook from '@/pages/readBook/ReadBook';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -50,6 +51,7 @@ function App(): React.JSX.Element {
             name="ShareBook"
             component={ShareBook}
           />
+          <Stack.Screen name="ReadBook" component={ReadBook} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
