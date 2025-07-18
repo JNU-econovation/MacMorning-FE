@@ -20,7 +20,7 @@ export const useShareButtonHandlers = (book_id: number | null, bookDetail: any) 
         console.warn('book_id가 없습니다.');
         return;
     }
-    goToReadBook({ story_id: book_id });
+    goToReadBook({ book_id: book_id, page_number: 1 });
     };
 
     const handleCreateStory = () => {

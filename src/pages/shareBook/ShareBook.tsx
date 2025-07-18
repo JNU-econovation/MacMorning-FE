@@ -20,29 +20,7 @@ const ShareBook = ({route}: ShareBookProps) => {
 
             try {
                 const response = await getBookDetail(bookId, accessToken);
-                const {
-                    title,
-                    titleImgUrl,
-                    author,
-                    background,
-                    createdAt,
-                    isBookMarked,
-                    character,
-                    genre
-                } = response;
-                
-                const mappedBookDetail: BookDetail = {
-                    book_id: bookId,
-                    title_img_url: titleImgUrl,
-                    title: title,
-                    author: author,
-                    background: background,
-                    is_bookmarked: isBookMarked,
-                    character: character,
-                    genre: genre,
-                    created_at: createdAt,
-                };
-                setBookDetail(mappedBookDetail);
+                setBookDetail(response);
             } catch (error) {
                 console.error('fetchBookDetail 에러 : ', error)
             }

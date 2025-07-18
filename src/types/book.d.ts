@@ -1,3 +1,4 @@
+//이건 홈화면에 나올 대략적인 책의 정보입니다.
 export interface Book {
   book_id: number;
   total_page: number;
@@ -19,6 +20,8 @@ interface Character {
   characteristic?: string;
 }
 
+//이건 책 공유 페이지에 나올 세부적인 책의 정보입니다.
+//book을 상속할걸 그랬나요?
 export interface BookDetail {
   book_id: number;
   title_img_url: string;
@@ -31,7 +34,17 @@ export interface BookDetail {
   created_at: string;
 }
 
-
+//story, total_page 제외하고는 전부 null가능
+export interface BookPage {
+  story_text: string;
+  total_page: number;
+  image_url: string | null;
+  my_choice: number | null;
+  first_choice: string | null;
+  second_choice: string | null;
+  third_choice: string | null;
+  is_success: boolean | null;
+}
 
 declare global {
   interface Window {
