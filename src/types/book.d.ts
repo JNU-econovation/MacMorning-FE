@@ -1,7 +1,7 @@
 export interface Book {
   book_id: number;
   total_page: number;
-  image?: string;
+  title_img_url?: string;
   title: string;
   author: string;
   isLiked: boolean;

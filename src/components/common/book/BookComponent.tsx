@@ -6,12 +6,14 @@ import CustomText from '@/utils/CustomText';
 import {Book} from '@/types/book';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
+import { useImageUrl } from '@/hooks/useImageUrl';
 
 interface BookComponentProps {
   book: Book;
 }
 
 function BookComponent({book}: BookComponentProps): React.JSX.Element {
+  const imageUrl = useImageUrl(book?.title_img_url);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const {goToCreatedBookProgress} = createNavigationHelpers(navigation);
 
@@ -21,7 +23,9 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
 
   return (
     <BookComponentContainer onPress={handlePress}>
-      <BookImageWrapper></BookImageWrapper>
+      <BookImage 
+        source={{uri:imageUrl}}
+      />
       <BookInfoContainer>
         <CustomText font={'NPSfont_bold'} style={{fontSize: scale(10)}}>
           {book?.title}
@@ -39,6 +43,13 @@ const BookComponentContainer = styled.TouchableOpacity`
 `;
 
 const BookImageWrapper = styled.View`
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: gray;
+  border-radius: ${scale(5)}px;
+`;
+
+const BookImage = styled.Image`
   width: 100%;
   aspect-ratio: 1;
   background-color: gray;
