@@ -16,6 +16,6 @@ export const createNavigationHelpers = (
   goToShareBook: (props: {bookId: number}) =>
     navigation.navigate('ShareBook', {props}),
 
-  goToReadBook: (props: { story_id: number }) =>
+  goToReadBook: (props: { book_id: number; page_number: number }) =>
     navigation.navigate('ReadBook', { props }),
 });

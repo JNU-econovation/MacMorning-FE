@@ -24,7 +24,8 @@ declare global {
     };
     ReadBook: {
       props: {
-        story_id: number;
+        book_id: number;
+        page_number : number;
       };
     };
   };
