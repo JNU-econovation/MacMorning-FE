@@ -1,4 +1,3 @@
-import { ShareBook } from '@/pages/shareBook/ShareBook';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {FormData} from './form';
 
@@ -21,6 +20,12 @@ declare global {
         bookId: number;
         lastPage: number;
         formData?: FormData | undefined;
+      };
+    };
+    ReadBook: {
+      props: {
+        book_id: number;
+        page_number : number;
       };
     };
   };

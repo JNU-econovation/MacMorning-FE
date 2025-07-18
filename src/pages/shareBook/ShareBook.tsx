@@ -7,7 +7,10 @@ import { getBookDetail } from '@/apis/book/getBook';
 import { useAuthStore } from '@/store/authStore';
 import {BookDetail} from '@/types/book';
 
-const ShareBook = ({bookId}: {bookId: number}) => {
+type ShareBookProps = RootStackScreenProps<'ShareBook'>;
+
+const ShareBook = ({route}: ShareBookProps) => {
+    const {bookId} = route.params.props;
     const accessToken = useAuthStore(state => state.accessToken);
     const [bookDetail, setBookDetail] = useState<BookDetail | null>(null);
 
@@ -17,29 +20,7 @@ const ShareBook = ({bookId}: {bookId: number}) => {
 
             try {
                 const response = await getBookDetail(bookId, accessToken);
-                const {
-                    title,
-                    titleImgUrl,
-                    author,
-                    background,
-                    createdAt,
-                    isBookMarked,
-                    character,
-                    genre
-                } = response;
-                
-                const mappedBookDetail: BookDetail = {
-                    book_id: bookId,
-                    title_img_url: titleImgUrl,
-                    title: title,
-                    author: author,
-                    background: background,
-                    is_bookmarked: isBookMarked,
-                    character: character,
-                    genre: genre,
-                    created_at: createdAt,
-                };
-                setBookDetail(mappedBookDetail);
+                setBookDetail(response);
             } catch (error) {
                 console.error('fetchBookDetail 에러 : ', error)
             }

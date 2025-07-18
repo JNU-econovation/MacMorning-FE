@@ -20,3 +20,21 @@ export const useImageUrl = (url: string | undefined | null): string => {
 
   return imageUrl;
 };
+
+//페이지 따로 이미지 받을때는 domain없이 받아와서 기존 도메인에 이미지 주소 붙이는 함수
+export const useStoryImageUrl = (imageUrl: string | undefined | null): string => {
+  const [storyImageUrl, setStoryImageUrl] = useState<string>('');
+
+  useEffect(() => {
+    if (!imageUrl) {
+      setStoryImageUrl('');
+      return;
+    }
+
+    // cloudFrontDomain + imageUrl 조합
+    const fullUrl = `${cloudFrontDomain}/${imageUrl}`;
+    setStoryImageUrl(fullUrl);
+  }, [imageUrl]);
+
+  return storyImageUrl;
+};
