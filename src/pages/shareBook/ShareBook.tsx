@@ -7,7 +7,10 @@ import { getBookDetail } from '@/apis/book/getBook';
 import { useAuthStore } from '@/store/authStore';
 import {BookDetail} from '@/types/book';
 
-const ShareBook = ({bookId}: {bookId: number}) => {
+type ShareBookProps = RootStackScreenProps<'ShareBook'>;
+
+const ShareBook = ({route}: ShareBookProps) => {
+    const {bookId} = route.params.props;
     const accessToken = useAuthStore(state => state.accessToken);
     const [bookDetail, setBookDetail] = useState<BookDetail | null>(null);
 

@@ -48,7 +48,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name="StoryProgress" component={StoryProgress} />
           <Stack.Screen
             name="ShareBook"
-            component={() => <ShareBook bookId={39} />}
+            component={ShareBook}
           />
         </Stack.Navigator>
       </NavigationContainer>
