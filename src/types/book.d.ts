@@ -6,6 +6,7 @@ export interface Book {
   author: string;
   isLiked: boolean;
   description: string;
+  is_in_progress?: boolean | null; //be에서 null 반환하면 안되는데 왜 null로 반환이 오죠..? 일단 임시 땜빵용 null
 }
 
 export type BookStatus = 'reading' | 'completed' | 'planned';

@@ -15,10 +15,14 @@ interface BookComponentProps {
 function BookComponent({book}: BookComponentProps): React.JSX.Element {
   const imageUrl = useImageUrl(book?.title_img_url);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const {goToCreatedBookProgress} = createNavigationHelpers(navigation);
+  const {goToCreatedBookProgress, goToShareBook} = createNavigationHelpers(navigation);
 
   const handlePress = () => {
-    goToCreatedBookProgress({bookId: Number(book.book_id), lastPage: 0});
+    if (book?.is_in_progress === null || book?.is_in_progress === false) {
+      goToShareBook({bookId: Number(book.book_id)});
+    } else {
+      goToCreatedBookProgress({bookId: Number(book.book_id), lastPage: 0});
+    }
   };
 
   return (
@@ -40,13 +44,6 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
 const BookComponentContainer = styled.TouchableOpacity`
   width: 19%;
   gap: 1%;
-`;
-
-const BookImageWrapper = styled.View`
-  width: 100%;
-  aspect-ratio: 1;
-  background-color: gray;
-  border-radius: ${scale(5)}px;
 `;
 
 const BookImage = styled.Image`
