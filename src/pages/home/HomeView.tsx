@@ -9,15 +9,19 @@ import TextNavigateButton from '@/components/home/TextNavigateButton';
 import {useNavigation} from '@react-navigation/native';
 import GuestView from '@/components/common/guestView/GuestView';
 import {useAuthStore} from '@/store/authStore';
+import {Book} from '@/types/book';
+import Loading from '@/components/common/loading/Loading';
 
 const HomeView = (): React.JSX.Element => {
   const [MyBooks, setMyBooks] = useState<Book[]>([]);
   const [bestBooks, setBestBooks] = useState<Book[]>([]);
   const accessToken = useAuthStore(state => state.accessToken);
   const isAuthenticated = accessToken;
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   useEffect(() => {
     const fetchBooks = async () => {
+      setIsLoading(true);
       if (!accessToken) return;
 
       try {
@@ -31,6 +35,7 @@ const HomeView = (): React.JSX.Element => {
       } catch (error) {
         console.error('fetchBooks 에러:', error);
       }
+      setIsLoading(false);
     };
 
     fetchBooks();
@@ -55,18 +60,22 @@ const HomeView = (): React.JSX.Element => {
         />
       </HomeButtonContainer>
       {isAuthenticated ? (
-        <FlatList<Book>
-          style={{width: '100%'}}
-          data={MyBooks}
-          renderItem={renderItem}
-          keyExtractor={book => book.id}
-          numColumns={4}
-          scrollEnabled={false}
-          columnWrapperStyle={{
-            marginBottom: scale(20),
-            gap: '8%',
-          }}
-        />
+        isLoading ? (
+          <Loading />
+        ) : (
+          <FlatList<Book>
+            style={{width: '100%'}}
+            data={MyBooks}
+            renderItem={renderItem}
+            keyExtractor={book => book.book_id.toString()}
+            numColumns={4}
+            scrollEnabled={false}
+            columnWrapperStyle={{
+              marginBottom: scale(20),
+              gap: '8%',
+            }}
+          />
+        )
       ) : (
         <GuestView />
       )}
@@ -83,18 +92,22 @@ const HomeView = (): React.JSX.Element => {
         />
       </HomeButtonContainer>
       {isAuthenticated ? (
-        <FlatList<Book>
-          style={{width: '100%'}}
-          data={bestBooks}
-          renderItem={renderItem}
-          keyExtractor={book => book.id}
-          numColumns={4}
-          scrollEnabled={false}
-          columnWrapperStyle={{
-            marginBottom: scale(20),
-            gap: '8%',
-          }}
-        />
+        isLoading ? (
+          <Loading script="" />
+        ) : (
+          <FlatList<Book>
+            style={{width: '100%'}}
+            data={bestBooks}
+            renderItem={renderItem}
+            keyExtractor={book => book.book_id.toString()}
+            numColumns={4}
+            scrollEnabled={false}
+            columnWrapperStyle={{
+              marginBottom: scale(20),
+              gap: '8%',
+            }}
+          />
+        )
       ) : (
         <GuestView />
       )}

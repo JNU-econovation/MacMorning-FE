@@ -7,10 +7,12 @@ import {COLORS} from '@/constants/colors';
 import Header from '@/components/common/header/Header';
 import {useAuthStore} from '@/store/authStore';
 import {getMyBooks} from '@/apis/book/getBooks';
+import {Book} from '@/types/book';
 import GuestView from '@/components/common/guestView/GuestView';
 import {ListRenderItem} from '@react-native/virtualized-lists';
 import BookComponent from '@/components/common/book/BookComponent';
 import Category from '@/components/common/category/Category';
+import Loading from '@/components/common/loading/Loading';
 
 function Mybook(): React.JSX.Element {
   const accessToken = useAuthStore(state => state.accessToken);
@@ -75,25 +77,29 @@ function Mybook(): React.JSX.Element {
       />
       <MybookFlatListContainer>
         {isAuthenticated ? (
-          <FlatList<Book>
-            style={{width: '100%'}}
-            data={myBooks}
-            renderItem={renderItem}
-            keyExtractor={(book, index) => `${book.id}-${index}`}
-            numColumns={4}
-            showsVerticalScrollIndicator={false}
-            scrollEnabled={true}
-            onEndReached={handleLoadMore}
-            onEndReachedThreshold={0.1}
-            contentContainerStyle={{
-              paddingTop: scale(30),
-              paddingBottom: scale(60),
-            }}
-            columnWrapperStyle={{
-              marginBottom: scale(20),
-              gap: '8%',
-            }}
-          />
+          isLoading ? (
+            <Loading script="내 책을 불러오는 중이에요..." />
+          ) : (
+            <FlatList<Book>
+              style={{width: '100%'}}
+              data={myBooks}
+              renderItem={renderItem}
+              keyExtractor={(book, index) => `${book.book_id}-${index}`}
+              numColumns={4}
+              showsVerticalScrollIndicator={false}
+              scrollEnabled={true}
+              onEndReached={handleLoadMore}
+              onEndReachedThreshold={0.1}
+              contentContainerStyle={{
+                paddingTop: scale(30),
+                paddingBottom: scale(60),
+              }}
+              columnWrapperStyle={{
+                marginBottom: scale(20),
+                gap: '8%',
+              }}
+            />
+          )
         ) : (
           <GuestView />
         )}

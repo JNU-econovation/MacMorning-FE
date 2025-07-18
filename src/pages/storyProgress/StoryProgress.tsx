@@ -8,11 +8,13 @@ import {createStory} from '@/apis/AI/createStory';
 import {FormData} from '@/types/form';
 import {getLastStory} from '@/apis/story/storyProgress';
 import {RouteProp, useRoute} from '@react-navigation/native';
+import Loading from '@/components/common/loading/Loading';
 
 const StoryProgress = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'StoryProgress'>>();
   const {bookId, lastPage, formData} = route.params.props || {};
-  console.log(bookId, lastPage, formData);
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
+
   const [AIResponse, setAIResponse] = useState<{
     story: string;
     choice1: string;
@@ -25,6 +27,7 @@ const StoryProgress = () => {
 
   useEffect(() => {
     const fetchStory = async () => {
+      setIsLoading(true);
       if (lastPage === 0 && formData) {
         console.log('createStory');
         const response = await createStory(formData, bookId);
@@ -43,6 +46,7 @@ const StoryProgress = () => {
         };
         setAIResponse(newStory);
       }
+      setIsLoading(false);
       console.log(AIResponse);
     };
     fetchStory();
@@ -51,13 +55,20 @@ const StoryProgress = () => {
   return (
     <StoryProgressContainer>
       <Header title="이야기 진행" headerType="progress" />
-      <StoryProgressViewContainer>
-        <StoryProgressView
-          bookId={bookId}
-          lastPage={lastPage}
-          AIResponse={AIResponse}
-        />
-      </StoryProgressViewContainer>
+
+      {isLoading ? (
+        <Loading script="이야기를 만드는 중이에요..." />
+      ) : (
+        <>
+          <StoryProgressViewContainer>
+            <StoryProgressView
+              bookId={bookId}
+              lastPage={lastPage}
+              AIResponse={AIResponse}
+            />
+          </StoryProgressViewContainer>
+        </>
+      )}
     </StoryProgressContainer>
   );
 };
