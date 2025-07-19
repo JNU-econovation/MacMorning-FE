@@ -4,17 +4,28 @@ import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
+import { Illust } from '@/types/book';
+import {cloudFrontDomain} from '@/constants/api';
 
-const ChooseThumbnailView = (): React.JSX.Element => {
-    const thumbnailCount = 10;
+const ChooseThumbnailView = ({illust}: {illust: any}) => {
+    const getImageUrl = (imageUrl: string | null | undefined): string => {
+        if (!imageUrl) return '';
+        return `${cloudFrontDomain}/${imageUrl}`;
+    };
 
-    const thumbnails = Array.from({length: thumbnailCount}, (_, index) => index);
-
-    const renderThumbnailItem = ({item}: {item: number}) => (
+    const renderThumbnailItem = ({item}: {item: Illust}) => {
+    const imageUrl = getImageUrl(item.image_url);
+    
+    return (
         <ThumbnailOption>
+        {imageUrl ? (
+            <ThumbnailImage source={{uri: imageUrl}} />
+        ) : (
             <ThumbnailPlaceholder />
+        )}
         </ThumbnailOption>
     );
+    };
     return (
         <ChooseThumbnailViewContainer>
             <ChooseTextContainer>
@@ -24,9 +35,9 @@ const ChooseThumbnailView = (): React.JSX.Element => {
             </ChooseTextContainer>
             <ThumbnailFlatListContainer>
                 <FlatList
-                    data={thumbnails}
+                    data={illust}
                     renderItem={renderThumbnailItem}
-                    keyExtractor={(item) => item.toString()}
+                    keyExtractor={(item) => item.illust_id.toString()}
                     numColumns={4}
                     showsVerticalScrollIndicator={false}
                     scrollEnabled={true}
@@ -79,6 +90,13 @@ const ThumbnailPlaceholder = styled.View`
     flex: 1;
     border-radius: ${scale(6)}px;
     background-color: ${COLORS.background.lightGray};
+`;
+
+const ThumbnailImage = styled.Image`
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: ${scale(6)}px;
 `;
 
 export default ChooseThumbnailView;

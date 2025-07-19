@@ -1,11 +1,43 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import Header from '@/components/common/header/Header';
 import {scale} from 'react-native-size-matters';
 import ChooseThumbnailView from './ChooseThumbnailView';
 import StepButton from '@/components/common/buttons/StepButton';
+import {getBookDetail, getBookAllIllust} from '@/apis/book/getBook';
+import {useAuthStore} from '@/store/authStore';
+import {BookDetail} from '@/types/book';
+import { Illust } from '@/types/book';
 
-const ChooseThumbnail = (): React.JSX.Element => {
+type ChooseThumbnailProps = RootStackScreenProps<'ChooseThumbnail'>;
+
+const ChooseThumbnail = ({ route }: ChooseThumbnailProps): React.JSX.Element => {
+  const {bookId} = route.params?.props || {};
+  const accessToken = useAuthStore(state => state.accessToken);
+  
+  const [bookDetail, setBookDetail] = useState<BookDetail | null>(null);
+  const [illust, setIllust] = useState<Illust[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!accessToken || !bookId) return;
+
+      try {
+        // 1. 책 정보 불러오기 - 책 제목을 불러오기 위함임.
+        const bookResponse = await getBookDetail(bookId, accessToken);
+        setBookDetail(bookResponse);
+
+        // 2. 모든 일러스트 불러오기
+        const illustResponse = await getBookAllIllust(bookId, accessToken);
+        if (illustResponse) {
+          setIllust(illustResponse);
+        }
+      } catch (error) {
+        console.error('ChooseThumbnail 데이터 fetch 에러:', error);
+      }
+    };
+    fetchData();
+  }, [bookId, accessToken]);
 
   const handleChoose = () => {
 
@@ -13,9 +45,9 @@ const ChooseThumbnail = (): React.JSX.Element => {
 
   return (
     <ChooseThumbnailContainer>
-      <Header title="썸네일 선택" headerType="create" />
+      <Header title={bookDetail?.title || '썸네일 선택'} headerType="create" />
       <ChooseThumbnailViewContainer>
-        <ChooseThumbnailView />
+        <ChooseThumbnailView illust={illust}/>
       </ChooseThumbnailViewContainer>
       <ProgressButtonContainer>
         <ProgressButtonWrapper>
