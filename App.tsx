@@ -19,6 +19,7 @@ import {FormData} from '@/types/form';
 import {processColorsInProps} from 'react-native-reanimated/lib/typescript/Colors';
 import ShareBook from '@/pages/shareBook/ShareBook';
 import ReadBook from '@/pages/readBook/ReadBook';
+import ChooseThumbnail from '@/pages/ChooseThumbnail/ChooseThumbnail';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -52,6 +53,7 @@ function App(): React.JSX.Element {
             component={ShareBook}
           />
           <Stack.Screen name="ReadBook" component={ReadBook} />
+          <Stack.Screen name="ChooseThumbnail" component={ChooseThumbnail} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

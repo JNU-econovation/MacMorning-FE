@@ -11,6 +11,7 @@ declare global {
     Login: undefined;
     Signin: undefined;
     CreateBook: undefined;
+    ChooseThumbnail: undefined;
     ShareBook: {
       props: {
         bookId: number;
