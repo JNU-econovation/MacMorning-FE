@@ -46,6 +46,14 @@ export interface BookPage {
   is_success: boolean | null;
 }
 
+export interface Illust {
+  illust_id: number;
+  story_id: number;
+  image_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
 declare global {
   interface Window {
     books: Book[];
