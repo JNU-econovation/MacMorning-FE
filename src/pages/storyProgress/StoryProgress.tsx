@@ -14,7 +14,7 @@ import CustomText from '@/utils/CustomText';
 
 const StoryProgress = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'StoryProgress'>>();
-  const {bookId, lastPage, formData} = route.params.props || {};
+  const {bookId, lastPage, formData, nextStory} = route.params.props || {};
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   const [AIResponse, setAIResponse] = useState<{
