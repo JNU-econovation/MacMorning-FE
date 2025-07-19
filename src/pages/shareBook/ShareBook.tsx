@@ -26,7 +26,7 @@ const ShareBook = ({route}: ShareBookProps) => {
             }
         };
         fetchBookDetail();
-    }, [bookId, accessToken, bookDetail]);
+    }, [bookId, accessToken]);
 
     return (
         <ShareBookContainer>
