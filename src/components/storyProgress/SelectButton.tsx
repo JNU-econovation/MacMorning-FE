@@ -7,9 +7,11 @@ import {COLORS} from '@/constants/colors';
 const SelectButton = ({
   onPress,
   selectScript,
+  isDisabled,
 }: {
   onPress: () => void;
   selectScript: string;
+  isDisabled: boolean;
 }) => {
   const [isPressed, setIsPressed] = useState(false);
 
@@ -18,14 +20,15 @@ const SelectButton = ({
       onPress={onPress}
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
-      isPressed={isPressed}>
+      isPressed={isPressed}
+      disabled={isDisabled}>
       <ButtonText font="NPSfont_regular">{selectScript}</ButtonText>
     </ButtonContainer>
   );
 };
 
 const ButtonContainer = styled.Pressable<{isPressed: boolean}>`
-  width: 80%;
+  width: 90%;
   background-color: ${COLORS.background.white};
   padding: ${scale(5)}px ${scale(15)}px;
   border-radius: ${scale(30)}px;
