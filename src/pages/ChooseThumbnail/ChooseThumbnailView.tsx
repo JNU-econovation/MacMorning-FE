@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
@@ -7,7 +7,14 @@ import CustomText from '@/utils/CustomText';
 import { Illust } from '@/types/book';
 import {cloudFrontDomain} from '@/constants/api';
 
-const ChooseThumbnailView = ({illust}: {illust: any}) => {
+interface ChooseThumbnailViewProps {
+    illust: Illust[];
+}
+
+const ChooseThumbnailView = ({illust}: ChooseThumbnailViewProps) => {
+    const [selectedId, setSelectedId] = useState<number | null>(null);
+
+    // illust가 배열로 받아와져서 hook이 안먹혀서 만든 함수
     const getImageUrl = (imageUrl: string | null | undefined): string => {
         if (!imageUrl) {
             return `${cloudFrontDomain}/basic.png`;
@@ -15,18 +22,29 @@ const ChooseThumbnailView = ({illust}: {illust: any}) => {
         return `${cloudFrontDomain}/${imageUrl}`;
     };
 
+
     const renderThumbnailItem = ({item}: {item: Illust}) => {
         const imageUrl = getImageUrl(item.image_url);
+        const isSelected = selectedId === item.illust_id;
+
         return (
-            <ThumbnailOption>
-            {imageUrl ? (
-                <ThumbnailImage source={{uri: imageUrl}} />
-            ) : (
-                <ThumbnailPlaceholder />
-            )}
+            <ThumbnailOption 
+            isSelected={isSelected}
+            onPress={() => handleSelectThumbnail(item.illust_id)}
+            >
+                {imageUrl ? (
+                    <ThumbnailImage source={{uri: imageUrl}} />
+                ) : (
+                    <ThumbnailPlaceholder />
+                )}
             </ThumbnailOption>
         );
     };
+
+    const handleSelectThumbnail = (illustId: number) => {
+        setSelectedId(illustId);
+    };
+
     return (
         <ChooseThumbnailViewContainer>
             <ChooseTextContainer>
@@ -82,8 +100,8 @@ const ThumbnailOption = styled.TouchableOpacity`
     width: 22%;
     aspect-ratio: 0.8;
     border-radius: ${scale(8)}px;
-    border-width: ${scale(1)}px;
-    border-color: ${COLORS.background.lightGray};
+    border-width: ${(props: {isSelected: boolean}) => props.isSelected ? scale(2) : scale(1)}px;
+    border-color: ${(props: {isSelected: boolean}) => props.isSelected ? COLORS.primary : COLORS.background.lightGray};
     background-color: ${COLORS.background.lightGray};
 `;
 
