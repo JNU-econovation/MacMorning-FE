@@ -53,7 +53,7 @@ const RightContainer = styled.View`
 
 const StoryContainer = styled.ScrollView`
     width: 100%;
-    padding: ${scale(10)}px;
+    padding: ${scale(20)}px;
 `;
 
 export default ReadBookView;
