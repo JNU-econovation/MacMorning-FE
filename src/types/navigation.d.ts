@@ -14,18 +14,20 @@ declare global {
     ShareBook: {
       props: {
         bookId: number;
-      };};
+      };
+    };
     StoryProgress: {
       props: {
         bookId: number;
         lastPage: number;
         formData?: FormData | undefined;
+        nextStory?: Story | undefined;
       };
     };
     ReadBook: {
       props: {
         book_id: number;
-        page_number : number;
+        page_number: number;
       };
     };
   };

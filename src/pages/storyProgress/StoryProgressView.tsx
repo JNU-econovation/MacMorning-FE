@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
@@ -10,18 +10,24 @@ import {useAuthStore} from '@/store/authStore';
 import CustomText from '@/utils/CustomText';
 import {saveProgressStory} from '@/apis/story/storyProgress';
 import {useRoute} from '@react-navigation/native';
+import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
+import {useNavigation} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 
 const StoryProgressView = ({
   bookId,
   lastPage,
   AIResponse,
+  isDisabled,
 }: {
   bookId: number;
   lastPage: number;
   AIResponse: {story: string; choice1: string; choice2: string};
+  isDisabled: boolean;
 }) => {
   const accessToken = useAuthStore(state => state.accessToken);
-  console.log(AIResponse);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const {goToStoryProgress} = createNavigationHelpers(navigation);
 
   const handleImagePicker = async () => {
     const result = await onSelectImage();
@@ -32,12 +38,18 @@ const StoryProgressView = ({
     );
     console.log(uploadResult);
   };
+
   const handleSelectChoice = (choice: number) => {
     saveProgressStory({
       bookId,
       lastPage,
       AIResponse,
       myChoice: choice,
+    });
+    goToStoryProgress({
+      bookId: bookId,
+      lastPage: lastPage + 1,
+      nextStory: choice === 1 ? AIResponse.choice1 : AIResponse.choice2,
     });
   };
 
@@ -57,10 +69,12 @@ const StoryProgressView = ({
           <SelectButton
             onPress={() => handleSelectChoice(1)}
             selectScript={AIResponse.choice1}
+            isDisabled={isDisabled}
           />
           <SelectButton
             onPress={() => handleSelectChoice(2)}
             selectScript={AIResponse.choice2}
+            isDisabled={isDisabled}
           />
         </SelectButtonContainer>
       </RightContainer>
@@ -72,7 +86,7 @@ const StoryProgressViewContainer = styled.View`
   background-color: ${COLORS.background.white};
   flex-direction: row;
   width: 90%;
-  height: 80%;
+  height: 100%;
   border-radius: ${scale(10)}px;
 `;
 

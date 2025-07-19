@@ -8,6 +8,7 @@ export const createNavigationHelpers = (
     bookId: number;
     lastPage: number;
     formData?: FormData | undefined;
+    nextStory?: string | undefined;
   }) => navigation.navigate('StoryProgress', {props}),
 
   goToCreatedBookProgress: (props: {bookId: number; lastPage: number}) =>
@@ -16,6 +17,6 @@ export const createNavigationHelpers = (
   goToShareBook: (props: {bookId: number}) =>
     navigation.navigate('ShareBook', {props}),
 
-  goToReadBook: (props: { book_id: number; page_number: number }) =>
-    navigation.navigate('ReadBook', { props }),
+  goToReadBook: (props: {book_id: number; page_number: number}) =>
+    navigation.navigate('ReadBook', {props}),
 });
