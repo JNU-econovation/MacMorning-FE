@@ -1,5 +1,5 @@
 import {baseUrl} from '@/constants/api';
-import {BookDetail, BookPage, Illust} from '@/types/book';
+import {BookDetail, BookPage} from '@/types/book';
 
 async function getBookDetail(bookId? : number, accessToken?: string) {
   const url = `${baseUrl}/book/${bookId}`;
@@ -63,26 +63,4 @@ async function getBookPage(bookNumber: number, pageNumber: number, accessToken?:
   }
 }
 
-async function getBookAllIllust(bookId: number, accessToken?: string): Promise<Illust[] | null> {
-  const url = `${baseUrl}/book/${bookId}/image`;
-  
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        Authorization: `${accessToken}`,
-      },
-    });
-    const result = await response.json();
-    if (result.success && result.data?.illusts) {
-      return result.data.illusts;
-    }
-
-    return null;
-  } catch (error) {
-    console.error('getBookAllIllust API 에러:', error);
-    return null;
-  }
-}
-
-export {getBookDetail, getBookPage, getBookAllIllust};
+export {getBookDetail, getBookPage};

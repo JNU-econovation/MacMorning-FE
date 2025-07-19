@@ -9,9 +9,10 @@ import {cloudFrontDomain} from '@/constants/api';
 
 interface ChooseThumbnailViewProps {
     illust: Illust[];
+    onSelectThumbnail: (selectedId: number | null) => void;
 }
 
-const ChooseThumbnailView = ({illust}: ChooseThumbnailViewProps) => {
+const ChooseThumbnailView = ({illust, onSelectThumbnail}: ChooseThumbnailViewProps) => {
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
     // illust가 배열로 받아와져서 hook이 안먹혀서 만든 함수
@@ -43,6 +44,7 @@ const ChooseThumbnailView = ({illust}: ChooseThumbnailViewProps) => {
 
     const handleSelectThumbnail = (illustId: number) => {
         setSelectedId(illustId);
+        onSelectThumbnail(illustId);
     };
 
     return (

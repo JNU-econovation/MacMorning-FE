@@ -4,10 +4,12 @@ import Header from '@/components/common/header/Header';
 import {scale} from 'react-native-size-matters';
 import ChooseThumbnailView from './ChooseThumbnailView';
 import StepButton from '@/components/common/buttons/StepButton';
-import {getBookDetail, getBookAllIllust} from '@/apis/book/getBook';
+import {getBookDetail} from '@/apis/book/getBook';
+import { getBookAllIllust, setThumbnail } from '@/apis/Illust/illusts';
 import {useAuthStore} from '@/store/authStore';
 import {BookDetail} from '@/types/book';
 import { Illust } from '@/types/book';
+import {Alert} from 'react-native';
 
 type ChooseThumbnailProps = RootStackScreenProps<'ChooseThumbnail'>;
 
@@ -17,6 +19,7 @@ const ChooseThumbnail = ({ route }: ChooseThumbnailProps): React.JSX.Element => 
   
   const [bookDetail, setBookDetail] = useState<BookDetail | null>(null);
   const [illust, setIllust] = useState<Illust[]>([]);
+  const [selectedThumbnailId, setSelectedThumbnailId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,15 +42,46 @@ const ChooseThumbnail = ({ route }: ChooseThumbnailProps): React.JSX.Element => 
     fetchData();
   }, [bookId, accessToken]);
 
-  const handleChoose = () => {
-
+  const handleSelectThumbnail = (selectedId: number | null) => {
+      setSelectedThumbnailId(selectedId);
   };
+
+  const handleChoose = async () => {
+    if (!selectedThumbnailId) {
+      Alert.alert('알림', '썸네일을 선택해주세요.');
+      return;
+    }
+
+    // 선택된 ID로 해당 일러스트 찾기
+    const selectedIllust = illust.find(item => item.illust_id === selectedThumbnailId);
+    
+    if (!selectedIllust || !selectedIllust.image_url) {
+      Alert.alert('오류', '선택된 이미지를 찾을 수 없습니다.');
+      return;
+    }
+
+    try {
+      const success = await setThumbnail(bookId, selectedIllust.image_url, accessToken);
+      
+      if (success) {
+        //navigate~
+      } else {
+        Alert.alert('오류', '썸네일 설정에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('썸네일 설정 오류:', error);
+      Alert.alert('오류', '썸네일 설정 중 오류가 발생했습니다.');
+    }
+  };
+
 
   return (
     <ChooseThumbnailContainer>
       <Header title={bookDetail?.title || '썸네일 선택'} headerType="create" />
       <ChooseThumbnailViewContainer>
-        <ChooseThumbnailView illust={illust}/>
+        <ChooseThumbnailView 
+          illust={illust}
+          onSelectThumbnail={handleSelectThumbnail}/>
       </ChooseThumbnailViewContainer>
       <ProgressButtonContainer>
         <ProgressButtonWrapper>
