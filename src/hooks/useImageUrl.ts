@@ -27,7 +27,8 @@ export const useStoryImageUrl = (imageUrl: string | undefined | null): string =>
 
   useEffect(() => {
     if (!imageUrl) {
-      setStoryImageUrl('');
+      const basicUrl = `${cloudFrontDomain}/basic.png`;
+      setStoryImageUrl(basicUrl);
       return;
     }
 

@@ -9,22 +9,23 @@ import {cloudFrontDomain} from '@/constants/api';
 
 const ChooseThumbnailView = ({illust}: {illust: any}) => {
     const getImageUrl = (imageUrl: string | null | undefined): string => {
-        if (!imageUrl) return '';
+        if (!imageUrl) {
+            return `${cloudFrontDomain}/basic.png`;
+        }
         return `${cloudFrontDomain}/${imageUrl}`;
     };
 
     const renderThumbnailItem = ({item}: {item: Illust}) => {
-    const imageUrl = getImageUrl(item.image_url);
-    
-    return (
-        <ThumbnailOption>
-        {imageUrl ? (
-            <ThumbnailImage source={{uri: imageUrl}} />
-        ) : (
-            <ThumbnailPlaceholder />
-        )}
-        </ThumbnailOption>
-    );
+        const imageUrl = getImageUrl(item.image_url);
+        return (
+            <ThumbnailOption>
+            {imageUrl ? (
+                <ThumbnailImage source={{uri: imageUrl}} />
+            ) : (
+                <ThumbnailPlaceholder />
+            )}
+            </ThumbnailOption>
+        );
     };
     return (
         <ChooseThumbnailViewContainer>
