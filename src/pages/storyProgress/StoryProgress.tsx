@@ -38,7 +38,8 @@ const StoryProgress = () => {
   useEffect(() => {
     const fetchStory = async () => {
       setIsLoading(true);
-      if (page_number === 0 && formData) {
+      console.log(page_number, formData, bookId);
+      if (page_number === 1 && formData) {
         console.log('createStory');
         const response = await createStory(formData, bookId);
         setAIResponse({
