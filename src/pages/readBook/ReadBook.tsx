@@ -11,6 +11,7 @@ import { BookPage } from '@/types/book';
 import { getBookPage } from '@/apis/book/getBook';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { createNavigationHelpers } from '@/utils/navigate/NavigateHelpers';
+import EditButton from '@/components/common/header/EditButton';
 
 type ReadBookProps = RootStackScreenProps<'ReadBook'>;
 
@@ -19,6 +20,7 @@ const ReadBook = ({ route }: ReadBookProps) => {
     const accessToken = useAuthStore(state => state.accessToken);
     const [bookPage, setBookPage] = useState<BookPage | null>(null);
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const [textSize, setTextSize] = useState<'small' | 'medium' | 'large'>('medium');
     const { goToReadBook } = createNavigationHelpers(navigation);
 
     const isPrevDisabled = page_number <= 1;
@@ -30,7 +32,6 @@ const ReadBook = ({ route }: ReadBookProps) => {
 
             try {
                 const response = await getBookPage(book_id, page_number, accessToken);
-                console.log(response)
                 setBookPage(response);
             } catch (error) {
                 console.error('fetchBookDetail 에러 : ', error)
@@ -56,13 +57,30 @@ const ReadBook = ({ route }: ReadBookProps) => {
             });
         }
     };
+
+    const handleTextSizeChange = (size: 'small' | 'medium' | 'large') => {
+        setTextSize(size);
+        console.log('글자 크기 변경:', size);
+    };
+
+    const handleEndRead = () => {
+        navigation.goBack();
+    };
+
     return (
         <ReadBookContainer>
             <ProgressBarWrapper>
                 <ProgressBar totalPages={bookPage?.total_page || 0} currentPage={page_number} />
+                <EditButton
+                    color="black" 
+                    page="read"
+                    onTextSize={handleTextSizeChange}
+                    onEndRead={handleEndRead}
+                    currentTextSize={textSize}
+                />
             </ProgressBarWrapper>
             <ReadBookViewContainer>
-                <ReadBookView bookPage={bookPage} />
+                <ReadBookView bookPage={bookPage} textSize={textSize}/>
             </ReadBookViewContainer>
             <ProgressButtonWrapper>
                 <StepButton 

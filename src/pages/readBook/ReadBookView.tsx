@@ -5,18 +5,35 @@ import { COLORS } from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
 import { useStoryImageUrl } from '@/hooks/useImageUrl';
 
-const ReadBookView = ({bookPage}: {bookPage: any}) => {
+interface ReadBookViewProps {
+    bookPage: any;
+    textSize: 'small' | 'medium' | 'large';
+}
+
+const ReadBookView = ({ bookPage, textSize }: ReadBookViewProps) => {
     const imageUrl = useStoryImageUrl(bookPage?.image_url);
+
+    const getFontSize = (size: 'small' | 'medium' | 'large') => {
+        switch (size) {
+            case 'small': return scale(7);
+            case 'medium': return scale(9);
+            case 'large': return scale(11);
+            default: return scale(9);
+        }
+    };
+
     return (
         <ReadBookViewContainer>
-        <LeftContainer source={{uri: imageUrl}}/>
-        <RightContainer>
-            <StoryContainer>
-                <CustomText font="NPSfont_regular" style={{fontSize: scale(9)}}>
-                    {bookPage?.story_text}
-                </CustomText>
-            </StoryContainer>
-        </RightContainer>
+            <LeftContainer>
+                <BookImage source={{uri: imageUrl}} />
+            </LeftContainer>
+            <RightContainer>
+                <StoryContainer>
+                    <CustomText font="NPSfont_regular" style={{fontSize: getFontSize(textSize)}}>
+                        {bookPage?.story_text}
+                    </CustomText>
+                </StoryContainer>
+            </RightContainer>
         </ReadBookViewContainer>
     );
 };
@@ -36,12 +53,18 @@ const ReadBookViewContainer = styled.View`
     elevation: 5;
 `;
 
-const LeftContainer = styled.Image`
+const LeftContainer = styled.View`
     width: 50%;
     height: 100%;
     align-items: center;
     justify-content: center;
     gap: ${scale(10)}px;
+`;
+
+const BookImage = styled.Image`
+    width: 100%;
+    height: 100%;
+    border-radius: ${scale(10)}px;
 `;
 
 const RightContainer = styled.View`
@@ -53,7 +76,7 @@ const RightContainer = styled.View`
 
 const StoryContainer = styled.ScrollView`
     width: 100%;
-    padding: ${scale(10)}px;
+    padding: ${scale(20)}px;
 `;
 
 export default ReadBookView;
