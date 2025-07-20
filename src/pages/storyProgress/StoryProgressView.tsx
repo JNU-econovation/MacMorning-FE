@@ -16,14 +16,18 @@ import {NavigationProp} from '@react-navigation/native';
 
 const StoryProgressView = ({
   bookId,
-  lastPage,
+  totalPage,
   AIResponse,
   isDisabled,
+  isLoading,
+  setLastPage,
 }: {
   bookId: number;
-  lastPage: number;
+  totalPage: number;
   AIResponse: {story: string; choice1: string; choice2: string};
   isDisabled: boolean;
+  isLoading: boolean;
+  setLastPage: (lastPage: number) => void;
 }) => {
   const accessToken = useAuthStore(state => state.accessToken);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -31,8 +35,6 @@ const StoryProgressView = ({
 
   const handleImagePicker = async () => {
     const result = await onSelectImage();
-
-    console.log(result);
 
     if (result) {
       const uploadResult = await uploadImageToS3(
@@ -46,15 +48,9 @@ const StoryProgressView = ({
   };
 
   const handleSelectChoice = (choice: number) => {
-    saveProgressStory({
-      bookId,
-      lastPage,
-      AIResponse,
-      myChoice: choice,
-    });
     goToStoryProgress({
       bookId: bookId,
-      lastPage: lastPage + 1,
+      lastPage: totalPage,
       nextStory: choice === 1 ? AIResponse.choice1 : AIResponse.choice2,
     });
   };
@@ -75,12 +71,12 @@ const StoryProgressView = ({
           <SelectButton
             onPress={() => handleSelectChoice(1)}
             selectScript={AIResponse.choice1}
-            isDisabled={isDisabled}
+            isDisabled={isDisabled || isLoading}
           />
           <SelectButton
             onPress={() => handleSelectChoice(2)}
             selectScript={AIResponse.choice2}
-            isDisabled={isDisabled}
+            isDisabled={isDisabled || isLoading}
           />
         </SelectButtonContainer>
       </RightContainer>
