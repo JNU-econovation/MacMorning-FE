@@ -4,10 +4,18 @@ import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 
-const BackButton = (): React.JSX.Element => {
+const BackButton = ({
+  disabled,
+  onPress = () => {},
+}: {
+  disabled: boolean;
+  onPress?: () => void;
+}): React.JSX.Element => {
   const navigation = useNavigation();
   return (
-    <BackbuttonContainer onPress={() => navigation.goBack()}>
+    <BackbuttonContainer
+      onPress={() => (onPress ? onPress() : navigation.goBack())}
+      disabled={disabled}>
       <ArrowLeftSVG color="#fff" width={scale(15)} height={scale(15)} />
     </BackbuttonContainer>
   );

@@ -7,13 +7,21 @@ import SearchButton from './SearchButton';
 import CustomText from '@/utils/CustomText';
 import EndingButton from './EndingButton';
 import EditButton from './EditButton';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 
 interface HeaderProps {
   title: string;
   headerType: 'default' | 'create' | 'progress' | 'edit';
+  isLoading?: boolean;
 }
 
-const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
+const Header = ({
+  title,
+  headerType,
+  isLoading = false,
+}: HeaderProps): React.JSX.Element => {
+  const navigation = useNavigation();
+
   if (headerType === 'default') {
     return (
       <HeaderWrapper>
@@ -29,7 +37,12 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
     return (
       <HeaderWrapper>
         <BackHeaderContainer>
-          <BackButton />
+          <BackButton
+            disabled={isLoading}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
         </BackHeaderContainer>
       </HeaderWrapper>
@@ -40,7 +53,17 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
     return (
       <HeaderWrapper>
         <BackHeaderContainer>
-          <BackButton />
+          <BackButton
+            disabled={isLoading}
+            onPress={() => {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{name: 'MainTabs'}],
+                }),
+              );
+            }}
+          />
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
           <EndingButton />
         </BackHeaderContainer>
@@ -52,7 +75,12 @@ const Header = ({title, headerType}: HeaderProps): React.JSX.Element => {
     return (
       <HeaderWrapper>
         <BackHeaderContainer>
-          <BackButton />
+          <BackButton
+            disabled={isLoading}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
           <EditButton />
         </BackHeaderContainer>
