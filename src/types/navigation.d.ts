@@ -35,6 +35,11 @@ declare global {
         page_number: number;
       };
     };
+    Questions: {
+      props: {
+        bookId: number;
+      };
+    };
   };
 
   type RootStackScreenNames = keyof RootStackParamList;
