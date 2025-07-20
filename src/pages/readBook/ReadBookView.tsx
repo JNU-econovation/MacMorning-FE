@@ -64,7 +64,8 @@ const LeftContainer = styled.View`
 const BookImage = styled.Image`
     width: 100%;
     height: 100%;
-    border-radius: ${scale(10)}px;
+    border-top-left-radius: ${scale(10)}px;
+    border-bottom-left-radius: ${scale(10)}px;
 `;
 
 const RightContainer = styled.View`

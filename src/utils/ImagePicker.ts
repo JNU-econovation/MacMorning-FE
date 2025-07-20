@@ -1,10 +1,9 @@
 import {
   launchImageLibrary,
-  ImagePickerResponse,
 } from 'react-native-image-picker';
 import {checkAndRequestPhotoPermission} from './permission';
 
-export const onSelectImage = async (): Promise<File | null> => {
+export const onSelectImage = async (): Promise<{blob: Blob, filename: string} | null> => {
   try {
     // 권한 체크 및 요청
     const hasPermission = await checkAndRequestPhotoPermission();
@@ -24,7 +23,7 @@ export const onSelectImage = async (): Promise<File | null> => {
           quality: 0.8,
           selectionLimit: 1,
         },
-        response => {
+        async response => {
           console.log('ImagePicker Response:', response);
 
           if (response.didCancel) {
@@ -37,17 +36,25 @@ export const onSelectImage = async (): Promise<File | null> => {
           } else if (response.assets && response.assets.length > 0) {
             const asset = response.assets[0];
             if (asset.uri) {
-              // File 객체 생성
-              const file = new File(
-                [asset.uri],
-                asset.fileName || 'image.jpg',
-                {
-                  type: asset.type || 'image/jpeg',
-                  lastModified: Date.now(),
-                },
-              );
-              console.log('이미지 선택 성공:', file);
-              resolve(file);
+              try {
+                // URI를 Blob으로 변환
+                const response = await fetch(asset.uri);
+                const blob = await response.blob();
+                
+                console.log('Blob 생성 성공:', {
+                  size: blob.size,
+                  type: blob.type,
+                  filename: asset.fileName || 'image.jpg'
+                });
+                
+                resolve({
+                  blob: blob,
+                  filename: asset.fileName || 'image.jpg'
+                });
+              } catch (error) {
+                console.error('Blob 생성 실패:', error);
+                reject(error);
+              }
             } else {
               resolve(null);
             }

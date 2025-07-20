@@ -13,9 +13,13 @@ import {useRoute} from '@react-navigation/native';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
+import { useStoryImageUrl } from '@/hooks/useImageUrl';
+import { createImage } from '@/apis/AI/createImage';
+import { create } from 'zustand';
 
 const StoryProgressView = ({
   bookId,
+  page_number,
   totalPage,
   AIResponse,
   isDisabled,
@@ -23,6 +27,7 @@ const StoryProgressView = ({
   setLastPage,
 }: {
   bookId: number;
+  page_number: number;
   totalPage: number;
   AIResponse: {
     story: string;
@@ -35,21 +40,36 @@ const StoryProgressView = ({
 }) => {
   const accessToken = useAuthStore(state => state.accessToken);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const displayImageUrl = useStoryImageUrl(uploadedImage);
   const {goToStoryProgress, goToQuestions} =
     createNavigationHelpers(navigation);
 
   const handleImagePicker = async () => {
     const result = await onSelectImage();
-
+    console.log(result);
     if (result) {
       const uploadResult = await uploadImageToS3(
-        result?.name || '',
+        result.filename,
         bookId,
         accessToken || '',
-        result,
+        result.blob,
       );
-      console.log(uploadResult);
+      if (uploadResult) {
+        const imageUrl = uploadResult;
+        setUploadedImage(imageUrl);
+      }
     }
+  };
+
+  const handleCreateImage = async () => {
+    const result = await createImage(
+      bookId,
+      page_number
+    );
+    console.log(result);
+
+        setUploadedImage(result);
   };
 
   const handleSelectChoice = async (choice: number) => {
@@ -65,8 +85,14 @@ const StoryProgressView = ({
   return (
     <StoryProgressViewContainer>
       <LeftContainer>
-        <ImageButton text="이미지 업로드" onPress={handleImagePicker} />
-        <ImageButton text="삽화 생성" onPress={() => {}} />
+        {uploadedImage ? (
+            <UploadedImage source={{uri: displayImageUrl}} />
+        ) : (
+          <>
+            <ImageButton text="이미지 업로드" onPress={handleImagePicker} />
+            <ImageButton text="삽화 생성" onPress={handleCreateImage} />
+          </>
+        )}
       </LeftContainer>
       <RightContainer>
         <StoryContainer>
@@ -150,6 +176,13 @@ const SelectButtonContainer = styled.View`
   margin-bottom: ${scale(10)}px;
 `;
 
+const UploadedImage = styled.Image`
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: ${scale(10)}px;
+  border-bottom-left-radius: ${scale(10)}px;
+`;
+
 const GoQuestionButton = styled.TouchableOpacity`
   padding: ${scale(10)}px ${scale(15)}px;
   align-items: center;
@@ -163,3 +196,4 @@ const GoQuestionButtonWrapper = styled.View`
 `;
 
 export default StoryProgressView;
+

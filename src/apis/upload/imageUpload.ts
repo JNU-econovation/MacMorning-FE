@@ -36,18 +36,18 @@ const getPresignedUrl = async (
 };
 
 const uploadImageToS3 = async (
-  image: string,
+  filename: string,
   bookId: number,
   accessToken: string,
-  asset: File,
+  blob: Blob,
 ) => {
   try {
-    const presignedData = await getPresignedUrl(image, bookId, accessToken);
+    const presignedData = await getPresignedUrl(filename, bookId, accessToken);
     console.log('Presigned Data:', presignedData);
 
     const uploadResponse = await fetch(presignedData.data.presigned_url, {
       method: 'PUT',
-      body: asset,
+      body: blob,
       headers: {
         'Content-Type': presignedData.data.content_type || 'image/jpeg',
       },
@@ -60,8 +60,8 @@ const uploadImageToS3 = async (
         `S3 업로드 실패: ${uploadResponse.status} - ${errorText}`,
       );
     }
-
-    return uploadResponse.url;
+    console.log(uploadResponse);
+    return presignedData.data.filename;
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : '알 수 없는 오류';
