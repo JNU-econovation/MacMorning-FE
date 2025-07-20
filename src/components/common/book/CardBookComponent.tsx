@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
 import CustomText from '@/utils/CustomText';
+import {Book} from '@/types/book';
 
 interface CardBookComponentProps {
   book: Book;

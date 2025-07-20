@@ -2,9 +2,9 @@ import React from 'react';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import CustomText from '@/utils/CustomText';
-const EndingButton = (): React.JSX.Element => {
+const EndingButton = ({onPress}: {onPress: () => void}): React.JSX.Element => {
   return (
-    <EndingButtonContainer>
+    <EndingButtonContainer onPress={onPress}>
       <CustomText font="NPSfont_regular">엔딩 만들기</CustomText>
     </EndingButtonContainer>
   );
