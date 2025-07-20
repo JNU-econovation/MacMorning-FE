@@ -19,7 +19,7 @@ import CustomText from '@/utils/CustomText';
 const StoryProgress = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'StoryProgress'>>();
   const {bookId, lastPage, formData, nextStory} = route.params.props || {};
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   console.log(bookId, lastPage, formData, nextStory);
   const [AIResponse, setAIResponse] = useState<{
     story: string;
@@ -115,7 +115,7 @@ const StoryProgress = () => {
 
   return (
     <StoryProgressContainer>
-      <Header title="이야기 진행" headerType="progress" />
+      <Header title="이야기 진행" headerType="progress" isLoading={isLoading} />
       {isLoading ? (
         <Loading script="이야기를 만드는 중이에요..." />
       ) : (
@@ -136,7 +136,7 @@ const StoryProgress = () => {
         <StepButton
           text="이전"
           onPress={handlePrevPage}
-          disabled={isPrevDisabled}
+          disabled={isPrevDisabled || isLoading}
         />
         <CustomText
           style={{fontSize: scale(10), color: COLORS.text.primary}}
@@ -146,7 +146,7 @@ const StoryProgress = () => {
         <StepButton
           text="다음"
           onPress={handleNextPage}
-          disabled={isNextDisabled}
+          disabled={isNextDisabled || isLoading}
         />
       </ProgressButtonWrapper>
     </StoryProgressContainer>
