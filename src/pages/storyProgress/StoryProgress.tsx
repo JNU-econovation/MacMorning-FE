@@ -123,6 +123,7 @@ const StoryProgress = () => {
           <StoryProgressViewContainer>
             <StoryProgressView
               bookId={bookId}
+              page_number = {page_number}
               totalPage={total_page}
               AIResponse={AIResponse}
               isDisabled={!isNextDisabled}

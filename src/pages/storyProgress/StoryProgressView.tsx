@@ -14,9 +14,12 @@ import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
 import { useStoryImageUrl } from '@/hooks/useImageUrl';
+import { createImage } from '@/apis/AI/createImage';
+import { create } from 'zustand';
 
 const StoryProgressView = ({
   bookId,
+  page_number,
   totalPage,
   AIResponse,
   isDisabled,
@@ -24,6 +27,7 @@ const StoryProgressView = ({
   setLastPage,
 }: {
   bookId: number;
+  page_number: number;
   totalPage: number;
   AIResponse: {story: string; choice1: string; choice2: string};
   isDisabled: boolean;
@@ -55,6 +59,16 @@ const StoryProgressView = ({
     }
   };
 
+  const handleCreateImage = async () => {
+    const result = await createImage(
+      bookId,
+      page_number
+    );
+    console.log(result);
+
+        setUploadedImage(result);
+  };
+
   const handleSelectChoice = async (choice: number) => {
     const response = await fetchChoice(bookId, choice);
     console.log(response);
@@ -73,7 +87,7 @@ const StoryProgressView = ({
         ) : (
           <>
             <ImageButton text="이미지 업로드" onPress={handleImagePicker} />
-            <ImageButton text="삽화 생성" onPress={() => {}} />
+            <ImageButton text="삽화 생성" onPress={handleCreateImage} />
           </>
         )}
       </LeftContainer>
