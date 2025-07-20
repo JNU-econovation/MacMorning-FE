@@ -77,29 +77,25 @@ function Mybook(): React.JSX.Element {
       />
       <MybookFlatListContainer>
         {isAuthenticated ? (
-          isLoading ? (
-            <Loading script="내 책을 불러오는 중이에요..." />
-          ) : (
-            <FlatList<Book>
-              style={{width: '100%'}}
-              data={myBooks}
-              renderItem={renderItem}
-              keyExtractor={(book, index) => `${book.book_id}-${index}`}
-              numColumns={4}
-              showsVerticalScrollIndicator={false}
-              scrollEnabled={true}
-              onEndReached={handleLoadMore}
-              onEndReachedThreshold={0.1}
-              contentContainerStyle={{
-                paddingTop: scale(30),
-                paddingBottom: scale(60),
-              }}
-              columnWrapperStyle={{
-                marginBottom: scale(20),
-                gap: '8%',
-              }}
-            />
-          )
+          <FlatList<Book>
+            style={{width: '100%'}}
+            data={myBooks}
+            renderItem={renderItem}
+            keyExtractor={(book, index) => `${book.book_id}-${index}`}
+            numColumns={4}
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={true}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.1}
+            contentContainerStyle={{
+              paddingTop: scale(30),
+              paddingBottom: scale(60),
+            }}
+            columnWrapperStyle={{
+              marginBottom: scale(20),
+              gap: '8%',
+            }}
+          />
         ) : (
           <GuestView />
         )}
