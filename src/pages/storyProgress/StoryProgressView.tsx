@@ -29,18 +29,21 @@ const StoryProgressView = ({
   bookId: number;
   page_number: number;
   totalPage: number;
-  AIResponse: {story: string; choice1: string; choice2: string};
+  AIResponse: {
+    story: string;
+    choice1: string | undefined;
+    choice2: string | undefined;
+  };
   isDisabled: boolean;
   isLoading: boolean;
   setLastPage: (lastPage: number) => void;
 }) => {
   const accessToken = useAuthStore(state => state.accessToken);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const {goToStoryProgress} = createNavigationHelpers(navigation);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const displayImageUrl = useStoryImageUrl(uploadedImage);
-
-  console.log(displayImageUrl);
+  const {goToStoryProgress, goToQuestions} =
+    createNavigationHelpers(navigation);
 
   const handleImagePicker = async () => {
     const result = await onSelectImage();
@@ -98,16 +101,38 @@ const StoryProgressView = ({
           </CustomText>
         </StoryContainer>
         <SelectButtonContainer>
-          <SelectButton
-            onPress={() => handleSelectChoice(1)}
-            selectScript={AIResponse.choice1}
-            isDisabled={isDisabled}
-          />
-          <SelectButton
-            onPress={() => handleSelectChoice(2)}
-            selectScript={AIResponse.choice2}
-            isDisabled={isDisabled}
-          />
+          {AIResponse.choice1 && (
+            <SelectButton
+              onPress={() => handleSelectChoice(1)}
+              selectScript={AIResponse.choice1}
+              isDisabled={isDisabled}
+            />
+          )}
+          {AIResponse.choice2 && (
+            <SelectButton
+              onPress={() => handleSelectChoice(2)}
+              selectScript={AIResponse.choice2}
+              isDisabled={isDisabled}
+            />
+          )}
+          {AIResponse.choice1 === '' && AIResponse.choice2 === '' && (
+            <GoQuestionButtonWrapper>
+              <GoQuestionButton
+                activeOpacity={1}
+                onPress={() => {
+                  goToQuestions({bookId});
+                }}>
+                <CustomText
+                  font="NPSfont_regular"
+                  style={{
+                    fontSize: scale(9),
+                    color: COLORS.primary,
+                  }}>
+                  작가의 의도 작성하러 가기 ▶
+                </CustomText>
+              </GoQuestionButton>
+            </GoQuestionButtonWrapper>
+          )}
         </SelectButtonContainer>
       </RightContainer>
     </StoryProgressViewContainer>
@@ -158,4 +183,17 @@ const UploadedImage = styled.Image`
   border-bottom-left-radius: ${scale(10)}px;
 `;
 
+const GoQuestionButton = styled.TouchableOpacity`
+  padding: ${scale(10)}px ${scale(15)}px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const GoQuestionButtonWrapper = styled.View`
+  width: 100%;
+  align-items: flex-end;
+  justify-content: flex-end;
+`;
+
 export default StoryProgressView;
+

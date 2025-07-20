@@ -10,10 +10,10 @@ import {
   getNextStory,
   saveProgressStory,
 } from '@/apis/story/storyProgress';
+import {createEnding, saveEnding} from '@/apis/story/createEnding';
 import {NavigationProp, RouteProp, useRoute} from '@react-navigation/native';
 import Loading from '@/components/common/loading/Loading';
 import StepButton from '@/components/common/buttons/StepButton';
-import {useNavigation} from '@react-navigation/native';
 import CustomText from '@/utils/CustomText';
 
 const StoryProgress = () => {
@@ -23,8 +23,8 @@ const StoryProgress = () => {
   console.log(bookId, lastPage, formData, nextStory);
   const [AIResponse, setAIResponse] = useState<{
     story: string;
-    choice1: string;
-    choice2: string;
+    choice1: string | undefined;
+    choice2: string | undefined;
   }>({
     story: '',
     choice1: '',
@@ -56,6 +56,7 @@ const StoryProgress = () => {
     console.log('useEffect', page_number);
     const fetchStory = async () => {
       await setIsLoading(true);
+      console.log(!formData && !nextStory);
       if (
         AIResponse.story === '' &&
         AIResponse.choice1 === '' &&
@@ -67,8 +68,8 @@ const StoryProgress = () => {
           const response = await createStory(formData, bookId);
           const newStory = {
             story: response.data.story || '',
-            choice1: response.data.choice1 || '',
-            choice2: response.data.choice2 || '',
+            choice1: response.data.choice1 || undefined,
+            choice2: response.data.choice2 || undefined,
           };
           setAIResponse(newStory);
           // 이야기 생성이 완되면 저장한다.
@@ -85,6 +86,18 @@ const StoryProgress = () => {
           saveProgressStory(bookId, page_number, newStory);
           setIsLoading(false);
         }
+      } // 엔딩만들기
+      else if (AIResponse.story === '' && !formData && !nextStory) {
+        const response = await createEnding(bookId);
+        const newStory = {
+          story: response.data.story,
+          choice1: '',
+          choice2: '',
+        };
+        setAIResponse(newStory);
+        saveProgressStory(bookId, page_number, newStory);
+
+        saveEnding(bookId);
       } else {
         console.log('getLastStory');
         const response = await getLastStory(bookId, page_number);
@@ -115,7 +128,13 @@ const StoryProgress = () => {
 
   return (
     <StoryProgressContainer>
-      <Header title="이야기 진행" headerType="progress" isLoading={isLoading} />
+      <Header
+        title="이야기 진행"
+        headerType="progress"
+        isLoading={isLoading}
+        bookId={bookId}
+        totalPage={total_page}
+      />
       {isLoading ? (
         <Loading script="이야기를 만드는 중이에요..." />
       ) : (

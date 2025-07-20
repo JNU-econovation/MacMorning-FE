@@ -26,11 +26,15 @@ const getLastStory = async (bookId: number, lastPage: number) => {
 const saveProgressStory = async (
   bookId: number,
   page_number: number,
-  AIResponse: {story: string; choice1: string; choice2: string},
+  AIResponse: {
+    story: string;
+    choice1: string | undefined;
+    choice2: string | undefined;
+  },
   illust?: string,
 ) => {
   const accessToken = await AsyncStorage.getItem('accessToken');
-
+  console.log('saveProgressStory', bookId, page_number, AIResponse);
   let requestBody = {
     story: {
       page_number: page_number,
@@ -42,8 +46,8 @@ const saveProgressStory = async (
       },
     }),
     choice: {
-      first_choice: AIResponse.choice1,
-      second_choice: AIResponse.choice2,
+      first_choice: AIResponse.choice1 || '',
+      second_choice: AIResponse.choice2 || '',
     },
   };
 

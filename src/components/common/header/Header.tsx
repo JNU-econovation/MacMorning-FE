@@ -13,14 +13,18 @@ interface HeaderProps {
   title: string;
   headerType: 'default' | 'create' | 'progress' | 'edit';
   isLoading?: boolean;
+  bookId?: number;
+  totalPage?: number;
 }
 
 const Header = ({
   title,
   headerType,
   isLoading = false,
+  bookId,
+  totalPage,
 }: HeaderProps): React.JSX.Element => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   if (headerType === 'default') {
     return (
@@ -49,7 +53,7 @@ const Header = ({
     );
   }
 
-  if (headerType === 'progress') {
+  if (headerType === 'progress' && bookId && totalPage) {
     return (
       <HeaderWrapper>
         <BackHeaderContainer>
@@ -65,7 +69,18 @@ const Header = ({
             }}
           />
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
-          <EndingButton />
+          <EndingButton
+            onPress={() => {
+              navigation.navigate('StoryProgress', {
+                props: {
+                  bookId: bookId,
+                  lastPage: totalPage,
+                  formData: undefined,
+                  nextStory: undefined,
+                },
+              });
+            }}
+          />
         </BackHeaderContainer>
       </HeaderWrapper>
     );
