@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {cloudFrontDomain} from '@/constants/api';
+import {cloudFrontDomain} from '@/constants/domain';
 
 //title_img_url에 /가 안붙어있어서 없다면 붙이는 함수 
 export const useImageUrl = (url: string | undefined | null): string => {

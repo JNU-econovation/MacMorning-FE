@@ -1,0 +1,1 @@
+export const cloudFrontDomain = 'https://dyr2odb2idgl1.cloudfront.net';

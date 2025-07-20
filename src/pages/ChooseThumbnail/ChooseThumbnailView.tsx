@@ -5,7 +5,7 @@ import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
 import { Illust } from '@/types/book';
-import {cloudFrontDomain} from '@/constants/api';
+import {cloudFrontDomain} from '@/constants/domain';
 
 interface ChooseThumbnailViewProps {
     illust: Illust[];
