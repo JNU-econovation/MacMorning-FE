@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native';
 import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
 import ImageButton from '@/components/storyProgress/ImageButton';
 import SelectButton from '@/components/storyProgress/SelectButton';
 import {onSelectImage} from '@/utils/ImagePicker';
-import {uploadImageToS3} from '@/apis/upload/imageUpload';
+import {uploadImageToS3, patchImage} from '@/apis/upload/imageUpload';
 import {useAuthStore} from '@/store/authStore';
 import CustomText from '@/utils/CustomText';
 import {fetchChoice} from '@/apis/story/storyProgress';
@@ -14,9 +14,11 @@ import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
 import {useStoryImageUrl} from '@/hooks/useImageUrl';
 import {createImage} from '@/apis/AI/createImage';
+import {Illust} from '@/types/form';
 
 const StoryProgressView = ({
   bookId,
+  illust,
   page_number,
   totalPage,
   AIResponse,
@@ -24,6 +26,7 @@ const StoryProgressView = ({
   setLastPage,
 }: {
   bookId: number;
+  illust: Illust;
   page_number: number;
   totalPage: number;
   AIResponse: {
@@ -35,7 +38,6 @@ const StoryProgressView = ({
   isLoading: boolean;
   setLastPage: (lastPage: number) => void;
 }) => {
-  const accessToken = useAuthStore(state => state.accessToken);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const displayImageUrl = useStoryImageUrl(uploadedImage);
@@ -54,14 +56,18 @@ const StoryProgressView = ({
       if (uploadResult) {
         const imageUrl = uploadResult;
         setUploadedImage(imageUrl);
+        const patchResult = await patchImage(
+          bookId,
+          imageUrl,
+          illust.illust_id,
+        );
+        console.log(patchResult);
       }
     }
   };
 
   const handleCreateImage = async () => {
     const result = await createImage(bookId, page_number);
-    console.log(result);
-
     setUploadedImage(result);
   };
 
@@ -74,6 +80,12 @@ const StoryProgressView = ({
       nextStory: choice === 1 ? AIResponse.choice1 : AIResponse.choice2,
     });
   };
+
+  useEffect(() => {
+    if (illust.image_url) {
+      setUploadedImage(illust.image_url);
+    }
+  }, [illust]);
 
   return (
     <StoryProgressViewContainer>
