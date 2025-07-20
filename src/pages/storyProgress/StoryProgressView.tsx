@@ -8,7 +8,7 @@ import {onSelectImage} from '@/utils/ImagePicker';
 import {uploadImageToS3} from '@/apis/upload/imageUpload';
 import {useAuthStore} from '@/store/authStore';
 import CustomText from '@/utils/CustomText';
-import {saveProgressStory} from '@/apis/story/storyProgress';
+import {fetchChoice} from '@/apis/story/storyProgress';
 import {useRoute} from '@react-navigation/native';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 import {useNavigation} from '@react-navigation/native';
@@ -47,7 +47,9 @@ const StoryProgressView = ({
     }
   };
 
-  const handleSelectChoice = (choice: number) => {
+  const handleSelectChoice = async (choice: number) => {
+    const response = await fetchChoice(bookId, choice);
+    console.log(response);
     goToStoryProgress({
       bookId: bookId,
       lastPage: totalPage,

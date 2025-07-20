@@ -65,6 +65,31 @@ const saveProgressStory = async (
   }
 };
 
+const fetchChoice = async (bookId: number, choice: number) => {
+  const accessToken = await AsyncStorage.getItem('accessToken');
+  console.log('fetchChoice', bookId, choice);
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/book/${bookId}/choice/${choice}/mychoice`,
+      {
+        my_choice: choice,
+        is_success: true,
+      },
+      {
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('선택지 가져오기 에러:', error);
+    throw error;
+  }
+};
+
 const getNextStory = async (bookId: number, choice: string) => {
   const accessToken = await AsyncStorage.getItem('accessToken');
   try {
@@ -85,4 +110,4 @@ const getNextStory = async (bookId: number, choice: string) => {
     throw error;
   }
 };
-export {getLastStory, saveProgressStory, getNextStory};
+export {getLastStory, saveProgressStory, getNextStory, fetchChoice};
