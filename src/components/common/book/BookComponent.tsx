@@ -6,30 +6,33 @@ import CustomText from '@/utils/CustomText';
 import {Book} from '@/types/book';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
-import { useImageUrl } from '@/hooks/useImageUrl';
+import {useImageUrl} from '@/hooks/useImageUrl';
 
 interface BookComponentProps {
   book: Book;
 }
 
 function BookComponent({book}: BookComponentProps): React.JSX.Element {
+  console.log('book', book);
   const imageUrl = useImageUrl(book?.title_img_url);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const {goToCreatedBookProgress, goToShareBook} = createNavigationHelpers(navigation);
+  const {goToCreatedBookProgress, goToShareBook} =
+    createNavigationHelpers(navigation);
 
   const handlePress = () => {
     if (book?.is_in_progress === null || book?.is_in_progress === false) {
       goToShareBook({bookId: Number(book.book_id)});
     } else {
-      goToCreatedBookProgress({bookId: Number(book.book_id), lastPage: 0});
+      goToCreatedBookProgress({
+        bookId: Number(book.book_id),
+        lastPage: book.total_page - 1,
+      });
     }
   };
 
   return (
     <BookComponentContainer onPress={handlePress}>
-      <BookImage 
-        source={{uri:imageUrl}}
-      />
+      <BookImage source={{uri: imageUrl}} />
       <BookInfoContainer>
         <CustomText font={'NPSfont_bold'} style={{fontSize: scale(10)}}>
           {book?.title}
