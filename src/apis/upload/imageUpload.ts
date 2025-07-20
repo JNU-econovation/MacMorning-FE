@@ -1,12 +1,10 @@
 import axios from 'axios';
 import {baseUrl} from '@/constants/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const getPresignedUrl = async (
-  image: string,
-  bookId: number,
-  accessToken: string,
-) => {
+const getPresignedUrl = async (image: string, bookId: number) => {
   try {
+    const accessToken = await AsyncStorage.getItem('accessToken');
     if (!accessToken) {
       const authError = new Error('인증 토큰이 없습니다. 다시 로그인해주세요.');
       console.error(authError.message);
@@ -38,11 +36,10 @@ const getPresignedUrl = async (
 const uploadImageToS3 = async (
   filename: string,
   bookId: number,
-  accessToken: string,
   blob: Blob,
 ) => {
   try {
-    const presignedData = await getPresignedUrl(filename, bookId, accessToken);
+    const presignedData = await getPresignedUrl(filename, bookId);
     console.log('Presigned Data:', presignedData);
 
     const uploadResponse = await fetch(presignedData.data.presigned_url, {
