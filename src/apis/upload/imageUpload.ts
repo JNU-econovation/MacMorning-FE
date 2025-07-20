@@ -67,4 +67,28 @@ const uploadImageToS3 = async (
   }
 };
 
-export {uploadImageToS3};
+const patchImage = async (
+  bookId: number,
+  image_url: string,
+  illust_id: number,
+) => {
+  const accessToken = await AsyncStorage.getItem('accessToken');
+  console.log('patchImage', bookId, image_url, illust_id);
+  try {
+    const response = await axios.patch(
+      `${baseUrl}/book/${bookId}/image/${illust_id}`,
+      {image_url: image_url},
+      {
+        headers: {
+          Authorization: `${accessToken}`,
+        },
+      },
+    );
+    console.log('patchImage response', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('patchImage error', error);
+    throw error;
+  }
+};
+export {uploadImageToS3, patchImage};
