@@ -39,27 +39,33 @@ const uploadImageToS3 = async (
   image: string,
   bookId: number,
   accessToken: string,
+  asset: File,
 ) => {
   try {
     const presignedData = await getPresignedUrl(image, bookId, accessToken);
+    console.log('Presigned Data:', presignedData);
 
-    const uploadResponse = await fetch(presignedData.data.presignedUrl, {
+    const uploadResponse = await fetch(presignedData.data.presigned_url, {
       method: 'PUT',
-      body: image,
+      body: asset,
       headers: {
-        'Content-Type': 'image/jpeg',
+        'Content-Type': presignedData.data.content_type || 'image/jpeg',
       },
     });
 
     if (!uploadResponse.ok) {
-      throw new Error(`S3 업로드 실패: ${uploadResponse.status}`);
+      const errorText = await uploadResponse.text();
+      console.error('S3 업로드 응답:', uploadResponse.status, errorText);
+      throw new Error(
+        `S3 업로드 실패: ${uploadResponse.status} - ${errorText}`,
+      );
     }
 
-    return presignedData.imageUrl;
+    return uploadResponse.url;
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : '알 수 없는 오류';
-    console.error('S3 업로드 오류:', errorMessage);
+    console.error('S3 업로드 오류 상세:', error);
     throw new Error(`이미지 업로드 실패: ${errorMessage}`);
   }
 };
