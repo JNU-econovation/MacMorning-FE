@@ -1,12 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
 import {useNavigation} from '@react-navigation/native';
-import PasswordErrorView from './PasswordErrorView';
+import {
+  PasswordNotMatchErrorView,
+  EmailErrorView,
+  PasswordErrorView,
+} from './ValidateView';
 import signup from '@/apis/auth/signup';
+import {validateEmail, validatePassword} from '@/utils/validator/validator';
 
 const Signin = (): React.JSX.Element => {
   const [email, setEmail] = useState('');
@@ -17,6 +22,40 @@ const Signin = (): React.JSX.Element => {
   const [nickname, setNickname] = useState('');
   const navigation = useNavigation<RootStackNavigationProp>();
 
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordNotMatchError, setPasswordNotMatchError] = useState(false);
+
+  useEffect(() => {
+    if (!validateEmail(email) && email) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+    if (!validatePassword(password) && password) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+    if (password !== passwordCheck) {
+      setPasswordNotMatchError(true);
+    } else {
+      setPasswordNotMatchError(false);
+    }
+  }, [email, password, passwordCheck]);
+
+  const hadleSignup = () => {
+    if (emailError || passwordError || passwordNotMatchError) {
+      return;
+    }
+    signup({
+      email: email,
+      password: password,
+      nickname: nickname,
+      username: username,
+      phone_number: phoneNumber,
+    });
+  };
   return (
     <ScrollView
       style={{flex: 1, width: '100%', backgroundColor: COLORS.background.white}}
@@ -35,12 +74,14 @@ const Signin = (): React.JSX.Element => {
           </LoginTitleContainer>
           <InputContainer>
             <Input placeholder="이메일" value={email} onChangeText={setEmail} />
+            {emailError && <EmailErrorView />}
             <Input
               placeholder="비밀번호"
               secureTextEntry={true}
               value={password}
               onChangeText={setPassword}
             />
+            {passwordError && <PasswordErrorView />}
             {password && (
               <Input
                 placeholder="비밀번호 확인"
@@ -49,7 +90,7 @@ const Signin = (): React.JSX.Element => {
                 onChangeText={setPasswordCheck}
               />
             )}
-            {password !== passwordCheck && <PasswordErrorView />}
+            {passwordNotMatchError && <PasswordNotMatchErrorView />}
           </InputContainer>
           <InputContainer>
             <InputLabel font="NanumSquareNeo-dEb">이름</InputLabel>
@@ -76,13 +117,7 @@ const Signin = (): React.JSX.Element => {
               activeOpacity={1}
               style={{backgroundColor: COLORS.primary}}
               onPress={() => {
-                signup({
-                  email: email,
-                  password: password,
-                  nickname: nickname,
-                  username: username,
-                  phone_number: phoneNumber,
-                });
+                hadleSignup();
               }}>
               <CustomText
                 font="NanumSquareNeo-dEb"
