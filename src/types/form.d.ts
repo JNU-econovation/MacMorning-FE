@@ -15,6 +15,14 @@ export interface FormData {
   };
 }
 
+export interface Illust {
+  illust_id: number;
+  story_id: number;
+  image_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Question {
   id: number;
   question: string;
