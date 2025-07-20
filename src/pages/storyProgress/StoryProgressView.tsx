@@ -9,13 +9,11 @@ import {uploadImageToS3} from '@/apis/upload/imageUpload';
 import {useAuthStore} from '@/store/authStore';
 import CustomText from '@/utils/CustomText';
 import {fetchChoice} from '@/apis/story/storyProgress';
-import {useRoute} from '@react-navigation/native';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
-import { useStoryImageUrl } from '@/hooks/useImageUrl';
-import { createImage } from '@/apis/AI/createImage';
-import { create } from 'zustand';
+import {useStoryImageUrl} from '@/hooks/useImageUrl';
+import {createImage} from '@/apis/AI/createImage';
 
 const StoryProgressView = ({
   bookId,
@@ -23,7 +21,6 @@ const StoryProgressView = ({
   totalPage,
   AIResponse,
   isDisabled,
-  isLoading,
   setLastPage,
 }: {
   bookId: number;
@@ -52,7 +49,6 @@ const StoryProgressView = ({
       const uploadResult = await uploadImageToS3(
         result.filename,
         bookId,
-        accessToken || '',
         result.blob,
       );
       if (uploadResult) {
@@ -63,13 +59,10 @@ const StoryProgressView = ({
   };
 
   const handleCreateImage = async () => {
-    const result = await createImage(
-      bookId,
-      page_number
-    );
+    const result = await createImage(bookId, page_number);
     console.log(result);
 
-        setUploadedImage(result);
+    setUploadedImage(result);
   };
 
   const handleSelectChoice = async (choice: number) => {
@@ -86,7 +79,7 @@ const StoryProgressView = ({
     <StoryProgressViewContainer>
       <LeftContainer>
         {uploadedImage ? (
-            <UploadedImage source={{uri: displayImageUrl}} />
+          <UploadedImage source={{uri: displayImageUrl}} />
         ) : (
           <>
             <ImageButton text="이미지 업로드" onPress={handleImagePicker} />
@@ -196,4 +189,3 @@ const GoQuestionButtonWrapper = styled.View`
 `;
 
 export default StoryProgressView;
-
