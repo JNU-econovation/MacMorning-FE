@@ -13,6 +13,7 @@ import {useRoute} from '@react-navigation/native';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
+import { useStoryImageUrl } from '@/hooks/useImageUrl';
 
 const StoryProgressView = ({
   bookId,
@@ -32,18 +33,25 @@ const StoryProgressView = ({
   const accessToken = useAuthStore(state => state.accessToken);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const {goToStoryProgress} = createNavigationHelpers(navigation);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const displayImageUrl = useStoryImageUrl(uploadedImage);
+
+  console.log(displayImageUrl);
 
   const handleImagePicker = async () => {
     const result = await onSelectImage();
-
+    console.log(result);
     if (result) {
       const uploadResult = await uploadImageToS3(
-        result?.name || '',
+        result.filename,
         bookId,
         accessToken || '',
-        result,
+        result.blob,
       );
-      console.log(uploadResult);
+      if (uploadResult) {
+        const imageUrl = uploadResult;
+        setUploadedImage(imageUrl);
+      }
     }
   };
 
@@ -60,8 +68,14 @@ const StoryProgressView = ({
   return (
     <StoryProgressViewContainer>
       <LeftContainer>
-        <ImageButton text="이미지 업로드" onPress={handleImagePicker} />
-        <ImageButton text="삽화 생성" onPress={() => {}} />
+        {uploadedImage ? (
+            <UploadedImage source={{uri: displayImageUrl}} />
+        ) : (
+          <>
+            <ImageButton text="이미지 업로드" onPress={handleImagePicker} />
+            <ImageButton text="삽화 생성" onPress={() => {}} />
+          </>
+        )}
       </LeftContainer>
       <RightContainer>
         <StoryContainer>
@@ -121,6 +135,13 @@ const SelectButtonContainer = styled.View`
   gap: ${scale(5)}px;
   padding: ${scale(10)}px 0;
   margin-bottom: ${scale(10)}px;
+`;
+
+const UploadedImage = styled.Image`
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: ${scale(10)}px;
+  border-bottom-left-radius: ${scale(10)}px;
 `;
 
 export default StoryProgressView;
