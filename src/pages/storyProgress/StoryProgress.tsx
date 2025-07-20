@@ -20,7 +20,7 @@ const StoryProgress = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'StoryProgress'>>();
   const {bookId, lastPage, formData, nextStory} = route.params.props || {};
   const [isLoading, setIsLoading] = useState<Boolean>(false);
-
+  console.log(bookId, lastPage, formData, nextStory);
   const [AIResponse, setAIResponse] = useState<{
     story: string;
     choice1: string;
@@ -38,7 +38,7 @@ const StoryProgress = () => {
 
   const isNextDisabled = page_number === total_page;
   const isPrevDisabled = page_number === 1;
-
+  console.log('page_number', page_number);
   // lastPage 변경 시 상태 업데이트
   useEffect(() => {
     const newTotalPage = lastPage + 1;
@@ -53,12 +53,14 @@ const StoryProgress = () => {
 
   // 스토리 가져오기
   useEffect(() => {
+    console.log('useEffect', page_number);
     const fetchStory = async () => {
       await setIsLoading(true);
       if (
         AIResponse.story === '' &&
         AIResponse.choice1 === '' &&
-        AIResponse.choice2 === ''
+        AIResponse.choice2 === '' &&
+        (formData || nextStory)
       ) {
         if (page_number === 1 && formData) {
           console.log('createStory');
@@ -84,6 +86,7 @@ const StoryProgress = () => {
           setIsLoading(false);
         }
       } else {
+        console.log('getLastStory');
         const response = await getLastStory(bookId, page_number);
         const newStory = {
           story: response.data.story.story_text,
