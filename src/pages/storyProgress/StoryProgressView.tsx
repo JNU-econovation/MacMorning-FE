@@ -31,12 +31,18 @@ const StoryProgressView = ({
 
   const handleImagePicker = async () => {
     const result = await onSelectImage();
-    const uploadResult = await uploadImageToS3(
-      result.assets?.[0]?.uri || '',
-      bookId,
-      accessToken || '',
-    );
-    console.log(uploadResult);
+
+    console.log(result);
+
+    if (result) {
+      const uploadResult = await uploadImageToS3(
+        result?.name || '',
+        bookId,
+        accessToken || '',
+        result,
+      );
+      console.log(uploadResult);
+    }
   };
 
   const handleSelectChoice = (choice: number) => {
