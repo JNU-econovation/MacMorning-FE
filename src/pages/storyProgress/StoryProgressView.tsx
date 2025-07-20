@@ -71,12 +71,12 @@ const StoryProgressView = ({
           <SelectButton
             onPress={() => handleSelectChoice(1)}
             selectScript={AIResponse.choice1}
-            isDisabled={isDisabled || isLoading}
+            isDisabled={isDisabled}
           />
           <SelectButton
             onPress={() => handleSelectChoice(2)}
             selectScript={AIResponse.choice2}
-            isDisabled={isDisabled || isLoading}
+            isDisabled={isDisabled}
           />
         </SelectButtonContainer>
       </RightContainer>
