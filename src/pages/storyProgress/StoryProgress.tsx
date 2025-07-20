@@ -5,7 +5,11 @@ import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
 import StoryProgressView from './StoryProgressView';
 import {createStory} from '@/apis/AI/createStory';
-import {getLastStory} from '@/apis/story/storyProgress';
+import {
+  getLastStory,
+  getNextStory,
+  saveProgressStory,
+} from '@/apis/story/storyProgress';
 import {NavigationProp, RouteProp, useRoute} from '@react-navigation/native';
 import Loading from '@/components/common/loading/Loading';
 import StepButton from '@/components/common/buttons/StepButton';
@@ -26,47 +30,73 @@ const StoryProgress = () => {
     choice1: '',
     choice2: '',
   });
-  const [isPrevDisabled, setIsPrevDisabled] = useState<boolean>(false);
 
-  const [total_page, setTotalPage] = useState<number>(lastPage + 1);
-  const [page_number, setPageNumber] = useState<number>(lastPage + 1);
-  const [isNextDisabled, setIsNextDisabled] = useState<boolean>(
-    page_number === lastPage,
-  );
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  // 초기값 설정
+  const initialTotalPage = lastPage + 1;
+  const [total_page, setTotalPage] = useState<number>(initialTotalPage);
+  const [page_number, setPageNumber] = useState<number>(initialTotalPage);
 
+  const isNextDisabled = page_number === total_page;
+  const isPrevDisabled = page_number === 1;
+
+  // lastPage 변경 시 상태 업데이트
+  useEffect(() => {
+    const newTotalPage = lastPage + 1;
+    setTotalPage(newTotalPage);
+    setPageNumber(newTotalPage);
+    setAIResponse({
+      story: '',
+      choice1: '',
+      choice2: '',
+    });
+  }, [lastPage]);
+
+  // 스토리 가져오기
   useEffect(() => {
     const fetchStory = async () => {
-      setIsLoading(true);
-      console.log(page_number, formData, bookId);
-      if (page_number === 1 && formData) {
-        console.log('createStory');
-        const response = await createStory(formData, bookId);
-        setAIResponse({
-          story: response.data.story || '',
-          choice1: response.data.choice1 || '',
-          choice2: response.data.choice2 || '',
-        });
+      await setIsLoading(true);
+      if (
+        AIResponse.story === '' &&
+        AIResponse.choice1 === '' &&
+        AIResponse.choice2 === ''
+      ) {
+        if (page_number === 1 && formData) {
+          console.log('createStory');
+          const response = await createStory(formData, bookId);
+          const newStory = {
+            story: response.data.story || '',
+            choice1: response.data.choice1 || '',
+            choice2: response.data.choice2 || '',
+          };
+          setAIResponse(newStory);
+          // 이야기 생성이 완되면 저장한다.
+          saveProgressStory(bookId, page_number, newStory);
+        } else if (isNextDisabled && nextStory) {
+          console.log('getNextStory');
+          const response = await getNextStory(bookId, nextStory);
+          const newStory = {
+            story: response.data.story,
+            choice1: response.data.choice1,
+            choice2: response.data.choice2,
+          };
+          setAIResponse(newStory);
+          saveProgressStory(bookId, page_number, newStory);
+          setIsLoading(false);
+        }
       } else {
         const response = await getLastStory(bookId, page_number);
-        console.log(response);
         const newStory = {
           story: response.data.story.story_text,
           choice1: response.data.choice.first_choice,
           choice2: response.data.choice.second_choice,
         };
+
         setAIResponse(newStory);
       }
-      setIsLoading(false);
-      console.log(AIResponse);
+      await setIsLoading(false);
     };
     fetchStory();
-  }, [bookId, page_number, formData]);
-
-  // 다음 선택지 버튼 비활성화
-  useEffect(() => {
-    setIsNextDisabled(page_number === lastPage);
-  }, [page_number]);
+  }, [bookId, page_number]);
 
   const handlePrevPage = () => {
     if (!isPrevDisabled) {
@@ -90,9 +120,11 @@ const StoryProgress = () => {
           <StoryProgressViewContainer>
             <StoryProgressView
               bookId={bookId}
-              lastPage={lastPage}
+              totalPage={total_page}
               AIResponse={AIResponse}
               isDisabled={!isNextDisabled}
+              isLoading={isLoading}
+              setLastPage={setTotalPage}
             />
           </StoryProgressViewContainer>
         </>
@@ -106,7 +138,7 @@ const StoryProgress = () => {
         <CustomText
           style={{fontSize: scale(10), color: COLORS.text.primary}}
           font="NPSfont_regular">
-          {page_number}/{lastPage + 1}
+          {page_number}/{total_page}
         </CustomText>
         <StepButton
           text="다음"
