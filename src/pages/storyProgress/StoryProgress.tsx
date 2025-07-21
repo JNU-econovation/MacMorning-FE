@@ -93,7 +93,6 @@ const StoryProgress = () => {
           );
           setChoiceId(saveResponse.data.choice.choice_id);
           setIllust(saveResponse.data.illust);
-          console.log(saveResult.data.illust.illust_id);
         } else if (isNextDisabled && nextStory) {
           console.log('getNextStory');
           const response = await getNextStory(bookId, nextStory);
