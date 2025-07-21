@@ -22,4 +22,7 @@ export const createNavigationHelpers = (
 
   goToQuestions: (props: {bookId: number}) =>
     navigation.navigate('Questions', {props}),
+
+  goToReadQuestions: (props: {bookId: number}) =>
+    navigation.navigate('ReadQuestions', {props}),
 });
