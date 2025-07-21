@@ -8,26 +8,31 @@ const SelectButton = ({
   onPress,
   selectScript,
   isDisabled,
+  isSelected = false,
 }: {
   onPress: () => void;
   selectScript: string;
   isDisabled: boolean;
+  isSelected?: boolean;
 }) => {
   const [isPressed, setIsPressed] = useState(false);
-
   return (
     <ButtonContainer
       onPress={onPress}
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
       isPressed={isPressed}
+      isSelected={isSelected}
       disabled={isDisabled}>
       <ButtonText font="NPSfont_regular">{selectScript}</ButtonText>
     </ButtonContainer>
   );
 };
 
-const ButtonContainer = styled.Pressable<{isPressed: boolean}>`
+const ButtonContainer = styled.Pressable<{
+  isPressed: boolean;
+  isSelected: boolean;
+}>`
   width: 90%;
   background-color: ${COLORS.background.white};
   padding: ${scale(5)}px ${scale(15)}px;
@@ -35,8 +40,8 @@ const ButtonContainer = styled.Pressable<{isPressed: boolean}>`
   justify-content: center;
   align-items: center;
   border: 2px solid
-    ${({isPressed}: {isPressed: boolean}) =>
-      isPressed ? COLORS.primary : COLORS.text.secondary};
+    ${({isPressed, isSelected}: {isPressed: boolean; isSelected: boolean}) =>
+      isPressed || isSelected ? COLORS.primary : COLORS.text.secondary};
 `;
 
 const ButtonText = styled(CustomText)`
