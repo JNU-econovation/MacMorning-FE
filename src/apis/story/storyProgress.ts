@@ -69,12 +69,16 @@ const saveProgressStory = async (
   }
 };
 
-const fetchChoice = async (bookId: number, choice: number) => {
+const fetchChoice = async (
+  bookId: number,
+  choiceId: number,
+  choice: number,
+) => {
   const accessToken = await AsyncStorage.getItem('accessToken');
-  console.log('fetchChoice', bookId, choice);
+  console.log('fetchChoice', bookId, choiceId, choice);
   try {
     const response = await axios.patch(
-      `${baseUrl}/book/${bookId}/choice/${choice}/mychoice`,
+      `${baseUrl}/book/${bookId}/choice/${choiceId}/mychoice`,
       {
         my_choice: choice,
         is_success: true,
