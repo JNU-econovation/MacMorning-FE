@@ -47,6 +47,9 @@ const saveProgressStory = async (
     choice: {
       first_choice: AIResponse.choice1 || '',
       second_choice: AIResponse.choice2 || '',
+      third_choice: '',
+      my_choice: 3,
+      is_success: true,
     },
   };
 
