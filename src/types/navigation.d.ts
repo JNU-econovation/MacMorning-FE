@@ -40,6 +40,11 @@ declare global {
         bookId: number;
       };
     };
+    ReadQuestions: {
+      props: {
+        bookId: number;
+      };
+    };
   };
 
   type RootStackScreenNames = keyof RootStackParamList;
