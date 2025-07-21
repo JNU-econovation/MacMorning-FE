@@ -4,7 +4,7 @@ import {useAuthStore} from '@/store/authStore';
 export const getQuestions = async (bookId: number) => {
   const accessToken = useAuthStore.getState().accessToken;
   try {
-    const response = await fetch(`${baseUrl}/books/${bookId}/choice`, {
+    const response = await fetch(`${baseUrl}/book/${bookId}/choice`, {
       method: 'GET',
       headers: {
         Authorization: `${accessToken}`,

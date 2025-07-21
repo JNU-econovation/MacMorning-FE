@@ -8,10 +8,11 @@ import CustomText from '@/utils/CustomText';
 import EndingButton from './EndingButton';
 import EditButton from './EditButton';
 import {CommonActions, useNavigation} from '@react-navigation/native';
+import {Alert} from 'react-native';
 
 interface HeaderProps {
   title: string;
-  headerType: 'default' | 'create' | 'progress' | 'edit';
+  headerType: 'default' | 'create' | 'progress' | 'edit' | 'questions';
   isLoading?: boolean;
   bookId?: number;
   totalPage?: number;
@@ -98,6 +99,39 @@ const Header = ({
           />
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
           <EditButton />
+        </BackHeaderContainer>
+      </HeaderWrapper>
+    );
+  }
+
+  if (headerType === 'questions') {
+    return (
+      <HeaderWrapper>
+        <BackHeaderContainer>
+          <BackButton
+            disabled={isLoading}
+            onPress={() => {
+              Alert.alert(
+                '정말 나가시겠어요?',
+                '지금 나가시면 작성한 내용이 저장되지 않아요.',
+                [
+                  {text: '취소', style: 'cancel'},
+                  {
+                    text: '확인',
+                    onPress: () => {
+                      navigation.dispatch(
+                        CommonActions.reset({
+                          index: 0,
+                          routes: [{name: 'MainTabs'}],
+                        }),
+                      );
+                    },
+                  },
+                ],
+              );
+            }}
+          />
+          <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
         </BackHeaderContainer>
       </HeaderWrapper>
     );
