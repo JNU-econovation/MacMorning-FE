@@ -5,6 +5,11 @@ import QuestionInput from '@/components/question/QeustionInput';
 import {Text} from 'react-native';
 import CustomText from '@/utils/CustomText';
 import {COLORS} from '@/constants/colors';
+import {getQuestions} from '@/apis/questions/getQuestions';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import Loading from '@/components/common/loading/Loading';
+import Header from '@/components/common/header/Header';
+
 interface Question {
   id: number;
   question: string;
@@ -12,19 +17,12 @@ interface Question {
 }
 
 const Questions = () => {
+  const route = useRoute<RouteProp<RootStackParamList, 'Questions'>>();
+  const {bookId} = route.params.props;
+  const [isLoading, setIsLoading] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: 0,
-      question: '질문의 제목이 보여집니다.',
-      answer: '답변이 보여집니다.',
-    },
-    {
-      id: 1,
-      question: '질문의 제목이 보여집니다.',
-      answer: '답변이 보여집니다.',
-    },
-    {
-      id: 2,
       question: '질문의 제목이 보여집니다.',
       answer: '답변이 보여집니다.',
     },
@@ -39,42 +37,72 @@ const Questions = () => {
     );
   };
 
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      setIsLoading(true);
+      const response = await getQuestions(bookId);
+      console.log('response', response);
+      setQuestions(
+        response.data.choices
+          .filter((choice: any) => choice.my_choice !== 3)
+          .map((choice: any, index: number) => ({
+            id: index,
+            question: choice.choice_content,
+            answer: '',
+          })),
+      );
+      console.log('questions', questions);
+      console.log('response', response);
+      setIsLoading(false);
+    };
+    fetchQuestions();
+  }, []);
   return (
-    <QuestionPageContainer>
-      <QuestionListContainer showsVerticalScrollIndicator={false}>
-        {questions.map(question => (
-          <QuestionWrapper
-            activeOpacity={1}
-            active={selectedQuestion === question.id}
-            key={question.id}
-            onPress={() => setSelectedQuestion(question.id)}>
-            <CustomText
-              font="NPSfont_regular"
-              style={{
-                fontSize: scale(9),
-                color: question.answer
-                  ? COLORS.text.primary
-                  : COLORS.text.secondary,
-              }}>
-              {question.id + 1}. {question.question}
-            </CustomText>
-          </QuestionWrapper>
-        ))}
-      </QuestionListContainer>
-      <QuestionInputContainer>
-        {questions.map(question =>
-          question.id === selectedQuestion ? (
-            <QuestionInput
-              key={question.id}
-              question={question}
-              setAnswer={setAnswer}
-            />
-          ) : null,
-        )}
-      </QuestionInputContainer>
-    </QuestionPageContainer>
+    <QuestionContainer>
+      <Header title="질문" headerType="questions" />
+      <QuestionPageContainer>
+        <QuestionListContainer showsVerticalScrollIndicator={false}>
+          {questions.map(
+            question =>
+              question && (
+                <QuestionWrapper
+                  activeOpacity={1}
+                  active={selectedQuestion === question.id}
+                  key={question.id}
+                  onPress={() => setSelectedQuestion(question.id)}>
+                  <CustomText
+                    font="NPSfont_regular"
+                    style={{
+                      fontSize: scale(9),
+                      color: question.answer
+                        ? COLORS.text.primary
+                        : COLORS.text.secondary,
+                    }}>
+                    {question.id + 1}. {question.question}
+                  </CustomText>
+                </QuestionWrapper>
+              ),
+          )}
+        </QuestionListContainer>
+        <QuestionInputContainer>
+          {questions.map(question =>
+            question.id === selectedQuestion ? (
+              <QuestionInput
+                key={question.id}
+                question={question}
+                setAnswer={setAnswer}
+              />
+            ) : null,
+          )}
+        </QuestionInputContainer>
+      </QuestionPageContainer>
+    </QuestionContainer>
   );
 };
+
+const QuestionContainer = styled.View`
+  flex: 1;
+`;
 
 const QuestionPageContainer = styled.View`
   flex: 1;
