@@ -21,14 +21,17 @@ const StoryProgress = () => {
   const {bookId, lastPage, formData, nextStory} = route.params.props || {};
   const [isLoading, setIsLoading] = useState<boolean>(false);
   console.log(bookId, lastPage, formData, nextStory);
+  const [choiceId, setChoiceId] = useState<number | null>(null);
   const [AIResponse, setAIResponse] = useState<{
     story: string;
     choice1: string | undefined;
     choice2: string | undefined;
+    my_choice: number | null;
   }>({
     story: '',
     choice1: '',
     choice2: '',
+    my_choice: null,
   });
 
   // 초기값 설정
@@ -48,6 +51,7 @@ const StoryProgress = () => {
       story: '',
       choice1: '',
       choice2: '',
+      my_choice: null,
     });
   }, [lastPage]);
 
@@ -70,10 +74,16 @@ const StoryProgress = () => {
             story: response.data.story || '',
             choice1: response.data.choice1 || undefined,
             choice2: response.data.choice2 || undefined,
+            my_choice: null,
           };
           setAIResponse(newStory);
           // 이야기 생성이 완되면 저장한다.
-          saveProgressStory(bookId, page_number, newStory);
+          const saveResponse = await saveProgressStory(
+            bookId,
+            page_number,
+            newStory,
+          );
+          setChoiceId(saveResponse.data.choice.choice_id);
         } else if (isNextDisabled && nextStory) {
           console.log('getNextStory');
           const response = await getNextStory(bookId, nextStory);
@@ -81,9 +91,15 @@ const StoryProgress = () => {
             story: response.data.story,
             choice1: response.data.choice1,
             choice2: response.data.choice2,
+            my_choice: null,
           };
           setAIResponse(newStory);
-          saveProgressStory(bookId, page_number, newStory);
+          const saveResponse = await saveProgressStory(
+            bookId,
+            page_number,
+            newStory,
+          );
+          setChoiceId(saveResponse.data.choice.choice_id);
           setIsLoading(false);
         }
       } // 엔딩만들기
@@ -93,9 +109,14 @@ const StoryProgress = () => {
           story: response.data.story,
           choice1: '',
           choice2: '',
+          my_choice: null,
         };
         setAIResponse(newStory);
-        saveProgressStory(bookId, page_number, newStory);
+        const saveResponse = await saveProgressStory(
+          bookId,
+          page_number,
+          newStory,
+        );
 
         saveEnding(bookId);
       } else {
@@ -105,6 +126,7 @@ const StoryProgress = () => {
           story: response.data.story.story_text,
           choice1: response.data.choice.first_choice,
           choice2: response.data.choice.second_choice,
+          my_choice: response.data.choice.my_choice,
         };
 
         setAIResponse(newStory);
@@ -142,8 +164,9 @@ const StoryProgress = () => {
           <StoryProgressViewContainer>
             <StoryProgressView
               bookId={bookId}
-              page_number = {page_number}
+              page_number={page_number}
               totalPage={total_page}
+              choiceId={choiceId}
               AIResponse={AIResponse}
               isDisabled={!isNextDisabled}
               isLoading={isLoading}

@@ -13,14 +13,15 @@ import {useRoute} from '@react-navigation/native';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
-import { useStoryImageUrl } from '@/hooks/useImageUrl';
-import { createImage } from '@/apis/AI/createImage';
-import { create } from 'zustand';
+import {useStoryImageUrl} from '@/hooks/useImageUrl';
+import {createImage} from '@/apis/AI/createImage';
+import {create} from 'zustand';
 
 const StoryProgressView = ({
   bookId,
   page_number,
   totalPage,
+  choiceId,
   AIResponse,
   isDisabled,
   isLoading,
@@ -29,10 +30,12 @@ const StoryProgressView = ({
   bookId: number;
   page_number: number;
   totalPage: number;
+  choiceId: number | null;
   AIResponse: {
     story: string;
     choice1: string | undefined;
     choice2: string | undefined;
+    my_choice: number | null;
   };
   isDisabled: boolean;
   isLoading: boolean;
@@ -63,17 +66,14 @@ const StoryProgressView = ({
   };
 
   const handleCreateImage = async () => {
-    const result = await createImage(
-      bookId,
-      page_number
-    );
+    const result = await createImage(bookId, page_number);
     console.log(result);
 
-        setUploadedImage(result);
+    setUploadedImage(result);
   };
 
   const handleSelectChoice = async (choice: number) => {
-    const response = await fetchChoice(bookId, choice);
+    const response = await fetchChoice(bookId, choiceId || 0, choice);
     console.log(response);
     goToStoryProgress({
       bookId: bookId,
@@ -81,12 +81,13 @@ const StoryProgressView = ({
       nextStory: choice === 1 ? AIResponse.choice1 : AIResponse.choice2,
     });
   };
+  // console.log('AIResponse', AIResponse);
 
   return (
     <StoryProgressViewContainer>
       <LeftContainer>
         {uploadedImage ? (
-            <UploadedImage source={{uri: displayImageUrl}} />
+          <UploadedImage source={{uri: displayImageUrl}} />
         ) : (
           <>
             <ImageButton text="이미지 업로드" onPress={handleImagePicker} />
@@ -106,6 +107,7 @@ const StoryProgressView = ({
               onPress={() => handleSelectChoice(1)}
               selectScript={AIResponse.choice1}
               isDisabled={isDisabled}
+              isSelected={AIResponse.my_choice === 1}
             />
           )}
           {AIResponse.choice2 && (
@@ -113,6 +115,7 @@ const StoryProgressView = ({
               onPress={() => handleSelectChoice(2)}
               selectScript={AIResponse.choice2}
               isDisabled={isDisabled}
+              isSelected={AIResponse.my_choice === 2}
             />
           )}
           {AIResponse.choice1 === '' && AIResponse.choice2 === '' && (
@@ -196,4 +199,3 @@ const GoQuestionButtonWrapper = styled.View`
 `;
 
 export default StoryProgressView;
-
