@@ -33,7 +33,7 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
   return (
     <BookComponentContainer onPress={handlePress}>
       <LikeButtonWrapper>
-        <LikeButton book={book} size={scale(6)} />
+        <LikeButton book={book} size={scale(5.4)} />
       </LikeButtonWrapper>
       <BookImage source={{uri: imageUrl}} />
       <BookInfoContainer>
