@@ -31,7 +31,6 @@ const saveProgressStory = async (
     choice1: string | undefined;
     choice2: string | undefined;
   },
-  illust?: string,
 ) => {
   const accessToken = await AsyncStorage.getItem('accessToken');
   console.log('saveProgressStory', bookId, page_number, AIResponse);
@@ -40,11 +39,11 @@ const saveProgressStory = async (
       page_number: page_number,
       story_text: AIResponse.story,
     },
-    ...(illust && {
-      illust: {
-        illust_url: illust,
-      },
-    }),
+
+    illust: {
+      image_url: '',
+    },
+
     choice: {
       first_choice: AIResponse.choice1 || '',
       second_choice: AIResponse.choice2 || '',
