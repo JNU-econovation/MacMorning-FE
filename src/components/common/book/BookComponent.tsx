@@ -7,13 +7,13 @@ import {Book} from '@/types/book';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 import {useImageUrl} from '@/hooks/useImageUrl';
+import LikeButton from '@/components/common/buttons/LikeButton';
 
 interface BookComponentProps {
   book: Book;
 }
 
 function BookComponent({book}: BookComponentProps): React.JSX.Element {
-  console.log('book', book);
   const imageUrl = useImageUrl(book?.title_img_url);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const {goToCreatedBookProgress, goToShareBook} =
@@ -32,6 +32,9 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
 
   return (
     <BookComponentContainer onPress={handlePress}>
+      <LikeButtonWrapper>
+        <LikeButton book={book} size={scale(6)} />
+      </LikeButtonWrapper>
       <BookImage source={{uri: imageUrl}} />
       <BookInfoContainer>
         <CustomText font={'NPSfont_bold'} style={{fontSize: scale(10)}}>
@@ -47,6 +50,13 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
 const BookComponentContainer = styled.TouchableOpacity`
   width: 19%;
   gap: 1%;
+`;
+
+const LikeButtonWrapper = styled.View`
+  z-index: 100;
+  position: absolute;
+  top: -${scale(5)}px;
+  right: -${scale(5)}px;
 `;
 
 const BookImage = styled.Image`
