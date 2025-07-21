@@ -9,9 +9,11 @@ import {Question} from '@/types/form';
 const QuestionInput = ({
   question,
   setAnswer,
+  disabled,
 }: {
   question: Question;
   setAnswer: (id: number, answer: string) => void;
+  disabled?: boolean;
 }) => {
   return (
     <QuestionInputContainer>
@@ -29,6 +31,7 @@ const QuestionInput = ({
         }}
         multiline={true}
         placeholder="질문의 답을 입력해주세요"
+        editable={!disabled}
       />
     </QuestionInputContainer>
   );
