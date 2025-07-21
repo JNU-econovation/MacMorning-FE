@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
 import {useStoryImageUrl} from '@/hooks/useImageUrl';
 import {createImage} from '@/apis/AI/createImage';
+import {create} from 'zustand';
 import {Illust} from '@/types/form';
 
 const StoryProgressView = ({
@@ -21,6 +22,7 @@ const StoryProgressView = ({
   illust,
   page_number,
   totalPage,
+  choiceId,
   AIResponse,
   isDisabled,
   setLastPage,
@@ -29,10 +31,12 @@ const StoryProgressView = ({
   illust: Illust;
   page_number: number;
   totalPage: number;
+  choiceId: number | null;
   AIResponse: {
     story: string;
     choice1: string | undefined;
     choice2: string | undefined;
+    my_choice: number | null;
   };
   isDisabled: boolean;
   isLoading: boolean;
@@ -72,7 +76,7 @@ const StoryProgressView = ({
   };
 
   const handleSelectChoice = async (choice: number) => {
-    const response = await fetchChoice(bookId, choice);
+    const response = await fetchChoice(bookId, choiceId || 0, choice);
     console.log(response);
     goToStoryProgress({
       bookId: bookId,
@@ -80,6 +84,7 @@ const StoryProgressView = ({
       nextStory: choice === 1 ? AIResponse.choice1 : AIResponse.choice2,
     });
   };
+  // console.log('AIResponse', AIResponse);
 
   useEffect(() => {
     if (illust.image_url) {
@@ -111,6 +116,7 @@ const StoryProgressView = ({
               onPress={() => handleSelectChoice(1)}
               selectScript={AIResponse.choice1}
               isDisabled={isDisabled}
+              isSelected={AIResponse.my_choice === 1}
             />
           )}
           {AIResponse.choice2 && (
@@ -118,6 +124,7 @@ const StoryProgressView = ({
               onPress={() => handleSelectChoice(2)}
               selectScript={AIResponse.choice2}
               isDisabled={isDisabled}
+              isSelected={AIResponse.my_choice === 2}
             />
           )}
           {AIResponse.choice1 === '' && AIResponse.choice2 === '' && (

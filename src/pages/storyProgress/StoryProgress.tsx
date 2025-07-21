@@ -21,6 +21,8 @@ const StoryProgress = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'StoryProgress'>>();
   const {bookId, lastPage, formData, nextStory} = route.params.props || {};
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  console.log(bookId, lastPage, formData, nextStory);
+  const [choiceId, setChoiceId] = useState<number | null>(null);
   const [illust, setIllust] = useState<Illust>({
     illust_id: 0,
     story_id: 0,
@@ -33,10 +35,12 @@ const StoryProgress = () => {
     story: string;
     choice1: string | undefined;
     choice2: string | undefined;
+    my_choice: number | null;
   }>({
     story: '',
     choice1: '',
     choice2: '',
+    my_choice: null,
   });
 
   // 초기값 설정
@@ -55,6 +59,7 @@ const StoryProgress = () => {
       story: '',
       choice1: '',
       choice2: '',
+      my_choice: null,
     });
   }, [lastPage]);
 
@@ -77,15 +82,17 @@ const StoryProgress = () => {
             story: response.data.story || '',
             choice1: response.data.choice1 || undefined,
             choice2: response.data.choice2 || undefined,
+            my_choice: null,
           };
           setAIResponse(newStory);
           // 이야기 생성이 완되면 저장한다.
-          const saveResult = await saveProgressStory(
+          const saveResponse = await saveProgressStory(
             bookId,
             page_number,
             newStory,
           );
-          setIllust(saveResult.data.illust);
+          setChoiceId(saveResponse.data.choice.choice_id);
+          setIllust(saveResponse.data.illust);
           console.log(saveResult.data.illust.illust_id);
         } else if (isNextDisabled && nextStory) {
           console.log('getNextStory');
@@ -94,14 +101,17 @@ const StoryProgress = () => {
             story: response.data.story,
             choice1: response.data.choice1,
             choice2: response.data.choice2,
+            my_choice: null,
           };
           setAIResponse(newStory);
-          const saveResult = await saveProgressStory(
+          const saveResponse = await saveProgressStory(
             bookId,
             page_number,
             newStory,
           );
-          setIllust(saveResult.data.illust);
+          setChoiceId(saveResponse.data.choice.choice_id);
+          setIllust(saveResponse.data.illust);
+
           setIsLoading(false);
         }
       } // 엔딩만들기
@@ -111,14 +121,16 @@ const StoryProgress = () => {
           story: response.data.story,
           choice1: '',
           choice2: '',
+          my_choice: null,
         };
         setAIResponse(newStory);
-        const saveResult = await saveProgressStory(
+
+        const saveResponse = await saveProgressStory(
           bookId,
           page_number,
           newStory,
         );
-        setIllust(saveResult.data.illust);
+        setIllust(saveResponse.data.illust);
         saveEnding(bookId);
       } else {
         console.log('getLastStory');
@@ -127,6 +139,7 @@ const StoryProgress = () => {
           story: response.data.story.story_text,
           choice1: response.data.choice.first_choice,
           choice2: response.data.choice.second_choice,
+          my_choice: response.data.choice.my_choice,
         };
         setIllust(response.data.illust);
         setAIResponse(newStory);
@@ -167,6 +180,7 @@ const StoryProgress = () => {
               illust={illust}
               page_number={page_number}
               totalPage={total_page}
+              choiceId={choiceId}
               AIResponse={AIResponse}
               isDisabled={!isNextDisabled}
               isLoading={isLoading}
