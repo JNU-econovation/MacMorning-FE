@@ -30,6 +30,7 @@ declare global {
         lastPage: number;
         formData?: FormData | undefined;
         nextStory?: Story | undefined;
+        createStatus?: string | undefined;
       };
     };
     ReadBook: {
