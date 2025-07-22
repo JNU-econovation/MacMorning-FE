@@ -106,7 +106,9 @@ const StoryProgressView = ({
       </LeftContainer>
       <RightContainer>
         <StoryContainer>
-          <CustomText font="NPSfont_regular" style={{fontSize: scale(9)}}>
+          <CustomText font="NPSfont_regular" style={{
+            fontSize: scale(9),
+            lineHeight: scale(14),}}>
             {AIResponse.story}
           </CustomText>
         </StoryContainer>
@@ -174,9 +176,15 @@ const RightContainer = styled.View`
   justify-content: space-between;
 `;
 
-const StoryContainer = styled.ScrollView`
+const StoryContainer = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    flexGrow: 1,
+    paddingBottom: scale(20),
+  },
+})`
   width: 100%;
-  padding: ${scale(10)}px;
+  padding: ${scale(20)}px;
 `;
 
 const SelectButtonContainer = styled.View`
