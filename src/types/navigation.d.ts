@@ -21,6 +21,7 @@ declare global {
     ShareBook: {
       props: {
         bookId: number;
+        is_bookmarked: boolean;
       };
     };
     StoryProgress: {

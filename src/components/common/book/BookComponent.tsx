@@ -21,7 +21,11 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
 
   const handlePress = () => {
     if (book?.is_in_progress === null || book?.is_in_progress === false) {
-      goToShareBook({bookId: Number(book.book_id)});
+      console.log(book.is_bookmarked || false);
+      goToShareBook({
+        bookId: Number(book.book_id),
+        is_bookmarked: book.is_bookmarked,
+      });
     } else {
       goToCreatedBookProgress({
         bookId: Number(book.book_id),
@@ -33,7 +37,11 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
   return (
     <BookComponentContainer onPress={handlePress}>
       <LikeButtonWrapper>
-        <LikeButton book={book} size={scale(5.4)} />
+        <LikeButton
+          book_id={book.book_id}
+          is_bookmarked={book.is_bookmarked || false}
+          size={scale(5.4)}
+        />
       </LikeButtonWrapper>
       <BookImage source={{uri: imageUrl}} />
       <BookInfoContainer>
