@@ -27,6 +27,7 @@ export interface Question {
   id: number;
   question: string;
   answer: string;
+  choice_id: number;
 }
 
 declare global {

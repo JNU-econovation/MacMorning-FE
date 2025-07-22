@@ -5,16 +5,12 @@ import QuestionInput from '@/components/question/QeustionInput';
 import {Text} from 'react-native';
 import CustomText from '@/utils/CustomText';
 import {COLORS} from '@/constants/colors';
-import {getQuestions} from '@/apis/questions/getQuestions';
+import {getQuestions, saveQuestions} from '@/apis/questions/getQuestions';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import Loading from '@/components/common/loading/Loading';
 import Header from '@/components/common/header/Header';
-
-interface Question {
-  id: number;
-  question: string;
-  answer: string;
-}
+import QuestionsTitle from './QuestionsTitle';
+import {Question} from '@/types/form';
 
 const Questions = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Questions'>>();
@@ -25,6 +21,7 @@ const Questions = () => {
       id: 0,
       question: '질문의 제목이 보여집니다.',
       answer: '답변이 보여집니다.',
+      choice_id: 0,
     },
   ]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);
@@ -35,6 +32,10 @@ const Questions = () => {
         question.id === id ? {...question, answer} : question,
       ),
     );
+  };
+
+  const saveQuestionsHandler = async () => {
+    const response = await saveQuestions(bookId, questions);
   };
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const Questions = () => {
             id: index,
             question: choice.choice_content,
             answer: '',
+            choice_id: choice.choice_id,
           })),
       );
       console.log('questions', questions);
@@ -60,6 +62,10 @@ const Questions = () => {
   return (
     <QuestionContainer>
       <Header title="질문" headerType="questions" />
+      <QuestionsTitle
+        titleText={'선택지를 고른 이유를 작성해주세요!'}
+        subtitleText={'모든 질문에 답변하지 않아도 괜찮아요.'}
+      />
       <QuestionPageContainer>
         <QuestionListContainer showsVerticalScrollIndicator={false}>
           {questions.map(
@@ -96,6 +102,13 @@ const Questions = () => {
           )}
         </QuestionInputContainer>
       </QuestionPageContainer>
+      <QuestionSaveButton onPress={saveQuestionsHandler}>
+        <CustomText
+          font="NPSfont_bold"
+          style={{color: COLORS.text.white, fontSize: scale(8)}}>
+          저장하기
+        </CustomText>
+      </QuestionSaveButton>
     </QuestionContainer>
   );
 };
@@ -135,8 +148,17 @@ const QuestionInputContainer = styled.View`
   align-items: center;
 `;
 
-const QuestionInputWrapper = styled.View`
-  flex: 1;
+const QuestionSaveButton = styled.TouchableOpacity`
+  position: absolute;
+  bottom: 6%;
+  right: 3%;
+  width: 15%;
+  height: 8%;
+  background-color: ${COLORS.primary};
+  border-radius: ${scale(20)}px;
+  align-items: center;
+  justify-content: center;
+  margin-top: ${scale(10)}px;
 `;
 
 export default Questions;
