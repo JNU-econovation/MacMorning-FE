@@ -28,9 +28,27 @@ export const useShareButtonHandlers = (book_id: number | null, bookDetail: any) 
         console.warn('bookDetail이 없습니다.');
         return;
     }
-    //책 만들러가는 navigate
-    // navigation.navigate('CreateStory', { bookDetail });
+    const formDataFromBookDetail = {
+        genre: bookDetail.genre || [],
+        gameMode: false,
+        title: `${bookDetail.title}`,
+        character: {
+            name: bookDetail.character?.name || '',
+            gender: bookDetail.character?.gender || '남성',
+            age: bookDetail.character?.age || '',
+            description: bookDetail.character?.characteristic || '',
+        },
+        story: {
+            grammatical_person: bookDetail.character?.grammatical_person || '1인칭',
+            historical_background: bookDetail.character?.historical_background || bookDetail.background || '',
+            plot: `${bookDetail.title}`,
+        },
     };
+
+    navigation.navigate('CreateBook', { 
+        preFilledData: formDataFromBookDetail 
+    });
+};
 
     return {
     handleReadStory,

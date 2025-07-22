@@ -14,10 +14,8 @@ import ShareButton, {
 const ShareBookView = ({bookDetail}: {bookDetail: any}) => {
   const imageUrl = useImageUrl(bookDetail?.title_img_url);
   const formattedDate = useDateFormat(bookDetail?.created_at);
-  const {handleReadStory, handleCreateStory} = useShareButtonHandlers(
-    bookDetail?.book_id,
-    bookDetail,
-  );
+
+  const {handleReadStory, handleCreateStory} = useShareButtonHandlers(bookDetail?.book_id, bookDetail);
 
   return (
     <ShareBookViewContainer>

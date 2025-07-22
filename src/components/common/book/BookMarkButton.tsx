@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import HeartRegularSVG from '@/assets/images/common/heart-regular.svg';
 import HeartSolidSVG from '@/assets/images/common/heart-solid.svg';
 import {scale} from 'react-native-size-matters';
@@ -7,19 +7,39 @@ import {baseUrl} from '@/constants/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface BookMarkButtonProps {
-  book_id: number;
-  is_bookmarked: boolean;
+
+    book_id: number;
+    is_bookmarked: boolean | null | undefined;
 }
 
-const BookMarkButton = ({
-  book_id,
-  is_bookmarked,
-}: BookMarkButtonProps): React.JSX.Element => {
-  const [isBookmarked, setIsBookmarked] = useState(is_bookmarked);
-  const [isLoading, setIsLoading] = useState(false);
+const BookMarkButton = ({book_id, is_bookmarked}: BookMarkButtonProps): React.JSX.Element => {
+    console.log(is_bookmarked)
+    const [isBookmarked, setIsBookmarked] = useState(is_bookmarked ?? false);
+    const [isLoading, setIsLoading] = useState(false);
 
-  const toggleBookmark = async () => {
-    if (isLoading) return;
+    useEffect(() => {
+        setIsBookmarked(is_bookmarked ?? false);
+    }, [is_bookmarked]);
+
+    const toggleBookmark = async () => {
+        if (isLoading) return;
+        
+        setIsLoading(true);
+        
+        try {
+        const accessToken = await AsyncStorage.getItem('accessToken');
+        
+        const response = await fetch(`${baseUrl}/bookmark`, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${accessToken}`,
+            },
+            body: JSON.stringify({
+            book_id: book_id,
+            }),
+        });
+
 
     setIsLoading(true);
 
