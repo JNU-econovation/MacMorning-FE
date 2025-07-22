@@ -9,6 +9,7 @@ import EndingButton from './EndingButton';
 import EditButton from './EditButton';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {Alert} from 'react-native';
+import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 
 interface HeaderProps {
   title: string;
@@ -26,7 +27,7 @@ const Header = ({
   totalPage,
 }: HeaderProps): React.JSX.Element => {
   const navigation = useNavigation<RootStackNavigationProp>();
-
+  const {goToStoryProgress} = createNavigationHelpers(navigation);
   if (headerType === 'default') {
     return (
       <HeaderWrapper>
@@ -72,13 +73,12 @@ const Header = ({
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
           <EndingButton
             onPress={() => {
-              navigation.navigate('StoryProgress', {
-                props: {
-                  bookId: bookId,
-                  lastPage: totalPage,
-                  formData: undefined,
-                  nextStory: undefined,
-                },
+              goToStoryProgress({
+                bookId: bookId,
+                lastPage: totalPage,
+                formData: undefined,
+                nextStory: undefined,
+                createStatus: 'ending',
               });
             }}
           />

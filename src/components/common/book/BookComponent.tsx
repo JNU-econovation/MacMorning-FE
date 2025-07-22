@@ -16,7 +16,7 @@ interface BookComponentProps {
 function BookComponent({book}: BookComponentProps): React.JSX.Element {
   const imageUrl = useImageUrl(book?.title_img_url);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const {goToCreatedBookProgress, goToShareBook} =
+  const {goToStoryProgress, goToShareBook} =
     createNavigationHelpers(navigation);
 
   const handlePress = () => {
@@ -27,9 +27,10 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
         is_bookmarked: book.is_bookmarked,
       });
     } else {
-      goToCreatedBookProgress({
+      goToStoryProgress({
         bookId: Number(book.book_id),
         lastPage: book.total_page - 1,
+        createStatus: 'getStory',
       });
     }
   };
