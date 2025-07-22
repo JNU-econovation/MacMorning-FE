@@ -4,13 +4,21 @@ import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 import {Book} from '@/types/book';
 import likeBook from '@/apis/book/likeBook';
+import HeartRegularSVG from '@/assets/images/common/heart-regular.svg';
+import HeartSolidSVG from '@/assets/images/common/heart-solid.svg';
 
 const LikeButton = ({book, size}: {book: Book; size: number}) => {
   const [isLiked, setIsLiked] = useState(book.is_bookmarked);
   const heartIcon =
-    isLiked === true
-      ? require('@/assets/images/common/heart-filled.png')
-      : require('@/assets/images/common/heart-outline.png');
+    isLiked === true ? (
+      <HeartSolidSVG color="#ff4757" width={scale(size)} height={scale(size)} />
+    ) : (
+      <HeartRegularSVG
+        color="#ff4757"
+        width={scale(size)}
+        height={scale(size)}
+      />
+    );
 
   const onClickLikeButton = async () => {
     await likeBook(book.book_id);
@@ -19,10 +27,7 @@ const LikeButton = ({book, size}: {book: Book; size: number}) => {
 
   return (
     <LikeButtonContainer onPress={onClickLikeButton}>
-      <Image
-        source={heartIcon}
-        style={{width: scale(size), height: scale(size)}}
-      />
+      {heartIcon}
     </LikeButtonContainer>
   );
 };
