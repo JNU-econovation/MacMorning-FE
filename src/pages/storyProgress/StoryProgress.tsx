@@ -68,14 +68,14 @@ const StoryProgress = () => {
     console.log('useEffect', page_number);
     const fetchStory = async () => {
       await setIsLoading(true);
-      console.log(!formData && !nextStory);
+
       if (
         AIResponse.story === '' &&
         AIResponse.choice1 === '' &&
         AIResponse.choice2 === '' &&
-        (formData || nextStory)
+        (formData !== undefined || nextStory !== undefined)
       ) {
-        if (page_number === 1 && formData) {
+        if (page_number === 1 && formData !== undefined) {
           console.log('createStory');
           const response = await createStory(formData, bookId);
           const newStory = {
