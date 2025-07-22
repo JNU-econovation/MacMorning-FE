@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import HeartRegularSVG from '@/assets/images/common/heart-regular.svg';
 import HeartSolidSVG from '@/assets/images/common/heart-solid.svg';
 import {scale} from 'react-native-size-matters';
@@ -8,12 +8,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface BookMarkButtonProps {
     book_id: number;
-    is_bookmarked: boolean;
+    is_bookmarked: boolean | null | undefined;
 }
 
 const BookMarkButton = ({book_id, is_bookmarked}: BookMarkButtonProps): React.JSX.Element => {
-    const [isBookmarked, setIsBookmarked] = useState(is_bookmarked);
+    console.log(is_bookmarked)
+    const [isBookmarked, setIsBookmarked] = useState(is_bookmarked ?? false);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setIsBookmarked(is_bookmarked ?? false);
+    }, [is_bookmarked]);
 
     const toggleBookmark = async () => {
         if (isLoading) return;
