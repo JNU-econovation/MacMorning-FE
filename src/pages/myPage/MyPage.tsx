@@ -36,7 +36,7 @@ const MyPage = (): React.JSX.Element => {
             navigation.dispatch(
               CommonActions.reset({
                 index: 0,
-                routes: [{name: 'MainTabs'}],
+                routes: [{name: 'MainTabs', params: {screen: 'Home'}}],
               }),
             );
           }}>
