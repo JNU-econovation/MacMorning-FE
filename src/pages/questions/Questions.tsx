@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import QuestionInput from '@/components/question/QeustionInput';
-import {Text} from 'react-native';
 import CustomText from '@/utils/CustomText';
 import {COLORS} from '@/constants/colors';
 import {getQuestions, saveQuestions} from '@/apis/questions/getQuestions';
@@ -11,9 +10,13 @@ import Loading from '@/components/common/loading/Loading';
 import Header from '@/components/common/header/Header';
 import QuestionsTitle from './QuestionsTitle';
 import {Question} from '@/types/form';
+import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
+import {useNavigation} from '@react-navigation/native';
 
 const Questions = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Questions'>>();
+  const navigation = useNavigation<RootStackNavigationProp>();
+  const {goToChooseThumbnail} = createNavigationHelpers(navigation);
   const {bookId} = route.params.props;
   const [isLoading, setIsLoading] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([
@@ -36,13 +39,15 @@ const Questions = () => {
 
   const saveQuestionsHandler = async () => {
     const response = await saveQuestions(bookId, questions);
+    if (response.success) {
+      goToChooseThumbnail({bookId});
+    }
   };
 
   useEffect(() => {
     const fetchQuestions = async () => {
       setIsLoading(true);
       const response = await getQuestions(bookId);
-      console.log('response', response);
       setQuestions(
         response.data.choices
           .filter((choice: any) => choice.my_choice !== 3)
@@ -53,8 +58,6 @@ const Questions = () => {
             choice_id: choice.choice_id,
           })),
       );
-      console.log('questions', questions);
-      console.log('response', response);
       setIsLoading(false);
     };
     fetchQuestions();
