@@ -45,6 +45,11 @@ declare global {
         bookId: number;
       };
     };
+    ChooseThumbnail: {
+      props: {
+        bookId: number;
+      };
+    };
   };
 
   type RootStackScreenNames = keyof RootStackParamList;
