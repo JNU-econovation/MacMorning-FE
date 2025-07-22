@@ -5,17 +5,12 @@ import QuestionInput from '@/components/question/QeustionInput';
 import {Text} from 'react-native';
 import CustomText from '@/utils/CustomText';
 import {COLORS} from '@/constants/colors';
-import {getQuestions} from '@/apis/questions/getQuestions';
+import {getQuestions, saveQuestions} from '@/apis/questions/getQuestions';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import Loading from '@/components/common/loading/Loading';
 import Header from '@/components/common/header/Header';
 import QuestionsTitle from './QuestionsTitle';
-
-interface Question {
-  id: number;
-  question: string;
-  answer: string;
-}
+import {Question} from '@/types/form';
 
 const Questions = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Questions'>>();
@@ -26,6 +21,7 @@ const Questions = () => {
       id: 0,
       question: '질문의 제목이 보여집니다.',
       answer: '답변이 보여집니다.',
+      choice_id: 0,
     },
   ]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);
@@ -38,8 +34,8 @@ const Questions = () => {
     );
   };
 
-  const saveQuestions = async () => {
-    console.log('questions', questions);
+  const saveQuestionsHandler = async () => {
+    const response = await saveQuestions(bookId, questions);
   };
 
   useEffect(() => {
@@ -54,6 +50,7 @@ const Questions = () => {
             id: index,
             question: choice.choice_content,
             answer: '',
+            choice_id: choice.choice_id,
           })),
       );
       console.log('questions', questions);
@@ -105,7 +102,7 @@ const Questions = () => {
           )}
         </QuestionInputContainer>
       </QuestionPageContainer>
-      <QuestionSaveButton>
+      <QuestionSaveButton onPress={saveQuestionsHandler}>
         <CustomText
           font="NPSfont_bold"
           style={{color: COLORS.text.white, fontSize: scale(8)}}>
