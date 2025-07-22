@@ -10,16 +10,15 @@ import SelectButton from '@/components/storyProgress/SelectButton';
 import {NavigationProp} from '@react-navigation/native';
 
 interface ReadBookViewProps {
+  bookId: number;
   bookPage: any;
   textSize: 'small' | 'medium' | 'large';
 }
 
-const ReadBookView = ({bookPage, textSize}: ReadBookViewProps) => {
+const ReadBookView = ({bookId, bookPage, textSize}: ReadBookViewProps) => {
   const imageUrl = useStoryImageUrl(bookPage?.image_url);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const {goToReadQuestions} = createNavigationHelpers(navigation);
-
-  console.log(bookPage);
   const getFontSize = (size: 'small' | 'medium' | 'large') => {
     switch (size) {
       case 'small':
@@ -69,7 +68,7 @@ const ReadBookView = ({bookPage, textSize}: ReadBookViewProps) => {
               <GoQuestionButton
                 activeOpacity={1}
                 onPress={() => {
-                  goToReadQuestions({bookId: bookPage.book_id});
+                  goToReadQuestions({bookId: bookId});
                 }}>
                 <CustomText
                   font="NPSfont_regular"
@@ -77,7 +76,7 @@ const ReadBookView = ({bookPage, textSize}: ReadBookViewProps) => {
                     fontSize: scale(9),
                     color: COLORS.primary,
                   }}>
-                  작가의 의도 작성하러 가기 ▶
+                  작가의 의도 보러 가기 ▶
                 </CustomText>
               </GoQuestionButton>
             </GoQuestionButtonWrapper>
