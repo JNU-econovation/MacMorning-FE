@@ -1,41 +1,34 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
+import {View} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import QuestionInput from '@/components/question/QeustionInput';
-import {Text} from 'react-native';
 import CustomText from '@/utils/CustomText';
 import {COLORS} from '@/constants/colors';
-import {getQuestions} from '@/apis/questions/getQuestions';
+import {getQuestions, saveQuestions} from '@/apis/questions/getQuestions';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import Loading from '@/components/common/loading/Loading';
 import Header from '@/components/common/header/Header';
-
-interface Question {
-  id: number;
-  question: string;
-  answer: string;
-}
+import QuestionsTitle from './QuestionsTitle';
+import {Question} from '@/types/form';
+import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 
 const ReadQuestions = () => {
-  const route = useRoute<RouteProp<RootStackParamList, 'Questions'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'ReadQuestions'>>();
+  const navigation = useNavigation<RootStackNavigationProp>();
   const {bookId} = route.params.props;
+
   const [isLoading, setIsLoading] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: 0,
       question: '질문의 제목이 보여집니다.',
       answer: '답변이 보여집니다.',
+      choice_id: 0,
     },
   ]);
   const [selectedQuestion, setSelectedQuestion] = useState<number>(0);
-
-  const setAnswer = (id: number, answer: string) => {
-    setQuestions(prev =>
-      prev.map(question =>
-        question.id === id ? {...question, answer} : question,
-      ),
-    );
-  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -44,60 +37,102 @@ const ReadQuestions = () => {
       console.log('response', response);
       setQuestions(
         response.data.choices
-          .filter((choice: any) => choice.my_choice !== 3)
+          .filter(
+            (choice: any) => choice.my_choice !== 3 && choice.reason !== '',
+          )
           .map((choice: any, index: number) => ({
             id: index,
             question: choice.choice_content,
-            answer: '',
+            answer: choice.reason,
+            choice_id: choice.choice_id,
           })),
       );
       console.log('questions', questions);
-      console.log('response', response);
       setIsLoading(false);
     };
     fetchQuestions();
   }, []);
   return (
     <QuestionContainer>
-      <Header title="작가의 의도" headerType="edit" />
+      <QuestionsTitle
+        titleText={'작가의 의도를 확인해보세요!'}
+        subtitleText={'해당 선택지를 고른 이유를 함께 확인해봐요.'}
+      />
       <QuestionPageContainer>
-        <QuestionListContainer showsVerticalScrollIndicator={false}>
-          {questions.map(
-            question =>
-              question && (
-                <QuestionWrapper
-                  activeOpacity={1}
-                  active={false}
-                  key={question.id}
-                  onPress={() => {}}
-                  disabled={true}>
-                  <CustomText
-                    font="NPSfont_regular"
-                    style={{
-                      fontSize: scale(9),
-                      color: question.answer
-                        ? COLORS.text.primary
-                        : COLORS.text.secondary,
-                    }}>
-                    {question.id + 1}. {question.question}
-                  </CustomText>
-                </QuestionWrapper>
-              ),
-          )}
-        </QuestionListContainer>
-        <QuestionInputContainer>
-          {questions.map(question =>
-            question.id === selectedQuestion ? (
-              <QuestionInput
-                key={question.id}
-                question={question}
-                setAnswer={() => {}}
-                disabled={true}
-              />
-            ) : null,
-          )}
-        </QuestionInputContainer>
+        {questions.length > 0 ? (
+          <>
+            <QuestionListContainer showsVerticalScrollIndicator={false}>
+              {questions.map(
+                question =>
+                  question && (
+                    <QuestionWrapper
+                      activeOpacity={1}
+                      active={selectedQuestion === question.id}
+                      key={question.id}
+                      onPress={() => setSelectedQuestion(question.id)}>
+                      <CustomText
+                        font="NPSfont_regular"
+                        style={{
+                          fontSize: scale(9),
+                          color: question.answer
+                            ? COLORS.text.primary
+                            : COLORS.text.secondary,
+                        }}>
+                        {question.id + 1}. {question.question}
+                      </CustomText>
+                    </QuestionWrapper>
+                  ),
+              )}
+            </QuestionListContainer>
+            <QuestionInputContainer>
+              {questions.map(question =>
+                question.id === selectedQuestion ? (
+                  <QuestionInput
+                    key={question.id}
+                    question={question}
+                    setAnswer={() => {}}
+                  />
+                ) : null,
+              )}
+            </QuestionInputContainer>
+          </>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: scale(50),
+            }}>
+            <CustomText
+              font="NPSfont_regular"
+              style={{fontSize: scale(10), color: COLORS.text.secondary}}>
+              작가의 의도가 없습니다.
+            </CustomText>
+          </View>
+        )}
       </QuestionPageContainer>
+
+      <QuestionSaveButton right={scale(7.5)}>
+        <CustomText
+          font="NPSfont_bold"
+          style={{color: COLORS.text.white, fontSize: scale(8)}}>
+          이야기로 돌아가기
+        </CustomText>
+      </QuestionSaveButton>
+
+      <QuestionSaveButton
+        right={scale(2)}
+        onPress={() => {
+          navigation.goBack();
+          navigation.goBack();
+        }}>
+        <CustomText
+          font="NPSfont_bold"
+          style={{color: COLORS.text.white, fontSize: scale(8)}}>
+          그만 읽기
+        </CustomText>
+      </QuestionSaveButton>
     </QuestionContainer>
   );
 };
@@ -137,8 +172,19 @@ const QuestionInputContainer = styled.View`
   align-items: center;
 `;
 
-const QuestionInputWrapper = styled.View`
-  flex: 1;
+const QuestionSaveButton = styled.TouchableOpacity<{
+  right: number;
+}>`
+  position: absolute;
+  bottom: 6%;
+  right: ${({right}: {right: number}) => right}%;
+  padding: 0 ${scale(10)}px;
+  height: 8%;
+  background-color: ${COLORS.primary};
+  border-radius: ${scale(20)}px;
+  align-items: center;
+  justify-content: center;
+  margin-top: ${scale(10)}px;
 `;
 
 export default ReadQuestions;
