@@ -6,7 +6,6 @@ import ImageButton from '@/components/storyProgress/ImageButton';
 import SelectButton from '@/components/storyProgress/SelectButton';
 import {onSelectImage} from '@/utils/ImagePicker';
 import {uploadImageToS3, patchImage} from '@/apis/upload/imageUpload';
-import {useAuthStore} from '@/store/authStore';
 import CustomText from '@/utils/CustomText';
 import {fetchChoice} from '@/apis/story/storyProgress';
 import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
@@ -14,8 +13,9 @@ import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
 import {useStoryImageUrl} from '@/hooks/useImageUrl';
 import {createImage} from '@/apis/AI/createImage';
-import {create} from 'zustand';
 import {Illust} from '@/types/form';
+import Loading from '@/components/common/loading/Loading';
+
 
 const StoryProgressView = ({
   bookId,
@@ -44,35 +44,56 @@ const StoryProgressView = ({
 }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [imageLoading, setImageLoading] = useState<boolean>(false);
   const displayImageUrl = useStoryImageUrl(uploadedImage);
   const {goToStoryProgress, goToQuestions} =
     createNavigationHelpers(navigation);
 
   const handleImagePicker = async () => {
-    const result = await onSelectImage();
-    console.log(result);
-    if (result) {
-      const uploadResult = await uploadImageToS3(
-        result.filename,
-        bookId,
-        result.blob,
-      );
-      if (uploadResult) {
-        const imageUrl = uploadResult;
-        setUploadedImage(imageUrl);
-        const patchResult = await patchImage(
+    try {
+      setImageLoading(true);
+      const result = await onSelectImage();
+      console.log(result);
+      if (result) {
+        const uploadResult = await uploadImageToS3(
+          result.filename,
           bookId,
-          imageUrl,
-          illust.illust_id,
+          result.blob,
         );
-        console.log(patchResult);
+        if (uploadResult) {
+          const imageUrl = uploadResult;
+          setUploadedImage(imageUrl);
+          const patchResult = await patchImage(
+            bookId,
+            imageUrl,
+            illust.illust_id,
+          );
+          console.log(patchResult);
+        }
       }
+    } catch (error) {
+      console.error('이미지 업로드 오류:', error);
+    } finally {
+      setImageLoading(false);
     }
   };
 
   const handleCreateImage = async () => {
-    const result = await createImage(bookId, page_number);
-    setUploadedImage(result);
+    try {
+      setImageLoading(true);
+      const result = await createImage(bookId, page_number);
+      setUploadedImage(result);
+      const patchResult = await patchImage(
+        bookId,
+        result,
+        illust.illust_id,
+      );
+      console.log(patchResult);
+    } catch (error) {
+      console.error('이미지 생성 오류:', error);
+    } finally {
+      setImageLoading(false);
+    }
   };
 
   const handleSelectChoice = async (choice: number) => {
@@ -84,7 +105,6 @@ const StoryProgressView = ({
       nextStory: choice === 1 ? AIResponse.choice1 : AIResponse.choice2,
     });
   };
-  // console.log('AIResponse', AIResponse);
 
   useEffect(() => {
     if (illust.image_url) {
@@ -95,7 +115,9 @@ const StoryProgressView = ({
   return (
     <StoryProgressViewContainer>
       <LeftContainer>
-        {uploadedImage ? (
+        {imageLoading ? (
+          <Loading script="이미지를 처리하는 중이에요..." />
+        ) : uploadedImage ? (
           <UploadedImage source={{uri: displayImageUrl}} />
         ) : (
           <>
@@ -106,7 +128,9 @@ const StoryProgressView = ({
       </LeftContainer>
       <RightContainer>
         <StoryContainer>
-          <CustomText font="NPSfont_regular" style={{fontSize: scale(9)}}>
+          <CustomText font="NPSfont_regular" style={{
+            fontSize: scale(9),
+            lineHeight: scale(14),}}>
             {AIResponse.story}
           </CustomText>
         </StoryContainer>
@@ -174,9 +198,15 @@ const RightContainer = styled.View`
   justify-content: space-between;
 `;
 
-const StoryContainer = styled.ScrollView`
+const StoryContainer = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    flexGrow: 1,
+    paddingBottom: scale(20),
+  },
+})`
   width: 100%;
-  padding: ${scale(10)}px;
+  padding: ${scale(20)}px;
 `;
 
 const SelectButtonContainer = styled.View`

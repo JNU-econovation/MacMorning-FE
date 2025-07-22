@@ -18,6 +18,7 @@ import SelectView from './selectView/SelectView';
 import StepButton from '@/components/common/buttons/StepButton';
 import StorySettingView from './selectView/StorySettingView';
 import SelectedSettingView from './selectView/SelectedSettingView';
+import {RouteProp, useRoute} from '@react-navigation/native';
 
 interface CreateBookTitle {
   titleText: string;
@@ -44,10 +45,12 @@ const CreateBookTitles: CreateBookTitle[] = [
 ];
 
 const CreateBook = (): React.JSX.Element => {
+  const route = useRoute<RouteProp<RootStackParamList, 'CreateBook'>>();
+  const preFilledData = route.params?.preFilledData;
   const navigation = useNavigation<RootStackNavigationProp>();
   const {goToStoryProgress} = createNavigationHelpers(navigation);
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormData>(preFilledData || {
     genre: [],
     gameMode: false,
     title: '',

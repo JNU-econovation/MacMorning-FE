@@ -27,7 +27,7 @@ const signup = async (params: SignupParams) => {
     },
   );
   console.log(response);
-  return response.data;
+  return response.data.success;
 };
 
 export default signup;

@@ -42,7 +42,8 @@ const ReadBookView = ({bookPage, textSize}: ReadBookViewProps) => {
         <StoryContainer>
           <CustomText
             font="NPSfont_regular"
-            style={{fontSize: getFontSize(textSize)}}>
+            style={{fontSize: getFontSize(textSize),
+              lineHeight: scale(14),}}>
             {bookPage?.story_text}
           </CustomText>
         </StoryContainer>
@@ -124,7 +125,13 @@ const RightContainer = styled.View`
   justify-content: space-between;
 `;
 
-const StoryContainer = styled.ScrollView`
+const StoryContainer = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    flexGrow: 1,
+    paddingBottom: scale(20),
+  },
+})`
   width: 100%;
   padding: ${scale(20)}px;
 `;

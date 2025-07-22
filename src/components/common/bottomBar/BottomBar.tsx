@@ -9,6 +9,7 @@ import BookSVG from '@/assets/images/bottomBar/book.svg';
 import OpenBookSVG from '@/assets/images/bottomBar/book-open.svg';
 import UserSVG from '@/assets/images/bottomBar/user.svg';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
+import { Platform } from 'react-native';
 
 const BottomBar = ({navigation}: BottomTabBarProps): React.JSX.Element => {
   const iconProps: IconProps = {
@@ -54,6 +55,7 @@ const BottomBar = ({navigation}: BottomTabBarProps): React.JSX.Element => {
 };
 
 const BottomBarContainer = styled.View`
+  z-index: 1;
   width: 100%;
   height: ${scale(38)}px;
   flex-direction: row;
@@ -63,6 +65,7 @@ const BottomBarContainer = styled.View`
   shadow-offset: 0px ${scale(-2)}px;
   shadow-opacity: 0.1;
   shadow-radius: ${scale(3)}px;
+  elevation: ${Platform.OS === 'android' ? scale(7) : 0};
 `;
 
 const BottomBarButtonContainer = styled.View`

@@ -13,7 +13,6 @@ const ShareBookView = ({bookDetail}: {bookDetail: any}) => {
   const imageUrl = useImageUrl(bookDetail?.title_img_url);
   const formattedDate = useDateFormat(bookDetail?.created_at);
   const {handleReadStory, handleCreateStory} = useShareButtonHandlers(bookDetail?.book_id, bookDetail);
-
   return (
     <ShareBookViewContainer>
       <LeftContainer>
@@ -21,7 +20,7 @@ const ShareBookView = ({bookDetail}: {bookDetail: any}) => {
       </LeftContainer>
       <RightContainer>
         <BookDetailContainer>
-          <BookMarkButton book_id={bookDetail?.book_id} is_bookmarked={false} />
+          <BookMarkButton book_id={bookDetail?.book_id} is_bookmarked={bookDetail?.is_bookmarked === true} />
           <ShareBadge text='제목'/>
             <TextContainer>
               <CustomText

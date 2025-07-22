@@ -5,6 +5,7 @@ import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
 import CustomText from '@/utils/CustomText';
 import {useNavigation} from '@react-navigation/native';
+import {Alert} from 'react-native';
 import {
   PasswordNotMatchErrorView,
   EmailErrorView,
@@ -44,17 +45,23 @@ const Signin = (): React.JSX.Element => {
     }
   }, [email, password, passwordCheck]);
 
-  const hadleSignup = () => {
+  const hadleSignup = async() => {
     if (emailError || passwordError || passwordNotMatchError) {
       return;
     }
-    signup({
+    const result = await signup({
       email: email,
       password: password,
       nickname: nickname,
       username: username,
       phone_number: phoneNumber,
     });
+    if(result) {
+      Alert.alert('알림', '회원가입 성공.');
+      navigation.goBack();
+    } else {
+      Alert.alert('오류', '회원가입 실패.');
+    }
   };
   return (
     <ScrollView

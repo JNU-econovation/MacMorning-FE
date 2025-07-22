@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
@@ -56,6 +57,7 @@ const BottomBarPlusButtonContainer = styled.TouchableOpacity`
   shadow-opacity: 0.3;
   shadow-radius: ${scale(3)}px;
   left: 50%;
+  elevation: ${Platform.OS === 'android' ? scale(1) : 0};
 `;
 
 export default BottomBarPlusButton;
