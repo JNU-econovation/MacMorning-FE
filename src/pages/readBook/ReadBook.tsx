@@ -87,7 +87,11 @@ const ReadBook = ({route}: ReadBookProps) => {
         />
       </ProgressBarWrapper>
       <ReadBookViewContainer>
-        <ReadBookView bookPage={bookPage} textSize={textSize} />
+        <ReadBookView
+          bookId={book_id}
+          bookPage={bookPage}
+          textSize={textSize}
+        />
       </ReadBookViewContainer>
       <ProgressButtonWrapper>
         <StepButton
