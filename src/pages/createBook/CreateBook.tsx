@@ -50,22 +50,24 @@ const CreateBook = (): React.JSX.Element => {
   const navigation = useNavigation<RootStackNavigationProp>();
   const {goToStoryProgress} = createNavigationHelpers(navigation);
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<FormData>(preFilledData || {
-    genre: [],
-    gameMode: false,
-    title: '',
-    character: {
-      name: '',
-      gender: '남성',
-      age: '',
-      description: '',
+  const [formData, setFormData] = useState<FormData>(
+    preFilledData || {
+      genre: [],
+      gameMode: false,
+      title: '',
+      character: {
+        name: '',
+        gender: '남성',
+        age: '',
+        description: '',
+      },
+      story: {
+        grammatical_person: '1인칭',
+        historical_background: '',
+        plot: '',
+      },
     },
-    story: {
-      grammatical_person: '1인칭',
-      historical_background: '',
-      plot: '',
-    },
-  });
+  );
   const [availableGenres, setAvailableGenres] = useState<string[]>([
     '판타지',
     '로맨스',
@@ -155,6 +157,7 @@ const CreateBook = (): React.JSX.Element => {
       bookId: Number(response.data.id),
       lastPage: 0,
       formData: formData,
+      createStatus: 'create',
     });
   };
 

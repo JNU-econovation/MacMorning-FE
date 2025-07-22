@@ -21,6 +21,7 @@ declare global {
     ShareBook: {
       props: {
         bookId: number;
+        is_bookmarked: boolean;
       };
     };
     StoryProgress: {
@@ -29,6 +30,7 @@ declare global {
         lastPage: number;
         formData?: FormData | undefined;
         nextStory?: Story | undefined;
+        createStatus?: string | undefined;
       };
     };
     ReadBook: {

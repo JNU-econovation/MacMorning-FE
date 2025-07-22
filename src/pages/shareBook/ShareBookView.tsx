@@ -11,11 +11,20 @@ import ShareButton, {
   useShareButtonHandlers,
 } from '@/components/common/buttons/ShareButton';
 
-const ShareBookView = ({bookDetail}: {bookDetail: any}) => {
+const ShareBookView = ({
+  bookDetail,
+  is_bookmarked,
+}: {
+  bookDetail: any;
+  is_bookmarked: boolean;
+}) => {
   const imageUrl = useImageUrl(bookDetail?.title_img_url);
   const formattedDate = useDateFormat(bookDetail?.created_at);
 
-  const {handleReadStory, handleCreateStory} = useShareButtonHandlers(bookDetail?.book_id, bookDetail);
+  const {handleReadStory, handleCreateStory} = useShareButtonHandlers(
+    bookDetail?.book_id,
+    bookDetail,
+  );
 
   return (
     <ShareBookViewContainer>
@@ -24,7 +33,11 @@ const ShareBookView = ({bookDetail}: {bookDetail: any}) => {
       </LeftContainer>
       <RightContainer>
         <BookDetailContainer>
-          <LikeButton book={bookDetail} size={scale(7)} />
+          <LikeButton
+            book_id={bookDetail?.book_id}
+            is_bookmarked={is_bookmarked}
+            size={scale(7)}
+          />
           <ShareBadge text="제목" />
           <TextContainer>
             <CustomText

@@ -16,7 +16,6 @@ import {createImage} from '@/apis/AI/createImage';
 import {Illust} from '@/types/form';
 import Loading from '@/components/common/loading/Loading';
 
-
 const StoryProgressView = ({
   bookId,
   illust,
@@ -83,11 +82,7 @@ const StoryProgressView = ({
       setImageLoading(true);
       const result = await createImage(bookId, page_number);
       setUploadedImage(result);
-      const patchResult = await patchImage(
-        bookId,
-        result,
-        illust.illust_id,
-      );
+      const patchResult = await patchImage(bookId, result, illust.illust_id);
       console.log(patchResult);
     } catch (error) {
       console.error('이미지 생성 오류:', error);
@@ -97,12 +92,14 @@ const StoryProgressView = ({
   };
 
   const handleSelectChoice = async (choice: number) => {
+    console.log(choiceId);
     const response = await fetchChoice(bookId, choiceId || 0, choice);
     console.log(response);
     goToStoryProgress({
       bookId: bookId,
       lastPage: totalPage,
       nextStory: choice === 1 ? AIResponse.choice1 : AIResponse.choice2,
+      createStatus: 'nextStory',
     });
   };
 
@@ -128,9 +125,12 @@ const StoryProgressView = ({
       </LeftContainer>
       <RightContainer>
         <StoryContainer>
-          <CustomText font="NPSfont_regular" style={{
-            fontSize: scale(9),
-            lineHeight: scale(14),}}>
+          <CustomText
+            font="NPSfont_regular"
+            style={{
+              fontSize: scale(9),
+              lineHeight: scale(14),
+            }}>
             {AIResponse.story}
           </CustomText>
         </StoryContainer>

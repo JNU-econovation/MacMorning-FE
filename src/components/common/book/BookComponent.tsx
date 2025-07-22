@@ -16,16 +16,21 @@ interface BookComponentProps {
 function BookComponent({book}: BookComponentProps): React.JSX.Element {
   const imageUrl = useImageUrl(book?.title_img_url);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const {goToCreatedBookProgress, goToShareBook} =
+  const {goToStoryProgress, goToShareBook} =
     createNavigationHelpers(navigation);
 
   const handlePress = () => {
     if (book?.is_in_progress === null || book?.is_in_progress === false) {
-      goToShareBook({bookId: Number(book.book_id)});
+      console.log(book.is_bookmarked || false);
+      goToShareBook({
+        bookId: Number(book.book_id),
+        is_bookmarked: book.is_bookmarked,
+      });
     } else {
-      goToCreatedBookProgress({
+      goToStoryProgress({
         bookId: Number(book.book_id),
         lastPage: book.total_page - 1,
+        createStatus: 'getStory',
       });
     }
   };
@@ -33,7 +38,11 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
   return (
     <BookComponentContainer onPress={handlePress}>
       <LikeButtonWrapper>
-        <LikeButton book={book} size={scale(5.4)} />
+        <LikeButton
+          book_id={book.book_id}
+          is_bookmarked={book.is_bookmarked || false}
+          size={scale(5.4)}
+        />
       </LikeButtonWrapper>
       <BookImage source={{uri: imageUrl}} />
       <BookInfoContainer>
