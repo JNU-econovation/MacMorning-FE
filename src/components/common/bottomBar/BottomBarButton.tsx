@@ -18,12 +18,7 @@ const BottomBarButton = ({
 }: BottomBarButtonProps): React.JSX.Element => {
   return (
     <BottomBarButtonContainer onPress={onPress}>
-      <Text
-        style={{
-          color: COLORS.text.primary,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+      <Text style={{justifyContent: 'center', alignItems: 'center'}}>
         {icon}
       </Text>
       <CustomText font="NPSfont_regular" style={{fontSize: scale(7)}}>
