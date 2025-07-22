@@ -5,7 +5,7 @@ export interface Book {
   title_img_url?: string;
   title: string;
   author: string;
-  isLiked: boolean;
+  is_bookmarked: boolean;
   description: string;
   is_in_progress?: boolean | null; //be에서 null 반환하면 안되는데 왜 null로 반환이 오죠..? 일단 임시 땜빵용 null
 }
