@@ -2,17 +2,22 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {COLORS} from '@/constants/colors';
 import {scale} from 'react-native-size-matters';
-import { useImageUrl } from '@/hooks/useImageUrl';
-import { useDateFormat } from '@/hooks/useDateFormat';
-import BookMarkButton from '@/components/common/book/BookMarkButton';
+import {useImageUrl} from '@/hooks/useImageUrl';
+import {useDateFormat} from '@/hooks/useDateFormat';
+import LikeButton from '@/components/common/buttons/LikeButton';
 import ShareBadge from '@/components/common/badge/shareBadge';
 import CustomText from '@/utils/CustomText';
-import ShareButton, {useShareButtonHandlers} from '@/components/common/buttons/ShareButton';
+import ShareButton, {
+  useShareButtonHandlers,
+} from '@/components/common/buttons/ShareButton';
 
 const ShareBookView = ({bookDetail}: {bookDetail: any}) => {
   const imageUrl = useImageUrl(bookDetail?.title_img_url);
   const formattedDate = useDateFormat(bookDetail?.created_at);
-  const {handleReadStory, handleCreateStory} = useShareButtonHandlers(bookDetail?.book_id, bookDetail);
+  const {handleReadStory, handleCreateStory} = useShareButtonHandlers(
+    bookDetail?.book_id,
+    bookDetail,
+  );
 
   return (
     <ShareBookViewContainer>
@@ -21,34 +26,37 @@ const ShareBookView = ({bookDetail}: {bookDetail: any}) => {
       </LeftContainer>
       <RightContainer>
         <BookDetailContainer>
-          <BookMarkButton book_id={bookDetail?.book_id} is_bookmarked={false} />
-          <ShareBadge text='제목'/>
-            <TextContainer>
-              <CustomText
-                style={{fontSize: scale(12), color: COLORS.text.primary}}
-                font="NPSfont_regular">
-                {bookDetail?.title}
-              </CustomText>
-            </TextContainer>
-          <ShareBadge text='지은이'/>
-            <TextContainer>
-              <CustomText
-                style={{fontSize: scale(12), color: COLORS.text.primary}}
-                font="NPSfont_regular">
-                {bookDetail?.author}
-              </CustomText>
-            </TextContainer>
-          <ShareBadge text='작성일'/>
-            <TextContainer>
-              <CustomText
-                style={{fontSize: scale(12), color: COLORS.text.primary}}
-                font="NPSfont_regular">
-                {formattedDate}
-              </CustomText> 
-            </TextContainer>
+          <LikeButton book={bookDetail} size={scale(7)} />
+          <ShareBadge text="제목" />
+          <TextContainer>
+            <CustomText
+              style={{fontSize: scale(12), color: COLORS.text.primary}}
+              font="NPSfont_regular">
+              {bookDetail?.title}
+            </CustomText>
+          </TextContainer>
+          <ShareBadge text="지은이" />
+          <TextContainer>
+            <CustomText
+              style={{fontSize: scale(12), color: COLORS.text.primary}}
+              font="NPSfont_regular">
+              {bookDetail?.author}
+            </CustomText>
+          </TextContainer>
+          <ShareBadge text="작성일" />
+          <TextContainer>
+            <CustomText
+              style={{fontSize: scale(12), color: COLORS.text.primary}}
+              font="NPSfont_regular">
+              {formattedDate}
+            </CustomText>
+          </TextContainer>
         </BookDetailContainer>
-        <ShareButton onPress={handleReadStory} text={'동화책 읽으러 가기'}/>
-        <ShareButton onPress={handleCreateStory} text={'해당 주제로 이야기 만들기'}/>
+        <ShareButton onPress={handleReadStory} text={'동화책 읽으러 가기'} />
+        <ShareButton
+          onPress={handleCreateStory}
+          text={'해당 주제로 이야기 만들기'}
+        />
       </RightContainer>
     </ShareBookViewContainer>
   );
