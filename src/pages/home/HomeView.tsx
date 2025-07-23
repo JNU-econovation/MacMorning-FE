@@ -82,7 +82,7 @@ const HomeView = (): React.JSX.Element => {
 
       <HomeButtonContainer>
         <TextNavigateButton
-          onPress={() => navigation.navigate('MyBook')}
+          onPress={() => navigation.navigate('Library')}
           text="Best 이야기"
           fontInfo={{
             font: 'NPSfont_bold',

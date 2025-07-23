@@ -10,9 +10,11 @@ declare global {
     MyPage: undefined;
     Login: undefined;
     Signin: undefined;
-    CreateBook: {
-      preFilledData?: FormData;
-    };
+    CreateBook:
+      | {
+          preFilledData?: FormData;
+        }
+      | undefined;
     ChooseThumbnail: {
       props: {
         bookId: number;
