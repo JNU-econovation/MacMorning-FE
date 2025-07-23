@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, Alert} from 'react-native';
+import {
+  View,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
@@ -164,44 +170,63 @@ const CreateBook = (): React.JSX.Element => {
   return (
     <CreateBookContainer>
       <Header title="이야기 만들기" headerType="create" />
-      <CreateBookTitle
-        titleText={CreateBookTitles[currentStep].titleText}
-        subtitleText={CreateBookTitles[currentStep].subtitleText}
-      />
-      <SelectView>
-        {currentStep === 0 && (
-          <GenreSelectView
-            initialData={formData.genre}
-            setFormData={setFormData}
-            availableGenres={availableGenres}
-            onAddGenre={handleAddGenre}
-            onRemoveGenre={handleRemoveGenre}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1}}
+        keyboardVerticalOffset={-scale(80)} // 필요시 조정
+      >
+        <ScrollView
+          style={{flex: 1}}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{flexGrow: 1, height: WINDOW_HEIGHT - 100}}>
+          <CreateBookTitle
+            titleText={CreateBookTitles[currentStep].titleText}
+            subtitleText={CreateBookTitles[currentStep].subtitleText}
           />
-        )}
-        {currentStep === 1 && (
-          <StorySettingView initialData={formData} setFormData={setFormData} />
-        )}
-        {currentStep === 2 && (
-          <CharacterSelectView
-            initialData={formData}
-            setFormData={setFormData}
-          />
-        )}
-        {currentStep === 3 && <SelectedSettingView data={formData} />}
-      </SelectView>
+          <CreateBookContainer>
+            <SelectView>
+              {currentStep === 0 && (
+                <GenreSelectView
+                  initialData={formData.genre}
+                  setFormData={setFormData}
+                  availableGenres={availableGenres}
+                  onAddGenre={handleAddGenre}
+                  onRemoveGenre={handleRemoveGenre}
+                />
+              )}
+              {currentStep === 1 && (
+                <StorySettingView
+                  initialData={formData}
+                  setFormData={setFormData}
+                />
+              )}
+              {currentStep === 2 && (
+                <CharacterSelectView
+                  initialData={formData}
+                  setFormData={setFormData}
+                />
+              )}
+              {currentStep === 3 && <SelectedSettingView data={formData} />}
+            </SelectView>
 
-      <BottomBarButtonContainer>
-        {currentStep > 0 ? (
-          <StepButton text="이전" onPress={() => handleStep(-1)} />
-        ) : (
-          <View style={{width: scale(40), height: scale(20)}} />
-        )}
-        {currentStep < 3 ? (
-          <StepButton text="다음" onPress={() => handleStep(1)} />
-        ) : (
-          <StepButton text="생성" onPress={() => handleCreateBook(formData)} />
-        )}
-      </BottomBarButtonContainer>
+            <BottomBarButtonContainer>
+              {currentStep > 0 ? (
+                <StepButton text="이전" onPress={() => handleStep(-1)} />
+              ) : (
+                <View style={{width: scale(40), height: scale(20)}} />
+              )}
+              {currentStep < 3 ? (
+                <StepButton text="다음" onPress={() => handleStep(1)} />
+              ) : (
+                <StepButton
+                  text="생성"
+                  onPress={() => handleCreateBook(formData)}
+                />
+              )}
+            </BottomBarButtonContainer>
+          </CreateBookContainer>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </CreateBookContainer>
   );
 };
