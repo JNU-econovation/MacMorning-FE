@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {View} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {WINDOW_WIDTH, WINDOW_HEIGHT} from '@/constants/windowSize';
@@ -14,7 +15,6 @@ import CustomText from '@/utils/CustomText';
 import {COLORS} from '@/constants/colors';
 import {getQuestions, saveQuestions} from '@/apis/questions/getQuestions';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import Loading from '@/components/common/loading/Loading';
 import Header from '@/components/common/header/Header';
 import QuestionsTitle from './QuestionsTitle';
 import {Question} from '@/types/form';
@@ -91,43 +91,58 @@ const Questions = () => {
               titleText={'선택지를 고른 이유를 작성해주세요!'}
               subtitleText={'모든 질문에 답변하지 않아도 괜찮아요.'}
             />
-
-            <QuestionPageContainer>
-              <QuestionListContainer showsVerticalScrollIndicator={false}>
-                {questions.map(
-                  question =>
-                    question && (
-                      <QuestionWrapper
-                        activeOpacity={1}
-                        active={selectedQuestion === question.id}
+            {questions.length === 0 ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: scale(50),
+                }}>
+                <CustomText
+                  font="NPSfont_regular"
+                  style={{fontSize: scale(10), color: COLORS.text.secondary}}>
+                  작가의 의도가 없습니다.
+                </CustomText>
+              </View>
+            ) : (
+              <QuestionPageContainer>
+                <QuestionListContainer showsVerticalScrollIndicator={false}>
+                  {questions.map(
+                    question =>
+                      question && (
+                        <QuestionWrapper
+                          activeOpacity={1}
+                          active={selectedQuestion === question.id}
+                          key={question.id}
+                          onPress={() => setSelectedQuestion(question.id)}>
+                          <CustomText
+                            font="NPSfont_regular"
+                            style={{
+                              fontSize: scale(9),
+                              color: question.answer
+                                ? COLORS.text.primary
+                                : COLORS.text.secondary,
+                            }}>
+                            {question.id + 1}. {question.question}
+                          </CustomText>
+                        </QuestionWrapper>
+                      ),
+                  )}
+                </QuestionListContainer>
+                <QuestionInputContainer>
+                  {questions.map(question =>
+                    question.id === selectedQuestion ? (
+                      <QuestionInput
                         key={question.id}
-                        onPress={() => setSelectedQuestion(question.id)}>
-                        <CustomText
-                          font="NPSfont_regular"
-                          style={{
-                            fontSize: scale(9),
-                            color: question.answer
-                              ? COLORS.text.primary
-                              : COLORS.text.secondary,
-                          }}>
-                          {question.id + 1}. {question.question}
-                        </CustomText>
-                      </QuestionWrapper>
-                    ),
-                )}
-              </QuestionListContainer>
-              <QuestionInputContainer>
-                {questions.map(question =>
-                  question.id === selectedQuestion ? (
-                    <QuestionInput
-                      key={question.id}
-                      question={question}
-                      setAnswer={setAnswer}
-                    />
-                  ) : null,
-                )}
-              </QuestionInputContainer>
-            </QuestionPageContainer>
+                        question={question}
+                        setAnswer={setAnswer}
+                      />
+                    ) : null,
+                  )}
+                </QuestionInputContainer>
+              </QuestionPageContainer>
+            )}
             <QuestionSaveButton onPress={saveQuestionsHandler}>
               <CustomText
                 font="NPSfont_bold"
