@@ -113,7 +113,11 @@ const ReadQuestions = () => {
         )}
       </QuestionPageContainer>
 
-      <QuestionSaveButton right={scale(7.5)}>
+      <QuestionSaveButton
+        right={scale(7.5)}
+        onPress={() => {
+          navigation.goBack();
+        }}>
         <CustomText
           font="NPSfont_bold"
           style={{color: COLORS.text.white, fontSize: scale(8)}}>
