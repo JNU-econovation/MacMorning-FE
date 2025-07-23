@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, KeyboardAvoidingView, Platform} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
@@ -45,7 +45,7 @@ const Signin = (): React.JSX.Element => {
     }
   }, [email, password, passwordCheck]);
 
-  const hadleSignup = async() => {
+  const hadleSignup = async () => {
     if (emailError || passwordError || passwordNotMatchError) {
       return;
     }
@@ -56,7 +56,7 @@ const Signin = (): React.JSX.Element => {
       username: username,
       phone_number: phoneNumber,
     });
-    if(result) {
+    if (result) {
       Alert.alert('알림', '회원가입 성공.');
       navigation.goBack();
     } else {
@@ -64,90 +64,103 @@ const Signin = (): React.JSX.Element => {
     }
   };
   return (
-    <ScrollView
-      style={{flex: 1, width: '100%', backgroundColor: COLORS.background.white}}
-      contentContainerStyle={{flexGrow: 1}}>
-      <SigninContainer>
-        <LoginBox>
-          <LoginTitleContainer>
-            <CustomText font="NanumSquareNeo-eHv" style={{fontSize: 25}}>
-              계정 생성
-            </CustomText>
-            <CustomText
-              font="NanumSquareNeo-cBd"
-              style={{fontSize: 15, color: COLORS.text.secondary}}>
-              시작해보세요.
-            </CustomText>
-          </LoginTitleContainer>
-          <InputContainer>
-            <Input placeholder="이메일" value={email} onChangeText={setEmail} />
-            {emailError && <EmailErrorView />}
-            <Input
-              placeholder="비밀번호"
-              secureTextEntry={true}
-              value={password}
-              onChangeText={setPassword}
-            />
-            {passwordError && <PasswordErrorView />}
-            {password && (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex: 1}}
+      keyboardVerticalOffset={0}>
+      <ScrollView
+        style={{
+          flex: 1,
+          width: '100%',
+          backgroundColor: COLORS.background.white,
+        }}
+        contentContainerStyle={{flexGrow: 1}}>
+        <SigninContainer>
+          <LoginBox>
+            <LoginTitleContainer>
+              <CustomText font="NanumSquareNeo-eHv" style={{fontSize: 25}}>
+                계정 생성
+              </CustomText>
+              <CustomText
+                font="NanumSquareNeo-cBd"
+                style={{fontSize: 15, color: COLORS.text.secondary}}>
+                시작해보세요.
+              </CustomText>
+            </LoginTitleContainer>
+            <InputContainer>
               <Input
-                placeholder="비밀번호 확인"
-                secureTextEntry={true}
-                value={passwordCheck}
-                onChangeText={setPasswordCheck}
+                placeholder="이메일"
+                value={email}
+                onChangeText={setEmail}
               />
-            )}
-            {passwordNotMatchError && <PasswordNotMatchErrorView />}
-          </InputContainer>
-          <InputContainer>
-            <InputLabel font="NanumSquareNeo-dEb">이름</InputLabel>
-            <Input
-              placeholder="이름"
-              value={username}
-              onChangeText={setUsername}
-            />
-            <InputLabel font="NanumSquareNeo-dEb">전화번호</InputLabel>
-            <Input
-              placeholder="전화번호"
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-            />
-            <InputLabel font="NanumSquareNeo-dEb">닉네임</InputLabel>
-            <Input
-              placeholder="닉네임"
-              value={nickname}
-              onChangeText={setNickname}
-            />
-          </InputContainer>
-          <LoginButtonsContainer>
-            <LoginButton
-              activeOpacity={1}
-              style={{backgroundColor: COLORS.primary}}
-              onPress={() => {
-                hadleSignup();
-              }}>
-              <CustomText
-                font="NanumSquareNeo-dEb"
-                style={{fontSize: 15, color: COLORS.background.white}}>
-                회원가입
-              </CustomText>
-            </LoginButton>
-            <LoginButton
-              activeOpacity={1}
-              style={{backgroundColor: COLORS.background.white}}
-              onPress={() => {
-                navigation.goBack();
-              }}>
-              <CustomText
-                font="NanumSquareNeo-dEb"
-                style={{fontSize: 15, color: COLORS.primary}}>
-                돌아가기
-              </CustomText>
-            </LoginButton>
-          </LoginButtonsContainer>
-        </LoginBox>
-      </SigninContainer>
-    </ScrollView>
+              {emailError && <EmailErrorView />}
+              <Input
+                placeholder="비밀번호"
+                secureTextEntry={true}
+                value={password}
+                onChangeText={setPassword}
+              />
+              {passwordError && <PasswordErrorView />}
+              {password && (
+                <Input
+                  placeholder="비밀번호 확인"
+                  secureTextEntry={true}
+                  value={passwordCheck}
+                  onChangeText={setPasswordCheck}
+                />
+              )}
+              {passwordNotMatchError && <PasswordNotMatchErrorView />}
+            </InputContainer>
+            <InputContainer>
+              <InputLabel font="NanumSquareNeo-dEb">이름</InputLabel>
+              <Input
+                placeholder="이름"
+                value={username}
+                onChangeText={setUsername}
+              />
+              <InputLabel font="NanumSquareNeo-dEb">전화번호</InputLabel>
+              <Input
+                placeholder="전화번호"
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+              />
+              <InputLabel font="NanumSquareNeo-dEb">닉네임</InputLabel>
+              <Input
+                placeholder="닉네임"
+                value={nickname}
+                onChangeText={setNickname}
+              />
+            </InputContainer>
+            <LoginButtonsContainer>
+              <LoginButton
+                activeOpacity={1}
+                style={{backgroundColor: COLORS.primary}}
+                onPress={() => {
+                  hadleSignup();
+                }}>
+                <CustomText
+                  font="NanumSquareNeo-dEb"
+                  style={{fontSize: 15, color: COLORS.background.white}}>
+                  회원가입
+                </CustomText>
+              </LoginButton>
+              <LoginButton
+                activeOpacity={1}
+                style={{backgroundColor: COLORS.background.white}}
+                onPress={() => {
+                  navigation.goBack();
+                }}>
+                <CustomText
+                  font="NanumSquareNeo-dEb"
+                  style={{fontSize: 15, color: COLORS.primary}}>
+                  돌아가기
+                </CustomText>
+              </LoginButton>
+            </LoginButtonsContainer>
+          </LoginBox>
+        </SigninContainer>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
