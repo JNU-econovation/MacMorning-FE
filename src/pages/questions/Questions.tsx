@@ -2,7 +2,13 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {WINDOW_WIDTH, WINDOW_HEIGHT} from '@/constants/windowSize';
-import {KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import QuestionInput from '@/components/question/QeustionInput';
 import CustomText from '@/utils/CustomText';
 import {COLORS} from '@/constants/colors';
@@ -66,71 +72,73 @@ const Questions = () => {
   }, []);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{flex: 1}}
-      keyboardVerticalOffset={-scale(100)}>
-      <Header title="질문" headerType="questions" />
-      <ScrollView
-        style={{
-          flex: 1,
-          height: WINDOW_HEIGHT,
-          backgroundColor: COLORS.background.white,
-        }}
-        contentContainerStyle={{flexGrow: 1, height: WINDOW_HEIGHT - 100}}
-        showsVerticalScrollIndicator={false}>
-        <QuestionContainer>
-          <QuestionsTitle
-            titleText={'선택지를 고른 이유를 작성해주세요!'}
-            subtitleText={'모든 질문에 답변하지 않아도 괜찮아요.'}
-          />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1}}
+        keyboardVerticalOffset={-scale(100)}>
+        <Header title="질문" headerType="questions" />
+        <ScrollView
+          style={{
+            flex: 1,
+            height: WINDOW_HEIGHT,
+            backgroundColor: COLORS.background.white,
+          }}
+          contentContainerStyle={{flexGrow: 1, height: WINDOW_HEIGHT - 100}}
+          showsVerticalScrollIndicator={false}>
+          <QuestionContainer>
+            <QuestionsTitle
+              titleText={'선택지를 고른 이유를 작성해주세요!'}
+              subtitleText={'모든 질문에 답변하지 않아도 괜찮아요.'}
+            />
 
-          <QuestionPageContainer>
-            <QuestionListContainer showsVerticalScrollIndicator={false}>
-              {questions.map(
-                question =>
-                  question && (
-                    <QuestionWrapper
-                      activeOpacity={1}
-                      active={selectedQuestion === question.id}
+            <QuestionPageContainer>
+              <QuestionListContainer showsVerticalScrollIndicator={false}>
+                {questions.map(
+                  question =>
+                    question && (
+                      <QuestionWrapper
+                        activeOpacity={1}
+                        active={selectedQuestion === question.id}
+                        key={question.id}
+                        onPress={() => setSelectedQuestion(question.id)}>
+                        <CustomText
+                          font="NPSfont_regular"
+                          style={{
+                            fontSize: scale(9),
+                            color: question.answer
+                              ? COLORS.text.primary
+                              : COLORS.text.secondary,
+                          }}>
+                          {question.id + 1}. {question.question}
+                        </CustomText>
+                      </QuestionWrapper>
+                    ),
+                )}
+              </QuestionListContainer>
+              <QuestionInputContainer>
+                {questions.map(question =>
+                  question.id === selectedQuestion ? (
+                    <QuestionInput
                       key={question.id}
-                      onPress={() => setSelectedQuestion(question.id)}>
-                      <CustomText
-                        font="NPSfont_regular"
-                        style={{
-                          fontSize: scale(9),
-                          color: question.answer
-                            ? COLORS.text.primary
-                            : COLORS.text.secondary,
-                        }}>
-                        {question.id + 1}. {question.question}
-                      </CustomText>
-                    </QuestionWrapper>
-                  ),
-              )}
-            </QuestionListContainer>
-            <QuestionInputContainer>
-              {questions.map(question =>
-                question.id === selectedQuestion ? (
-                  <QuestionInput
-                    key={question.id}
-                    question={question}
-                    setAnswer={setAnswer}
-                  />
-                ) : null,
-              )}
-            </QuestionInputContainer>
-          </QuestionPageContainer>
-          <QuestionSaveButton onPress={saveQuestionsHandler}>
-            <CustomText
-              font="NPSfont_bold"
-              style={{color: COLORS.text.white, fontSize: scale(8)}}>
-              저장하기
-            </CustomText>
-          </QuestionSaveButton>
-        </QuestionContainer>
-      </ScrollView>
-    </KeyboardAvoidingView>
+                      question={question}
+                      setAnswer={setAnswer}
+                    />
+                  ) : null,
+                )}
+              </QuestionInputContainer>
+            </QuestionPageContainer>
+            <QuestionSaveButton onPress={saveQuestionsHandler}>
+              <CustomText
+                font="NPSfont_bold"
+                style={{color: COLORS.text.white, fontSize: scale(8)}}>
+                저장하기
+              </CustomText>
+            </QuestionSaveButton>
+          </QuestionContainer>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 

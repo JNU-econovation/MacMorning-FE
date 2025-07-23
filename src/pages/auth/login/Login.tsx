@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Platform} from 'react-native';
+import {Platform, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import {COLORS} from '@/constants/colors';
@@ -19,81 +19,90 @@ const Login = (): React.JSX.Element => {
   const {setLogin} = useAuth();
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{flex: 1}}
-      keyboardVerticalOffset={0}>
-      <LoginContainer>
-        <LoginBox>
-          <LoginTitleContainer>
-            <CustomText font="NanumSquareNeo-eHv" style={{fontSize: 25}}>
-              로그인
-            </CustomText>
-            <CustomText
-              font="NanumSquareNeo-cBd"
-              style={{fontSize: 15, color: COLORS.text.secondary}}>
-              환영합니다.
-            </CustomText>
-          </LoginTitleContainer>
-          <InputContainer>
-            <Input placeholder="아이디" value={email} onChangeText={setEmail} />
-            <Input
-              placeholder="비밀번호"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={true}
-            />
-          </InputContainer>
-          <LoginButton
-            activeOpacity={1}
-            style={{backgroundColor: COLORS.primary}}
-            onPress={async () => {
-              const response = await signin({email: email, password: password});
-              if (response) {
-                setLogin(response.accessToken, response.refreshToken);
-                setAuth(response.accessToken, response.refreshToken);
-                navigation.dispatch(
-                  CommonActions.reset({
-                    index: 0,
-                    routes: [{name: 'MainTabs', params: {screen: 'Home'}}],
-                  }),
-                );
-              }
-            }}>
-            <CustomText
-              font="NanumSquareNeo-dEb"
-              style={{fontSize: 15, color: COLORS.background.white}}>
-              로그인
-            </CustomText>
-          </LoginButton>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1}}
+        keyboardVerticalOffset={0}>
+        <LoginContainer>
+          <LoginBox>
+            <LoginTitleContainer>
+              <CustomText font="NanumSquareNeo-eHv" style={{fontSize: 25}}>
+                로그인
+              </CustomText>
+              <CustomText
+                font="NanumSquareNeo-cBd"
+                style={{fontSize: 15, color: COLORS.text.secondary}}>
+                환영합니다.
+              </CustomText>
+            </LoginTitleContainer>
+            <InputContainer>
+              <Input
+                placeholder="아이디"
+                value={email}
+                onChangeText={setEmail}
+              />
+              <Input
+                placeholder="비밀번호"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={true}
+              />
+            </InputContainer>
+            <LoginButton
+              activeOpacity={1}
+              style={{backgroundColor: COLORS.primary}}
+              onPress={async () => {
+                const response = await signin({
+                  email: email,
+                  password: password,
+                });
+                if (response) {
+                  setLogin(response.accessToken, response.refreshToken);
+                  setAuth(response.accessToken, response.refreshToken);
+                  navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [{name: 'MainTabs', params: {screen: 'Home'}}],
+                    }),
+                  );
+                }
+              }}>
+              <CustomText
+                font="NanumSquareNeo-dEb"
+                style={{fontSize: 15, color: COLORS.background.white}}>
+                로그인
+              </CustomText>
+            </LoginButton>
 
-          {/* 현재 임시 스타일링 작업을 위해 작성해놓은 코드 추후 컴포넌트 분리 및 수정 필요 */}
-          <LoginButtonsContainer>
-            <LoginButton
-              activeOpacity={1}
-              style={{backgroundColor: COLORS.background.lightGray}}>
-              <CustomText
-                font="NanumSquareNeo-dEb"
-                style={{fontSize: 15, color: COLORS.text.primary}}>
-                구글 로그인
-              </CustomText>
-            </LoginButton>
-            <LoginButton
-              activeOpacity={1}
-              onPress={() => {
-                navigation.navigate('Signin');
-              }}
-              style={{backgroundColor: COLORS.background.lightGray}}>
-              <CustomText
-                font="NanumSquareNeo-dEb"
-                style={{fontSize: 15, color: COLORS.text.primary}}>
-                회원가입
-              </CustomText>
-            </LoginButton>
-          </LoginButtonsContainer>
-        </LoginBox>
-      </LoginContainer>
-    </KeyboardAvoidingView>
+            {/* 현재 임시 스타일링 작업을 위해 작성해놓은 코드 추후 컴포넌트 분리 및 수정 필요 */}
+            <LoginButtonsContainer>
+              <LoginButton
+                activeOpacity={1}
+                style={{backgroundColor: COLORS.background.lightGray}}>
+                <CustomText
+                  font="NanumSquareNeo-dEb"
+                  style={{fontSize: 15, color: COLORS.text.primary}}>
+                  구글 로그인
+                </CustomText>
+              </LoginButton>
+              <LoginButton
+                activeOpacity={1}
+                onPress={() => {
+                  navigation.navigate('Signin');
+                }}
+                style={{backgroundColor: COLORS.background.lightGray}}>
+                <CustomText
+                  font="NanumSquareNeo-dEb"
+                  style={{fontSize: 15, color: COLORS.text.primary}}>
+                  회원가입
+                </CustomText>
+              </LoginButton>
+            </LoginButtonsContainer>
+          </LoginBox>
+        </LoginContainer>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
