@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
 import CustomText from '@/utils/CustomText';
@@ -27,11 +27,22 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
         is_bookmarked: book.is_bookmarked,
       });
     } else {
-      goToStoryProgress({
-        bookId: Number(book.book_id),
-        lastPage: book.total_page - 1,
-        createStatus: 'getStory',
-      });
+      Alert.alert('작성중이던 이야기예요!', '이어 쓰시겠어요?', [
+        {
+          text: '취소',
+          style: 'cancel',
+        },
+        {
+          text: '확인',
+          onPress: () => {
+            goToStoryProgress({
+              bookId: Number(book.book_id),
+              lastPage: book.total_page - 1,
+              createStatus: 'getStory',
+            });
+          },
+        },
+      ]);
     }
   };
 
