@@ -58,6 +58,7 @@ function BookComponent({book}: BookComponentProps): React.JSX.Element {
 }
 const BookComponentContainer = styled.TouchableOpacity`
   width: 19%;
+  height: ${scale(100)}px;
   gap: 1%;
 `;
 

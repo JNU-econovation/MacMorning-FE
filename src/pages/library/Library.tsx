@@ -104,14 +104,13 @@ function Mybook(): React.JSX.Element {
             showsVerticalScrollIndicator={false}
             scrollEnabled={true}
             onEndReached={handleLoadMore}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={1}
             contentContainerStyle={{
               paddingTop: scale(30),
-              paddingBottom: scale(60),
             }}
             columnWrapperStyle={{
-              marginBottom: scale(20),
               gap: '8%',
+              marginBottom: scale(30),
             }}
           />
         ) : (
