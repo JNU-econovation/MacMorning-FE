@@ -22,13 +22,9 @@ const HomeView = (): React.JSX.Element => {
   useEffect(() => {
     const fetchBooks = async () => {
       setIsLoading(true);
-      if (!accessToken) return;
 
       try {
-        const {books: myBooks} = await getRecentMyBooks(
-          'created_at_desc',
-          accessToken,
-        );
+        const {books: myBooks} = await getRecentMyBooks('created_at_desc');
         setMyBooks(myBooks);
         const {books: bestBooks} = await getMainBestBooks();
         setBestBooks(bestBooks);
@@ -91,25 +87,21 @@ const HomeView = (): React.JSX.Element => {
           }}
         />
       </HomeButtonContainer>
-      {isAuthenticated ? (
-        isLoading ? (
-          <Loading script="" />
-        ) : (
-          <FlatList<Book>
-            style={{width: '100%'}}
-            data={bestBooks}
-            renderItem={renderItem}
-            keyExtractor={book => book.book_id.toString()}
-            numColumns={4}
-            scrollEnabled={false}
-            columnWrapperStyle={{
-              marginBottom: scale(20),
-              gap: '8%',
-            }}
-          />
-        )
+      {isLoading ? (
+        <Loading script="" />
       ) : (
-        <GuestView />
+        <FlatList<Book>
+          style={{width: '100%'}}
+          data={bestBooks}
+          renderItem={renderItem}
+          keyExtractor={book => book.book_id.toString()}
+          numColumns={4}
+          scrollEnabled={false}
+          columnWrapperStyle={{
+            marginBottom: scale(20),
+            gap: '8%',
+          }}
+        />
       )}
     </HomeViewContainer>
   );
