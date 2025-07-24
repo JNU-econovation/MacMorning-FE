@@ -161,7 +161,7 @@ const StoryProgress = () => {
 
   const handleNextPage = () => {
     if (!isNextDisabled) {
-      setStatus('nextStory');
+      setStatus('getStory');
       setPageNumber(page_number + 1);
     }
   };
