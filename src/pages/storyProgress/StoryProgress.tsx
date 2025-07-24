@@ -57,6 +57,7 @@ const StoryProgress = () => {
   // 초기값 설정
   useEffect(() => {
     setStatus(createStatus || '');
+    console.log('createStatus', status);
   }, [createStatus]);
 
   // lastPage 변경 시 상태 업데이트
@@ -200,6 +201,7 @@ const StoryProgress = () => {
               isDisabled={!isNextDisabled}
               isLoading={isLoading}
               setLastPage={setTotalPage}
+              setStatus={setStatus}
             />
           </StoryProgressViewContainer>
         </>
