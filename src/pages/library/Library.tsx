@@ -94,7 +94,9 @@ function Mybook(): React.JSX.Element {
         setCategory={setSelectedCategory}
       />
       <LibraryFlatListContainer>
-        {isAuthenticated ? (
+        {isAuthenticated ||
+        selectedCategory === '인기' ||
+        selectedCategory === '둘러보기' ? (
           <FlatList<Book>
             style={{width: '100%'}}
             data={books}
@@ -128,6 +130,8 @@ const LibraryContainer = styled.View`
 
 const LibraryFlatListContainer = styled.View`
   flex: 1;
+  justify-content: center;
+  align-items: center;
   background-color: ${COLORS.background.white};
   padding: 0 ${scale(30)}px;
 `;
