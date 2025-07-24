@@ -89,11 +89,10 @@ function Mybook(): React.JSX.Element {
             onEndReachedThreshold={0.1}
             contentContainerStyle={{
               paddingTop: scale(30),
-              paddingBottom: scale(60),
             }}
             columnWrapperStyle={{
-              marginBottom: scale(20),
               gap: '8%',
+              marginBottom: scale(30),
             }}
           />
         ) : (
