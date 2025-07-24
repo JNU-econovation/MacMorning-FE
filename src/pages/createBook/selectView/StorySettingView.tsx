@@ -1,4 +1,4 @@
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import React from 'react';
 import styled from 'styled-components/native';
 import {scale} from 'react-native-size-matters';
@@ -21,7 +21,8 @@ const StorySettingView = (props: StorySettingViewProps): React.JSX.Element => {
         <GameModeTitle font="NPSfont_bold">게임 모드</GameModeTitle>
         <Toggle
           onToggle={() => {
-            props.setFormData(prev => ({...prev, gameMode: !prev.gameMode}));
+            Alert.alert('게임 모드는 준비중이에요! 👋');
+            // props.setFormData(prev => ({...prev, gameMode: !prev.gameMode}));
           }}
           isOn={props.initialData.gameMode}
         />
