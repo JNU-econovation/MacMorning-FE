@@ -8,8 +8,9 @@ import BookSVG from '@/assets/images/bottomBar/book.svg';
 import OpenBookSVG from '@/assets/images/bottomBar/book-open.svg';
 import UserSVG from '@/assets/images/bottomBar/user.svg';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {Platform, Text} from 'react-native';
+import {Alert, Platform, Text} from 'react-native';
 import CustomText from '@/utils/CustomText';
+import {useAuthStore} from '@/store/authStore';
 
 interface BottomBarButtonProps {
   icon: React.ReactNode;
@@ -51,12 +52,34 @@ const BottomBar = ({
     strokeWidth: scale(0.8),
   };
   const currentRoute = state.routes[state.index].name;
-
+  const isAuthenticated = useAuthStore(state => state.accessToken);
   return (
     <>
       <BottomBarPlusButton
         buttonName="책 추가"
-        onPress={() => navigation.navigate('CreateBook')}
+        onPress={() => {
+          if (isAuthenticated) {
+            navigation.navigate('CreateBook');
+          } else {
+            Alert.alert(
+              '로그인이 필요한 기능이에요! ',
+              '로그인 후 이용해주세요.',
+              [
+                {
+                  text: '로그인 하러가기',
+                  onPress: () => {
+                    navigation.navigate('Login');
+                  },
+                },
+                {
+                  text: '취소',
+                  onPress: () => {},
+                  style: 'cancel',
+                },
+              ],
+            );
+          }
+        }}
       />
       <BottomBarContainer>
         <BottomBarButtonContainer>
