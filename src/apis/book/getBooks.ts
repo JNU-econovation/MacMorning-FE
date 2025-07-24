@@ -1,4 +1,5 @@
 import {baseUrl} from '@/constants/api';
+import {useAuthStore} from '@/store/authStore';
 
 async function getBooks(
   orderStrategy?: string,
@@ -114,9 +115,17 @@ async function getMyBooks(
   };
 }
 
-async function getRecentMyBooks(orderStrategy?: string, accessToken?: string) {
+async function getRecentMyBooks(orderStrategy?: string) {
   const baseUrl = 'https://api.ilovejokbal.monster/v1/books/mybooks';
   const limit = 4;
+  const accessToken = useAuthStore.getState().accessToken;
+
+  if (!accessToken) {
+    return {
+      books: [],
+      nextCursor: null,
+    };
+  }
 
   const url = `${baseUrl}?limit=${limit}&order_strategy=${orderStrategy}`;
 
@@ -140,7 +149,7 @@ async function getMainBestBooks() {
   const url = `${baseUrl}?limit=${limit}`;
 
   const response = await (await fetch(url)).json();
-
+  console.log('response', response);
   return {
     books: response.data.books,
     nextCursor: response.data.next_cursor,

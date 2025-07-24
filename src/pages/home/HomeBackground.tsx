@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import {Image} from 'react-native';
 import styled from 'styled-components/native';
 import {COLORS} from '@/constants/colors';
@@ -7,10 +7,12 @@ import {scale} from 'react-native-size-matters';
 import CustomText from '@/utils/CustomText';
 import TextNavigateButton from '@/components/home/TextNavigateButton';
 import {useNavigation} from '@react-navigation/native';
+import {useAuthStore} from '@/store/authStore';
 
 const HomeBackground = (): React.JSX.Element => {
   const HomeImage = require('../../assets/images/home/home_image.png');
   const navigation = useNavigation<RootStackNavigationProp>();
+  const isAuthenticated = useAuthStore(state => state.accessToken);
 
   return (
     <>
@@ -26,7 +28,24 @@ const HomeBackground = (): React.JSX.Element => {
             AI로 만드는 나만의 동화
           </CustomText>
           <TextNavigateButton
-            onPress={() => navigation.navigate('CreateBook')}
+            onPress={() => {
+              if (isAuthenticated) {
+                navigation.navigate('CreateBook');
+              } else {
+                Alert.alert(
+                  '로그인이 필요한 기능이에요! ',
+                  '로그인 후 이용해주세요.',
+                  [
+                    {
+                      text: '로그인 하러가기',
+                      onPress: () => {
+                        navigation.navigate('Login');
+                      },
+                    },
+                  ],
+                );
+              }
+            }}
             text="이야기 만들러 가기"
             fontInfo={{
               font: 'NPSfont_regular',
