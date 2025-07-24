@@ -58,6 +58,7 @@ const ChooseThumbnailView = ({
       <ThumbnailFlatListContainer>
         {illust.length > 0 ? (
           <FlatList
+            style={{width: '100%'}}
             data={illust}
             renderItem={renderThumbnailItem}
             keyExtractor={item => item.illust_id.toString()}
