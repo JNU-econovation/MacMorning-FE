@@ -25,6 +25,7 @@ const StoryProgressView = ({
   AIResponse,
   isDisabled,
   setLastPage,
+  setStatus,
 }: {
   bookId: number;
   illust: Illust;
@@ -40,6 +41,7 @@ const StoryProgressView = ({
   isDisabled: boolean;
   isLoading: boolean;
   setLastPage: (lastPage: number) => void;
+  setStatus: (status: string) => void;
 }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -95,6 +97,7 @@ const StoryProgressView = ({
     console.log(choiceId);
     const response = await fetchChoice(bookId, choiceId || 0, choice);
     console.log(response);
+    setStatus('nextStory');
     goToStoryProgress({
       bookId: bookId,
       lastPage: totalPage,
