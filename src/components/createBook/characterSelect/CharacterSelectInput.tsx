@@ -13,7 +13,11 @@ type Props = {
 const CharacterSelectInput = ({value, onChange, style}: Props) => {
   return (
     <CharacterSelectInputContainer style={style}>
-      <CharacterSelectInputInput value={value} onChangeText={onChange} />
+      <CharacterSelectInputInput
+        value={value}
+        onChangeText={onChange}
+        multiline={true}
+      />
     </CharacterSelectInputContainer>
   );
 };
@@ -21,6 +25,7 @@ const CharacterSelectInput = ({value, onChange, style}: Props) => {
 const CharacterSelectInputContainer = styled.View`
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 `;
 
 const CharacterSelectInputInput = styled.TextInput`
@@ -29,7 +34,7 @@ const CharacterSelectInputInput = styled.TextInput`
   border-radius: ${scale(10)}px;
   border-width: 1px;
   border-color: ${COLORS.background.lightGray};
-  padding: ${scale(5)}px;
+  padding: ${scale(6)}px;
 `;
 
 export default CharacterSelectInput;
