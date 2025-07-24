@@ -39,7 +39,7 @@ const Header = ({
       <HeaderWrapper>
         <DefaultHeaderContainer>
           <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
-          <SearchButton />
+          {/* <SearchButton /> */}
         </DefaultHeaderContainer>
       </HeaderWrapper>
     );
@@ -169,7 +169,7 @@ const Header = ({
     <HeaderWrapper>
       <DefaultHeaderContainer>
         <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
-        <SearchButton />
+        {/* <SearchButton /> */}
       </DefaultHeaderContainer>
     </HeaderWrapper>
   );
