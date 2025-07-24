@@ -25,7 +25,6 @@ const ShareBookView = ({
     bookDetail?.book_id,
     bookDetail,
   );
-
   return (
     <ShareBookViewContainer>
       <LeftContainer>
@@ -33,11 +32,11 @@ const ShareBookView = ({
       </LeftContainer>
       <RightContainer>
         <BookDetailContainer>
-          <LikeButton
+          {/* <LikeButton
             book_id={bookDetail?.book_id}
             is_bookmarked={is_bookmarked}
             size={scale(7)}
-          />
+          /> */}
           <ShareBadge text="제목" />
           <TextContainer>
             <CustomText
