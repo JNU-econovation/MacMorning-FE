@@ -13,7 +13,13 @@ import {createNavigationHelpers} from '@/utils/navigate/NavigateHelpers';
 
 interface HeaderProps {
   title: string;
-  headerType: 'default' | 'create' | 'progress' | 'edit' | 'questions';
+  headerType:
+    | 'default'
+    | 'create'
+    | 'progress'
+    | 'edit'
+    | 'questions'
+    | 'ending';
   isLoading?: boolean;
   bookId?: number;
   totalPage?: number;
@@ -82,6 +88,26 @@ const Header = ({
               });
             }}
           />
+        </BackHeaderContainer>
+      </HeaderWrapper>
+    );
+  }
+  if (headerType === 'ending') {
+    return (
+      <HeaderWrapper>
+        <BackHeaderContainer>
+          <BackButton
+            disabled={isLoading}
+            onPress={() => {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{name: 'MainTabs', params: {screen: 'Home'}}],
+                }),
+              );
+            }}
+          />
+          <HeaderTitle font="NPSfont_regular">{title}</HeaderTitle>
         </BackHeaderContainer>
       </HeaderWrapper>
     );

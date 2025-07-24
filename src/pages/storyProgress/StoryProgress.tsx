@@ -168,13 +168,23 @@ const StoryProgress = () => {
 
   return (
     <StoryProgressContainer>
-      <Header
-        title="이야기 진행"
-        headerType="progress"
-        isLoading={isLoading}
-        bookId={bookId}
-        totalPage={total_page}
-      />
+      {status === 'ending' ? (
+        <Header
+          title="이야기 진행"
+          headerType="ending"
+          isLoading={isLoading}
+          bookId={bookId}
+          totalPage={total_page}
+        />
+      ) : (
+        <Header
+          title="이야기 진행"
+          headerType="progress"
+          isLoading={isLoading}
+          bookId={bookId}
+          totalPage={total_page}
+        />
+      )}
       {isLoading ? (
         <Loading script="이야기를 만드는 중이에요..." />
       ) : (
