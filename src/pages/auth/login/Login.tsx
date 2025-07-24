@@ -77,7 +77,7 @@ const Login = (): React.JSX.Element => {
 
             {/* 현재 임시 스타일링 작업을 위해 작성해놓은 코드 추후 컴포넌트 분리 및 수정 필요 */}
             <LoginButtonsContainer>
-              <LoginButton
+              {/* <LoginButton
                 activeOpacity={1}
                 style={{backgroundColor: COLORS.background.lightGray}}>
                 <CustomText
@@ -85,7 +85,7 @@ const Login = (): React.JSX.Element => {
                   style={{fontSize: 15, color: COLORS.text.primary}}>
                   구글 로그인
                 </CustomText>
-              </LoginButton>
+              </LoginButton> */}
               <LoginButton
                 activeOpacity={1}
                 onPress={() => {
