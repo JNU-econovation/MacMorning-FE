@@ -8,13 +8,13 @@ AI를 활용하여 사용자가 직접 동화와 이야기를 만들고, 선택�
 
 ### 주요 기능
 
-- ✨ **AI 기반 동화 생성**: 사용자 설정에 라 AI가 동화를 자동 생성
-- 📚 **인터랙티브 스토리 진행**: 선택지를 통해 이야기의 방향을 결정
-- 🎨 **이미지 생성**: 각 페이지마다 AI가 생성한 일러스트 제공
-- 📖 **책 라이브러리**: 생성한 책들을 모아서 관리
-- 🔖 **북마크 기능**: 좋아하는 책을 저장
-- 📤 **책 공유**: 만든 책을 다른 사용자와 공유
-- ❓ **질문 기능**: 스토리 진행 중 질문을 통해 더 깊이 있는 경험 제공
+✨ **AI 기반 동화 생성**: 사용자 설정에 라 AI가 동화를 자동 생성
+📚 **인터랙티브 스토리 진행**: 선택지를 통해 이야기의 방향을 결정
+🎨 **이미지 생성**: 각 페이지마다 AI가 생성한 일러스트 제공
+📖 **책 라이브러리**: 생성한 책들을 모아서 관리
+🔖 **북마크 기능**: 좋아하는 책을 저장
+📤 **책 공유**: 만든 책을 다른 사용자와 공유
+❓ **질문 기능**: 스토리 진행 중 질문을 통해 더 깊이 있는 경험 제공
 
 ## 🛠 기술 스택
 
@@ -31,12 +31,12 @@ AI를 활용하여 사용자가 직접 동화와 이야기를 만들고, 선택�
 
 ### 주요 패키지
 
-- `@react-native-async-storage/async-storage` - 로컬 스토리지
-- `@gorhom/bottom-sheet` - 바텀 시트 UI
-- `react-native-image-picker` - 이미지 선택
-- `react-native-reanimated` - 애니메이션
-- `react-native-svg` - SVG 지원
-- `react-native-size-matters` - 반응형 크기 조정
+`@react-native-async-storage/async-storage` - 로컬 스토리지
+`@gorhom/bottom-sheet` - 바텀 시트 UI
+`react-native-image-picker` - 이미지 선택
+`react-native-reanimated` - 애니메이션
+`react-native-svg` - SVG 지원
+`react-native-size-matters` - 반응형 크기 조정
 
 ## 📁 프로젝트 구조
 
